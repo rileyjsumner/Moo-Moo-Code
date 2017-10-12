@@ -80,7 +80,7 @@ public class Home extends HttpServlet {
             }
         }
         request.setAttribute("data", data);*/
-        forward = "/index.jsp";
+        forward = "/WEB-INF/home.jsp";
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
     }
@@ -104,12 +104,12 @@ public class Home extends HttpServlet {
         String action = request.getParameter("action");
         System.out.println("Post action is: " + action);
 
-        String forward="/home.jsp";
+        String forward="/WEB-INF/home.jsp";
 
         //LOGIC HERE
 
         if(action.equals("home")){
-            forward="/home.jsp";
+            forward="/WEB-INF/home.jsp";
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
