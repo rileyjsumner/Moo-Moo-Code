@@ -28,7 +28,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
 
     var jsKeywords = {
       "if": kw("if"), "while": A, "with": A, "else": B, "do": B, "try": B, "finally": B,
-      "return": C, "break": C, "continue": C, "new": kw("new"), "delete": C, "void": C, "throw": C, "debugger": C,
+      "return": C, "break": C, "continue": C, "new": kw("new"), "delete": C, "void": C, "throw": C, "debugger": C, "print" : C,
       "var": kw("var"), "const": kw("var"), "let": kw("var"),
       "function": kw("function"), "catch": kw("catch"),
       "for": kw("for"), "switch": kw("switch"), "case": kw("case"), "default": kw("default"),

@@ -15,7 +15,7 @@
         </div>
         <button onclick = "submitCode()">Submit</button>
         <p style = "font-size:20px;">Output:</p>
-        <p id ="output"></p>
+        <pre id ="output"></pre>
     </body>
     <script>
         var codeMirror = CodeMirror.fromTextArea(document.getElementById("code"),{
@@ -28,7 +28,21 @@
         });
         function submitCode()
         {
-        $.post("CodeExec",{code:codeMirror.getValue()},function(data){$("#output").html(data);console.log(data);});
+            $.post("RawCodeExec",{code:codeMirror.getValue()},function(data)
+            {
+                console.log(data);
+                var json = JSON.parse(data);
+
+                $("#output").html(json["data"]);
+
+                if(json["error"])
+                {
+                    $("#output").css("color","red");
+                }
+                else{
+                    $("#output").css("color","black");
+                }
+            });
         }
     </script>
 </html>
