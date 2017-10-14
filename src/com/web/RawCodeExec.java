@@ -40,6 +40,7 @@ public class RawCodeExec extends HttpServlet {
 		//String action = request.getParameter("action");
 		//System.out.println("Post action is: " + action);
 		String code = (String)request.getParameter("code");
+		System.out.println("S234234TART");
 		HashMap output = CodeExec.Exec(code);
 		if((boolean)output.get("error"))
 		{
