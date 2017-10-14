@@ -10,19 +10,6 @@
 		<welcome-file>Home</welcome-file>
 	</welcome-file-list>
 	
-	
-	<servlet>
-		<description></description>
-		<display-name>Test</display-name>
-		<servlet-name>Test</servlet-name>
-		<servlet-class>com.web.Test</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Test</servlet-name>
-		<url-pattern>/Test</url-pattern>
-	</servlet-mapping>
-	
-	
 	<servlet>
 		<description></description>
 		<display-name>Home</display-name>
@@ -34,6 +21,27 @@
 		<url-pattern>/Home</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<description></description>
+		<display-name>Code</display-name>
+		<servlet-name>Code</servlet-name>
+		<servlet-class>com.web.Code</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Code</servlet-name>
+		<url-pattern>/Code</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>Learn</display-name>
+		<servlet-name>Learn</servlet-name>
+		<servlet-class>com.web.Learn</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Learn</servlet-name>
+		<url-pattern>/Learn</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
 		<description></description>

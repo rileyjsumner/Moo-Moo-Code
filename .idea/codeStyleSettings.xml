@@ -5,6 +5,12 @@
       <value>
         <option name="HTML_ELEMENTS_TO_INSERT_NEW_LINE_BEFORE" value="div,p,form,h1,h2,h3,body" />
         <option name="HTML_DO_NOT_INDENT_CHILDREN_OF" value="thead,tbody,tfoot" />
+        <codeStyleSettings language="CSS">
+          <indentOptions>
+            <option name="USE_TAB_CHARACTER" value="true" />
+            <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true" />
+          </indentOptions>
+        </codeStyleSettings>
         <codeStyleSettings language="HTML">
           <indentOptions>
             <option name="USE_TAB_CHARACTER" value="true" />

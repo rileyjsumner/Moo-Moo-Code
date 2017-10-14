@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="../codemirror/theme/monokai.css">
 		<script src="../codemirror/mode/javascript/javascript.js"></script>
 		<script src="../codemirror/addon/edit/closebrackets.js"></script>
-		<title>Moo Moo Code</title>
+		<title>Learn - Moo Moo Code</title>
 		<link rel="stylesheet" href="../css/main.css">
 		
 		<!-- FAVICONS -->
@@ -30,14 +30,14 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	<body>
-		<div id="banner">
+		<div id="banner-compact">
 			<p class="banner-text">Moo Moo Code</p>
 		</div>
 		<div id="menu">
-			<div class="menu-item bracket-hover">
+			<div class="menu-item bracket-hover" onclick="location.href='Home';">
 				<p class="menu-text">Home</p>
 			</div>
-			<div class="menu-item bracket-hover" onclick = "location.href='Learn';">
+			<div class="menu-item bracket-hover">
 				<p class="menu-text">Learn</p>
 			</div>
 			<div class="menu-item bracket-hover" onclick="location.href='Code';">
