@@ -1,0 +1,88 @@
+body,html{
+    margin:0px;
+    background-color: #272822;
+    color:#F8F8F2;
+    cursor: default;
+}
+p{
+    margin:0px;
+}
+#banner {
+    display: block;
+    text-align: center;
+    padding-top:50px;
+    padding-bottom:50px;
+    vertical-align: middle;
+    cursor: default;
+}
+
+.banner-text {
+    display: inline-block;
+    font-size: 60px;
+    font-family: Consolas;
+}
+
+#menu {
+    display: block;
+    text-align: center;
+    background-color: #49483E;
+}
+
+.menu-item {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    margin: 0px 10px;
+}
+.menu-item:hover
+{
+    color:#A6E22E;
+    background-color:#272822;
+}
+.bracket-hover>p::after
+{
+    content:"}";
+    visibility: hidden;
+    right: -50px;
+    opacity: 0;
+    position: relative;
+    transition: .3s;
+    margin-left:5px;
+}
+.bracket-hover>p::before
+{
+    content:"{";
+    visibility: hidden;
+    left: -50px;
+    opacity: 0;
+    position: relative;
+    transition: .3s;
+    margin-right:5px;
+}
+.bracket-hover:hover>p::after
+{
+    visibility: visible;
+    right:0;
+    opacity: 1;
+}
+.bracket-hover:hover>p::before
+{
+    visibility: visible;
+    left:0;
+    opacity: 1;
+}
+.bracket-hover:active>p
+{
+    font-style: italic;
+}
+.menu-text
+{
+    font-size:25px;
+    font-family: Consolas;
+    cursor: pointer;
+}
+#content
+{
+    display: block;
+}

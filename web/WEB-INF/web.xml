@@ -3,10 +3,26 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+	
 	<display-name>MooMooCode</display-name>
+	
 	<welcome-file-list>
 		<welcome-file>Home</welcome-file>
 	</welcome-file-list>
+	
+	
+	<servlet>
+		<description></description>
+		<display-name>Test</display-name>
+		<servlet-name>Test</servlet-name>
+		<servlet-class>com.web.Test</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Test</servlet-name>
+		<url-pattern>/Test</url-pattern>
+	</servlet-mapping>
+	
+	
 	<servlet>
 		<description></description>
 		<display-name>Home</display-name>
@@ -17,6 +33,8 @@
 		<servlet-name>Home</servlet-name>
 		<url-pattern>/Home</url-pattern>
 	</servlet-mapping>
+	
+	
 	<servlet>
 		<description></description>
 		<display-name>RawCodeExec</display-name>
@@ -27,4 +45,5 @@
 		<servlet-name>RawCodeExec</servlet-name>
 		<url-pattern>/RawCodeExec</url-pattern>
 	</servlet-mapping>
+	
 </web-app>
