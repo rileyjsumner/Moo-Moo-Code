@@ -1,14 +1,21 @@
+<%--@elvariable id="signed_in" type="Boolean"--%>
+<%--@elvariable id="account_name" type="java.lang.String"--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 	<head>
 		<script src="../js/jquery-3.2.1.js"></script>
+		
 		<script src="../codemirror/lib/codemirror.js"></script>
 		<link rel="stylesheet" href="../codemirror/lib/codemirror.css">
 		<link rel="stylesheet" href="../codemirror/theme/monokai.css">
 		<script src="../codemirror/mode/javascript/javascript.js"></script>
 		<script src="../codemirror/addon/edit/closebrackets.js"></script>
+		
 		<title>Moo Moo Code</title>
+		
+		<script src = "../js/login.js"></script>
 		<link rel="stylesheet" href="../css/main.css">
+		<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
 		
 		<!-- FAVICONS -->
 		<link rel="apple-touch-icon" sizes="57x57" href="../icons/apple-icon-57x57.png">
@@ -50,5 +57,6 @@
 		<div id="content">
 		
 		</div>
+		<script>makeMenu("<%=request.getSession().getAttribute("signed_in")%>","<%=request.getSession().getAttribute("username")%>");</script>
 	</body>
 </html>

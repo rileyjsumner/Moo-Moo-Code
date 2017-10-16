@@ -35,17 +35,17 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	<body>
-		<div id="banner-compact">
+		<div id="banner">
 			<p class="banner-text">Moo Moo Code</p>
 		</div>
 		<div id="menu">
-			<div class="menu-item bracket-hover" onclick="location.href='Home';">
+			<div class="menu-item bracket-hover" onclick = "location.href='Home';">
 				<p class="menu-text">Home</p>
 			</div>
-			<div class="menu-item bracket-hover" onclick="location.href='Learn';">
+			<div class="menu-item bracket-hover" onclick = "location.href='Learn';">
 				<p class="menu-text">Learn</p>
 			</div>
-			<div class="menu-item bracket-hover">
+			<div class="menu-item bracket-hover" onclick="location.href='Code';">
 				<p class="menu-text">Code</p>
 			</div>
 			<div class="menu-item bracket-hover">
@@ -53,46 +53,8 @@
 			</div>
 		</div>
 		<div id="content">
-			<div>
-				<p class = "content-header">Test your code</p>
-			</div>
-			<div>
-				<textarea title="code" id="code">print("Moo Moo Code!");</textarea>
-			</div>
-			<div class = "code-submit bracket-hover" onclick="submitCode()"><p class="menu-text">Run</p></div>
-			<div style="display: block;width:500px;margin-left:auto;margin-right:auto;margin-top:10px;border:solid 5px #49483E;padding:10px;">
-				<p style="font-size:20px;font-family:Consolas,serif">Output:</p>
-				<pre id="output"></pre>
-			</div>
-			
+		
 		</div>
-		<script>
-			var codeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
-				theme: "monokai",
-				lineNumbers: true,
-				mode: "javascript",
-				autoCloseBrackets: true,
-				matchBrackets: true,
-				showCursorWhenSelecting: true
-			});
-			
-			function submitCode() {
-				$.post("RawCodeExec", {code: codeMirror.getValue()}, function (data) {
-					console.log(data);
-					var json = JSON.parse(data);
-					
-					var output = $("#output");
-					output.html(json["data"]);
-					
-					if (json["error"]) {
-						output.css("color", "red");
-					}
-					else {
-						output.css("color", "inherit");
-					}
-				});
-			}
-		</script>
 		<script>makeMenu("<%=request.getSession().getAttribute("signed_in")%>","<%=request.getSession().getAttribute("username")%>");</script>
 	</body>
 </html>

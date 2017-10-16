@@ -12,6 +12,28 @@
 	
 	<servlet>
 		<description></description>
+		<display-name>CreateAccount</display-name>
+		<servlet-name>CreateAccount</servlet-name>
+		<servlet-class>com.web.CreateAccount</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateAccount</servlet-name>
+		<url-pattern>/CreateAccount</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>Login</display-name>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>com.web.Login</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
 		<display-name>Home</display-name>
 		<servlet-name>Home</servlet-name>
 		<servlet-class>com.web.Home</servlet-class>

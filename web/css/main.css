@@ -1,19 +1,142 @@
 body, html {
-	margin: 0px;
+	margin: 0;
 	background-color: #272822;
 	color: #F8F8F2;
 	cursor: default;
 }
 
-p {
-	margin: 0px;
+p,div {
+	margin: 0;
+	font-family: Consolas, serif;
 }
-
+.content-container-header
+{
+	font-size:18px;
+	font-weight: bold;
+	margin:10px;
+}
+.content-container-button
+{
+	padding: 10px;
+	background-color: #75715E;
+	border: 0;
+	color: #F8F8F2;
+	cursor: pointer;
+	display: block;
+	margin: 10px auto;
+	transition: background-color .2s, color .2s;
+}
+.content-container-button:hover
+{
+	background-color: #272822;
+	color: #A6E22E;
+}
+.content-container-input
+{
+	margin: 10px;
+	padding: 10px;
+	background-color: #49483E;
+	border: 0;
+	border-bottom: 2px solid #F8F8F2;
+	color: #F8F8F2;
+}
+.account-sign-in
+{
+	display: inline-block;
+	padding: 10px;
+	background-color: #49483E;
+	margin: 10px;
+	cursor: pointer;
+	transition: background-color .2s, color .2s;
+}
+.account-sign-in:hover
+{
+	background-color: #181915;
+	color: #A6E22E;
+}
+div#account-picture
+{
+	width:50px;
+	height:50px;
+	background-color: grey;
+	position: relative;
+}
+p#account-signed-in
+{
+	font-size: 14px;
+	display: inline;
+	margin-right:6px;
+}
+p#account-name
+{
+	font-size:14px;
+	color: #A6E22E;
+	display: inline;
+}
+div#account-container
+{
+	position: absolute;
+	right:0;
+	top:0;
+}
+div#account-dropdown
+{
+	background-color: #75715E;
+	width: 100%;
+	box-shadow: 0 0 13px 6px #272822;
+}
+.account-icon
+{
+	margin-right:20px;
+	margin-left:10px;
+}
+div.account-dropdown-option
+{
+	display: block;
+	cursor: pointer;
+	color: #272822;
+	font-size: 20px;
+	transition: background-color 0.2s;
+	padding: 5px;
+	text-align: left;
+}
+div.account-dropdown-option:hover
+{
+	background-color: #49483E;
+}
+div#account-box
+{
+	padding: 5px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+div#account-box:hover
+{
+	background-color: #49483E;
+}
+.content-container
+{
+	padding: 40px;
+	background-color: #49483E;
+	display: inline-block;
+	text-align: center;
+}
+.content-header
+{
+	text-align: center;
+	display: block;
+	padding: 10px 20px;
+	margin: 0 10px;
+	font-size: 20px;
+	font-family: Consolas, serif;
+}
 .code-submit {
 	display: block;
 	text-align: center;
 	background-color: #49483E;
 	transition: background-color 0.2s, color 0.2s;
+	padding-top:10px;
+	padding-bottom:10px;
 }
 .code-submit:hover {
 	color: #A6E22E;
@@ -40,7 +163,8 @@ p {
 .banner-text {
 	display: inline-block;
 	font-size: 60px;
-	font-family: Consolas;
+	font-weight: bold;
+	font-family: Consolas, serif;
 }
 
 #menu {
@@ -54,7 +178,7 @@ p {
 	padding: 10px 20px;
 	cursor: pointer;
 	transition: background-color 0.2s, color 0.2s;
-	margin: 0px 10px;
+	margin: 0 10px;
 }
 
 .menu-item:hover {
@@ -65,20 +189,20 @@ p {
 .bracket-hover > p::after {
 	content: "}";
 	visibility: hidden;
-	right: -50px;
+	right: -40px;
 	opacity: 0;
 	position: relative;
-	transition: .3s;
+	transition: .25s;
 	margin-left: 5px;
 }
 
 .bracket-hover > p::before {
 	content: "{";
 	visibility: hidden;
-	left: -50px;
+	left: -40px;
 	opacity: 0;
 	position: relative;
-	transition: .3s;
+	transition: .25s;
 	margin-right: 5px;
 }
 
@@ -100,7 +224,7 @@ p {
 
 .menu-text {
 	font-size: 25px;
-	font-family: Consolas;
+	font-family: Consolas, serif;
 	cursor: pointer;
 }
 

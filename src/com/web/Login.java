@@ -1,16 +1,19 @@
 package com.web;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Enumeration;
 
 
-public class Home extends HttpServlet {
+public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public Home() {
+	public Login() {
 		super();
 	}
 	
@@ -22,9 +25,8 @@ public class Home extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    request.setAttribute("signed_in",false);
-		request.setAttribute("account_name","Phil");
-		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+		// Get the login page
+		request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 	}
 	
 	/**
@@ -35,8 +37,15 @@ public class Home extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("signed_in",true);
-		request.setAttribute("account_name","Bob");
+		// Log the user in
+		String username = request.getParameter("username");
+		String password = request.getParameter("username");
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("username",username);
+		session.setAttribute("password",password);
+		session.setAttribute("signed_in",true);
+		
 		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 	}
 }
