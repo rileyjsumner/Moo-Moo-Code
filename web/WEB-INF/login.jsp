@@ -60,9 +60,10 @@
 						<p class = "content-container-header">Username</p>
 						<input type ="text" name = "username" class = "content-container-input" />
 						<p class = "content-container-header">Password</p>
-						<input type ="password" name = "pass" class = "content-container-input" />
+						<input type ="password" name = "password" class = "content-container-input" />
 						<button class = "content-container-button">Log in</button>
 					</form>
+					<p class = "login-failed" style="<% if(!(Boolean) request.getAttribute("failed")){out.print("display:none");}%>">login failed</p>
 				</div>
 			</div>
 		</div>

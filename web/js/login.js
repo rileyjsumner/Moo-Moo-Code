@@ -18,7 +18,7 @@ function makeMenu(signed_in,account)
 			"</div>\n" +
 			"<div id = \"account-dropdown\" style=\"display:none\">\n" +
 			"\t<div class=\"account-dropdown-option\"><i class=\"fa fa-sliders account-icon\"></i>Options</div>\n" +
-			"<div class=\"account-dropdown-option\"><i class=\"fa fa-sign-out account-icon\"></i>Sign out</div></div></div>");
+			"<div class=\"account-dropdown-option\" onclick = \"location.href = 'Logout'\" ><i class=\"fa fa-sign-out account-icon\"></i>Sign out</div></div></div>");
 	}
 	else
 	{

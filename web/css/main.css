@@ -4,7 +4,15 @@ body, html {
 	color: #F8F8F2;
 	cursor: default;
 }
-
+.login-failed
+{
+	color: red;
+	font-family: "Consolas", serif;
+	font-style: italic;
+	font-size: 12px;
+	display: block;
+	margin: 10px;
+}
 p,div {
 	margin: 0;
 	font-family: Consolas, serif;

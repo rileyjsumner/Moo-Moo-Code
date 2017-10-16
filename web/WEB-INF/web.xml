@@ -12,6 +12,17 @@
 	
 	<servlet>
 		<description></description>
+		<display-name>Logout</display-name>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>com.web.Logout</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/Logout</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
 		<display-name>CreateAccount</display-name>
 		<servlet-name>CreateAccount</servlet-name>
 		<servlet-class>com.web.CreateAccount</servlet-class>

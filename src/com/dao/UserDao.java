@@ -17,7 +17,7 @@ public class UserDao {
 		try {
 			preparedStatement = con.prepareStatement("SELECT id FROM users WHERE username = ? AND password = ?");
 			preparedStatement.setString(1, username);
-			preparedStatement.setString(1, password);
+			preparedStatement.setString(2, password);
 			ResultSet set = preparedStatement.executeQuery();
 			if(set.first()){
 				return true;
