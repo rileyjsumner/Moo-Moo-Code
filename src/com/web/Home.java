@@ -1,5 +1,7 @@
 package com.web;
 
+import com.util.LoginUtil;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setAttribute("signed_in",false);
 		request.setAttribute("account_name","Phil");
+		LoginUtil.TestLogin(request.getSession());
 		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 	}
 	
@@ -37,6 +40,7 @@ public class Home extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("signed_in",true);
 		request.setAttribute("account_name","Bob");
+		LoginUtil.TestLogin(request.getSession());
 		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 	}
 }

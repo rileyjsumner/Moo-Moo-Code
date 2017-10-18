@@ -4,6 +4,23 @@ body, html {
 	color: #F8F8F2;
 	cursor: default;
 }
+.category-container
+{
+	padding: 10px;
+}
+.lesson-category
+{
+
+}
+.lesson-text
+{
+	display: inline-block;
+	margin-left: 10px;
+}
+.lesson-num
+{
+	display: inline-block;
+}
 .login-failed
 {
 	color: red;

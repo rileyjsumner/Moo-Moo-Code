@@ -53,7 +53,19 @@
 			</div>
 		</div>
 		<div id="content">
-		
+			<div class="content-header" style ="margin:20px">Create Account</div>
+			<div style = "text-align: center;">
+				<div class="content-container">
+					<form action="CreateAccount" method = "POST">
+						<p class = "content-container-header">Username</p>
+						<input type ="text" name = "username" class = "content-container-input" />
+						<p class = "content-container-header">Password</p>
+						<input type ="password" name = "password" class = "content-container-input" />
+						<button class = "content-container-button">Create Account</button>
+					</form>
+					<p class = "login-failed" style="<% if(!(Boolean) request.getAttribute("failed")){out.print("display:none");}%>">username taken</p>
+				</div>
+			</div>
 		</div>
 		<script>makeMenu("<%=request.getSession().getAttribute("signed_in")%>","<%=request.getSession().getAttribute("username")%>");</script>
 	</body>

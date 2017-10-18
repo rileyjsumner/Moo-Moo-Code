@@ -1,3 +1,6 @@
+<%@ page import="com.data.LessonCategory" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.data.Lesson" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 	<head>
@@ -53,7 +56,27 @@
 			</div>
 		</div>
 		<div id="content">
-		
+			<%
+				if((Boolean) request.getAttribute("show_lessons"))
+				{
+					out.print("<p class=\"content-header\">Select a lesson</p>");
+					ArrayList<LessonCategory> lessonCategories = (ArrayList<LessonCategory>) request.getAttribute("lessons");
+					for (LessonCategory lessonCategory : lessonCategories) {
+						out.print("<div class = \"category-container\"><div class=\"lesson-category\">" +
+								"<p class = \"lesson-num\">" + lessonCategory.Num + "</p><p class=\"lesson-text\">" + lessonCategory.Name + "</p></div>");
+						
+						ArrayList<Lesson> lessons = lessonCategory.getLessons();
+						for (Lesson lesson : lessons) {
+							out.print("<div class=\"lesson\"><p class = \"lesson-num\">" + lesson.Num + "</p><p class=\"lesson-text\">" + lesson.Name + "</p></div>");
+						}
+						out.print("</div>");
+					}
+				}
+				else
+				{
+					out.print("<p>Sign in to view lessons</p>");
+				}
+			%>
 		</div>
 		<script>makeMenu("<%=request.getSession().getAttribute("signed_in")%>","<%=request.getSession().getAttribute("username")%>");</script>
 	</body>

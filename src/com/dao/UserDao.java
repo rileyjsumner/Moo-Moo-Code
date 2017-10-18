@@ -28,4 +28,41 @@ public class UserDao {
 		}
 		return false;
 	}
+	public static boolean TestUserExists(String username)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT id FROM users WHERE username = ?");
+			preparedStatement.setString(1, username);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()){
+				return true;
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return false;
+	}
+	public static boolean AddUser(String username,String password)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			if(!TestUserExists(username))
+			{
+				preparedStatement = con.prepareStatement("INSERT INTO users (username,password) VALUES (?,?)");
+				preparedStatement.setString(1, username);
+				preparedStatement.setString(2, password);
+				preparedStatement.execute();
+				return true;
+			}
+			
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return false;
+	}
 }
