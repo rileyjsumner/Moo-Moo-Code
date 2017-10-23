@@ -2,7 +2,6 @@ package com.web;
 
 import com.dao.LessonDao;
 import com.dao.UserDao;
-import com.data.UserProgress;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -13,10 +12,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-public class Learn extends HttpServlet {
+public class Lesson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public Learn() {
+	public Lesson() {
 		super();
 	}
 	
@@ -28,24 +27,25 @@ public class Learn extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// If the user is logged in
+		// Test if user is logged in
 		HttpSession session = request.getSession();
 		if(LoginUtil.TestLogin(session))
 		{
-			UserProgress progress = UserDao.GetUserProgress((int)session.getAttribute("user_id"));
-			request.setAttribute("progress_category",progress.Category);
-			request.setAttribute("progress_lesson",progress.Lesson);
-			
-			request.setAttribute("show_lessons",true);
-			request.setAttribute("lessons", LessonDao.GetAllLessonCategories());
-			request.getRequestDispatcher("/WEB-INF/learn.jsp").forward(request, response);
+			// Check if requested lesson is available for this user and valid
+			String lesson_s = request.getParameter("lesson");
+			int lesson = Integer.parseInt(lesson_s);
+			if(LessonDao.CheckLessonAccessible(lesson,(int)session.getAttribute("user_id")))
+			{
+				request.setAttribute("lesson_text",LessonDao.GetLessonText(lesson));
+				request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
+			}
+			else
+			{
+				request.setAttribute("user_progress", LessonDao.GetIdFromLesson(UserDao.GetUserProgress((int)session.getAttribute("user_id"))));
+				request.getRequestDispatcher("/WEB-INF/lesson_invalid.jsp").forward(request, response);
+			}
 		}
-		else
-		{
-			request.setAttribute("show_lessons",false);
-			request.getRequestDispatcher("/WEB-INF/learn.jsp").forward(request, response);
-		}
-		
+		response.sendRedirect("/Home");
 	}
 	
 	/**
@@ -56,6 +56,8 @@ public class Learn extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("signed_in",true);
+		request.setAttribute("account_name","Bob");
 		LoginUtil.TestLogin(request.getSession());
 		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 	}

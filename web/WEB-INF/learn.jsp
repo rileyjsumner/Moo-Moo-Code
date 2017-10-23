@@ -5,6 +5,7 @@
 <html>
 	<head>
 		<script src="../js/jquery-3.2.1.js"></script>
+		<script src="../js/jquery.color.js"></script>
 		
 		<script src="../codemirror/lib/codemirror.js"></script>
 		<link rel="stylesheet" href="../codemirror/lib/codemirror.css">
@@ -59,25 +60,84 @@
 			<%
 				if((Boolean) request.getAttribute("show_lessons"))
 				{
+					int categoryProgress = (int)request.getAttribute("progress_category");
+					int lessonProgress = (int)request.getAttribute("progress_lesson");
+					
 					out.print("<p class=\"content-header\">Select a lesson</p>");
 					ArrayList<LessonCategory> lessonCategories = (ArrayList<LessonCategory>) request.getAttribute("lessons");
 					for (LessonCategory lessonCategory : lessonCategories) {
-						out.print("<div class = \"category-container\"><div class=\"lesson-category\">" +
-								"<p class = \"lesson-num\">" + lessonCategory.Num + "</p><p class=\"lesson-text\">" + lessonCategory.Name + "</p></div>");
-						
-						ArrayList<Lesson> lessons = lessonCategory.getLessons();
-						for (Lesson lesson : lessons) {
-							out.print("<div class=\"lesson\"><p class = \"lesson-num\">" + lesson.Num + "</p><p class=\"lesson-text\">" + lesson.Name + "</p></div>");
+						boolean locked =false;
+						boolean open = false;
+						out.print("<div class = \"category-container\"><div class=\"lesson-category");
+						if(categoryProgress == lessonCategory.Num){
+							out.print(" bracket-hover lesson-category-active");
+							open=true;
+						}
+						else if(categoryProgress < lessonCategory.Num){
+							out.print(" lesson-category-locked");
+							locked = true;
+						}
+						else{
+							out.print(" bracket-hover lesson-category-complete");
+						}
+						out.print("\">");
+						if(categoryProgress < lessonCategory.Num){out.print("<i style=\"margin-right:10px;\" class=\"fa fa-lock\"></i>");}
+						out.print("<p class=\"lesson-text\">" + lessonCategory.Name + "</p></div>");
+						if(!locked)
+						{
+							out.print("<div class = \"lessons-container\"");
+							if(!open){out.print(" style=\"display:none\"");}
+							out.print(">");
+							ArrayList<Lesson> lessons = lessonCategory.getLessons();
+							for (Lesson lesson : lessons) {
+								out.print("<div data-lesson=\""+lesson.Id+"\" class=\"lesson");
+								if(categoryProgress == lessonCategory.Num && lessonProgress == lesson.Num){
+									out.print(" bracket-hover-mini lesson-active\">");
+								}
+								else if(categoryProgress < lessonCategory.Num || (categoryProgress == lessonCategory.Num && lessonProgress < lesson.Num)){
+									out.print(" lesson-locked\">");
+								}
+								else{
+									out.print(" bracket-hover-mini lesson-complete\">");
+								}
+								out.print("<p class=\"lesson-text\">" + lesson.Name + "</p></div>");
+							}
+							out.print("</div>");
 						}
 						out.print("</div>");
 					}
 				}
 				else
 				{
-					out.print("<p>Sign in to view lessons</p>");
+					out.print("<p style=\"text-align:center;display:block;margin-top:10px\">Sign in to view lessons</p>");
 				}
 			%>
 		</div>
 		<script>makeMenu("<%=request.getSession().getAttribute("signed_in")%>","<%=request.getSession().getAttribute("username")%>");</script>
+		<script>
+			// Switch categories
+			$(".lesson-category-active, .lesson-category-complete").click(function()
+			{
+				var clicked = $(this).next();
+				$(".lessons-container").each(function()
+				{
+					if(clicked[0] === $(this)[0])
+					{
+						$(this).slideDown({duration:100,easing:"linear"});
+						$(this).prev().animate({backgroundColor: "#49483E"},100);
+					}
+					else
+					{
+						$(this).prev().animate({backgroundColor: "#272822"},100);
+						$(this).slideUp({duration:100,easing:"linear"});
+					}
+				});
+			});
+			// Go to a lesson
+			$(".lesson-complete, .lesson-active").click(function()
+			{
+				location.href = "Lesson?lesson="+$(this).data("lesson");
+			});
+		</script>
 	</body>
 </html>

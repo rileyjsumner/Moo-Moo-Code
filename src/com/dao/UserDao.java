@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.data.UserProgress;
 import com.util.DbUtil;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserDao {
-	public static boolean TestLogin(String username,String password)
+	public static int TestLogin(String username,String password)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
@@ -20,13 +21,13 @@ public class UserDao {
 			preparedStatement.setString(2, password);
 			ResultSet set = preparedStatement.executeQuery();
 			if(set.first()){
-				return true;
+				return set.getInt("id");
 			}
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return false;
+		return -1;
 	}
 	public static boolean TestUserExists(String username)
 	{
@@ -64,5 +65,22 @@ public class UserDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return false;
+	}
+	public static UserProgress GetUserProgress(int id)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT progress_learn_category, progress_learn_lesson FROM users WHERE id = ?");
+			preparedStatement.setInt(1, id);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()){
+				return new UserProgress(set.getInt("progress_learn_category"),set.getInt("progress_learn_lesson"));
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return new UserProgress(-1,-1);
 	}
 }

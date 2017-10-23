@@ -6,13 +6,14 @@ public class LessonCategory {
 	public ArrayList<Lesson> Lessons;
 	public String Name;
 	public int Num;
+	public int Id;
 	public LessonCategory()
 	{
 		Lessons = new ArrayList<>();
 	}
-	public LessonCategory(String name,int num)
+	public LessonCategory(String name,int num,int id)
 	{
-		Lessons = new ArrayList<>();Name = name;Num = num;
+		Lessons = new ArrayList<>();Name = name;Num = num;Id = id;
 	}
 	public LessonCategory(ArrayList<Lesson> lessons)
 	{

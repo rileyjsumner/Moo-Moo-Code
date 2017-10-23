@@ -47,8 +47,13 @@ public class Login extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("username",username);
 		session.setAttribute("password",password);
-		boolean signed_in = UserDao.TestLogin(username,password);
+		
+		int user_id = UserDao.TestLogin(username,password);
+		boolean signed_in = user_id != -1;
+		
 		session.setAttribute("signed_in",signed_in);
+		session.setAttribute("user_id",user_id);
+		
 		if(!signed_in)
 		{
 			request.setAttribute("failed",true);

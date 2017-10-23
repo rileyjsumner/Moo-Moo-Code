@@ -11,18 +11,22 @@ public class LoginUtil {
 		String password = (String)session.getAttribute("password");
 		if(username != null && password != null)
 		{
-			if(UserDao.TestLogin(username,password))
+			int user_id = UserDao.TestLogin(username,password);
+			if(user_id != -1)
 			{
 				session.setAttribute("signed_in",true);
+				session.setAttribute("user_id",user_id);
 				return true;
 			}
 			else{
 				session.setAttribute("signed_in",false);
+				session.setAttribute("user_id",-1);
 			}
 		}
 		else{
 			session.setAttribute("username","");
 			session.setAttribute("password","");
+			session.setAttribute("user_id",-1);
 			session.setAttribute("signed_in",false);
 		}
 		return false;

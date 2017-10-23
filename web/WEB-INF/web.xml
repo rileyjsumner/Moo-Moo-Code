@@ -12,6 +12,17 @@
 	
 	<servlet>
 		<description></description>
+		<display-name>Lesson</display-name>
+		<servlet-name>Lesson</servlet-name>
+		<servlet-class>com.web.Lesson</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Lesson</servlet-name>
+		<url-pattern>/Lesson</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
 		<display-name>Logout</display-name>
 		<servlet-name>Logout</servlet-name>
 		<servlet-class>com.web.Logout</servlet-class>

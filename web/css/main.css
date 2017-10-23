@@ -6,18 +6,57 @@ body, html {
 }
 .category-container
 {
-	padding: 10px;
+	padding: 10px 0;
+	text-align: center;
 }
-.lesson-category
+.lesson
+{
+	display: inline-block;
+	font-size: 12px;
+	padding: 5px 15px;
+	cursor: pointer;
+}
+.lesson.lesson-complete
 {
 
 }
-.lesson-text
+.lesson.lesson-complete:hover
 {
-	display: inline-block;
-	margin-left: 10px;
+	background-color: #49483E;
 }
-.lesson-num
+.lesson.lesson-active
+{
+	color: #A6E22E;
+}
+.lesson.lesson-active:hover
+{
+	background-color: #49483E;
+}
+.lesson.lesson-locked
+{
+	cursor: default;
+	color: #75715E;
+}
+.lesson-category
+{
+	font-size: 20px;
+	padding: 5px;
+}
+.lesson-category.lesson-category-locked{
+	cursor: default;
+	color: #75715E;
+}
+.lesson-category.lesson-category-active
+{
+	background-color: #49483E;
+	color: #A6E22E;
+	cursor:pointer;
+}
+.lesson-category.lesson-category-complete
+{
+	cursor:pointer;
+}
+.lesson-text
 {
 	display: inline-block;
 }
@@ -210,7 +249,41 @@ div#account-box:hover
 	color: #A6E22E;
 	background-color: #272822;
 }
+.bracket-hover-mini > p::after {
+	content: "}";
+	visibility: hidden;
+	right: -10px;
+	opacity: 0;
+	position: relative;
+	transition: .15s;
+	margin-left: 5px;
+}
 
+.bracket-hover-mini > p::before {
+	content: "{";
+	visibility: hidden;
+	left: -10px;
+	opacity: 0;
+	position: relative;
+	transition: .15s;
+	margin-right: 5px;
+}
+
+.bracket-hover-mini:hover > p::after {
+	visibility: visible;
+	right: 0;
+	opacity: 1;
+}
+
+.bracket-hover-mini:hover > p::before {
+	visibility: visible;
+	left: 0;
+	opacity: 1;
+}
+
+.bracket-hover-mini:active > p {
+	font-style: italic;
+}
 .bracket-hover > p::after {
 	content: "}";
 	visibility: hidden;
