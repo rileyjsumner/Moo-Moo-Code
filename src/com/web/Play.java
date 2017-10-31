@@ -31,6 +31,7 @@ public class Play extends HttpServlet {
 		{
 			request.setAttribute("level","Play");
 			request.getRequestDispatcher("/WEB-INF/play.jsp").forward(request, response);
+			return;
 		}
 		request.setAttribute("action_text","play");
 		request.setAttribute("action","Play");

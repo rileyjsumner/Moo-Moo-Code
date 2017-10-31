@@ -16,7 +16,6 @@ USE `moo_moo_code`;
 
 
 -- Dumping structure for table moo_moo_code.lessons
-DROP TABLE IF EXISTS `lessons`;
 CREATE TABLE IF NOT EXISTS `lessons` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lesson_name` varchar(60) DEFAULT NULL,
@@ -48,7 +47,6 @@ INSERT INTO `lessons` (`id`, `lesson_name`, `lesson_num`, `category_id`, `lesson
 
 
 -- Dumping structure for table moo_moo_code.lesson_categories
-DROP TABLE IF EXISTS `lesson_categories`;
 CREATE TABLE IF NOT EXISTS `lesson_categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -56,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `lesson_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.lesson_categories: ~4 rows (approximately)
+-- Dumping data for table moo_moo_code.lesson_categories: ~3 rows (approximately)
 DELETE FROM `lesson_categories`;
 /*!40000 ALTER TABLE `lesson_categories` DISABLE KEYS */;
 INSERT INTO `lesson_categories` (`id`, `name`, `lesson_num`) VALUES
@@ -68,22 +66,22 @@ INSERT INTO `lesson_categories` (`id`, `name`, `lesson_num`) VALUES
 
 
 -- Dumping structure for table moo_moo_code.users
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `progress_learn_category` int(11) NOT NULL DEFAULT '0',
   `progress_learn_lesson` int(11) NOT NULL DEFAULT '0',
+  `progress_game_level` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table moo_moo_code.users: ~2 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `username`, `password`, `progress_learn_category`, `progress_learn_lesson`) VALUES
-	(1, 'root', 'admin', 2, 2),
-	(2, 'nixon', 'TESTRichard', 0, 0);
+INSERT INTO `users` (`id`, `username`, `password`, `progress_learn_category`, `progress_learn_lesson`, `progress_game_level`) VALUES
+	(1, 'root', 'admin', 2, 2, 0),
+	(2, 'nixon', 'TESTRichard', 0, 0, 0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
