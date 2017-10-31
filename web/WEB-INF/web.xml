@@ -12,6 +12,17 @@
 	
 	<servlet>
 		<description></description>
+		<display-name>Play</display-name>
+		<servlet-name>Play</servlet-name>
+		<servlet-class>com.web.Play</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Play</servlet-name>
+		<url-pattern>/Play</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
 		<display-name>Lesson</display-name>
 		<servlet-name>Lesson</servlet-name>
 		<servlet-class>com.web.Lesson</servlet-class>
@@ -97,5 +108,5 @@
 		<servlet-name>RawCodeExec</servlet-name>
 		<url-pattern>/RawCodeExec</url-pattern>
 	</servlet-mapping>
-	
+
 </web-app>

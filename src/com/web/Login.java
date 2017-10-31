@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Objects;
 
 
 public class Login extends HttpServlet {
@@ -28,6 +29,8 @@ public class Login extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Get the login page
+		String action = request.getParameter("action");
+		request.setAttribute("action",action);
 		request.setAttribute("failed",false);
 		request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 	}
@@ -60,6 +63,11 @@ public class Login extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 		}
 		else{
+			if(request.getParameterMap().containsKey("action"))
+			{
+				response.sendRedirect(request.getParameter("action"));
+				return;
+			}
 			response.sendRedirect("Home");
 		}
 	}

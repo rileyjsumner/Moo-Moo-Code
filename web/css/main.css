@@ -3,6 +3,43 @@ body, html {
 	background-color: #272822;
 	color: #F8F8F2;
 	cursor: default;
+	display: flex;
+	flex-direction: column;
+}
+.lesson-codebed-output
+{
+	padding:10px;
+}
+.lesson-codebed-submit
+{
+	text-align:center;
+	padding:10px;
+	transition: color 0.2s;
+	cursor: pointer;
+	font-size:20px;
+	background-color:  #49483E;
+}
+.lesson-codebed-submit:hover
+{
+	color: #A6E22E;
+}
+.lesson-content-container
+{
+	position: absolute;
+	left:0;
+	width:50%;
+	bottom:0;
+	top:0;
+	padding: 10px;
+}
+.lesson-codebed-container
+{
+	border-left: 5px solid #49483E;
+	position: absolute;
+	right:0;
+	width:50%;
+	bottom:0;
+	top:0;
 }
 .category-container
 {
@@ -327,5 +364,8 @@ div#account-box:hover
 }
 
 #content {
-	display: block;
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	position: relative;
 }

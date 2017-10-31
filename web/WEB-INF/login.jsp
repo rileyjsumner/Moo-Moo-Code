@@ -48,6 +48,9 @@
 			<div class="menu-item bracket-hover" onclick="location.href='Code';">
 				<p class="menu-text">Code</p>
 			</div>
+			<div class="menu-item bracket-hover" onclick="location.href='Play';">
+				<p class="menu-text">Play</p>
+			</div>
 			<div class="menu-item bracket-hover">
 				<p class="menu-text">Compete</p>
 			</div>
@@ -61,6 +64,7 @@
 						<input type ="text" name = "username" class = "content-container-input" />
 						<p class = "content-container-header">Password</p>
 						<input type ="password" name = "password" class = "content-container-input" />
+						<input type="hidden" name = "action" value="<%= request.getAttribute("action")%>"/>
 						<button class = "content-container-button">Log in</button>
 					</form>
 					<p class = "login-failed" style="<% if(!(Boolean) request.getAttribute("failed")){out.print("display:none");}%>">login failed</p>

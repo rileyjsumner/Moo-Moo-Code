@@ -50,6 +50,9 @@
 			<div class="menu-item bracket-hover" onclick="location.href='Code';">
 				<p class="menu-text">Code</p>
 			</div>
+			<div class="menu-item bracket-hover" onclick="location.href='Play';">
+				<p class="menu-text">Play</p>
+			</div>
 			<div class="menu-item bracket-hover">
 				<p class="menu-text">Compete</p>
 			</div>

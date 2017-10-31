@@ -1,9 +1,9 @@
 package com.data;
 
-public class UserProgress {
+public class LessonId {
 	public int Category;
 	public int Lesson;
-	public UserProgress (int category,int lesson)
+	public LessonId (int category,int lesson)
 	{
 		Category = category;Lesson = lesson;
 	}

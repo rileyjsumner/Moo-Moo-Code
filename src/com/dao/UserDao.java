@@ -1,6 +1,6 @@
 package com.dao;
 
-import com.data.UserProgress;
+import com.data.LessonId;
 import com.util.DbUtil;
 
 import java.sql.Connection;
@@ -66,7 +66,7 @@ public class UserDao {
 		}
 		return false;
 	}
-	public static UserProgress GetUserProgress(int id)
+	public static LessonId GetUserLessonProgress(int id)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
@@ -75,12 +75,29 @@ public class UserDao {
 			preparedStatement.setInt(1, id);
 			ResultSet set = preparedStatement.executeQuery();
 			if(set.first()){
-				return new UserProgress(set.getInt("progress_learn_category"),set.getInt("progress_learn_lesson"));
+				return new LessonId(set.getInt("progress_learn_category"),set.getInt("progress_learn_lesson"));
 			}
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return new UserProgress(-1,-1);
+		return new LessonId(-1,-1);
+	}
+	public static int GetUserGameLevel(int id)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT progress_game_level FROM users WHERE id = ?");
+			preparedStatement.setInt(1, id);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()){
+				return set.getInt("progress_game_level");
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return -1;
 	}
 }

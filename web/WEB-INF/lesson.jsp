@@ -42,19 +42,60 @@
 			<div class="menu-item bracket-hover" onclick="location.href='Home';">
 				<p class="menu-text">Home</p>
 			</div>
-			<div class="menu-item bracket-hover">
+			<div class="menu-item bracket-hover" onclick="location.href='Learn';">
 				<p class="menu-text">Learn</p>
 			</div>
 			<div class="menu-item bracket-hover" onclick="location.href='Code';">
 				<p class="menu-text">Code</p>
+			</div>
+			<div class="menu-item bracket-hover" onclick="location.href='Play';">
+				<p class="menu-text">Play</p>
 			</div>
 			<div class="menu-item bracket-hover">
 				<p class="menu-text">Compete</p>
 			</div>
 		</div>
 		<div id="content">
-			<p><%=request.getAttribute("lesson_text")%></p>
+			<div class = "lesson-content-container">
+				<p><%=request.getAttribute("lesson_text")%></p>
+			</div>
+			<div class = "lesson-codebed-container">
+				<div class = "lesson-codebed">
+					<textarea style="height:1000px;" title="code" id="code">//Type your code here:&#13;&#10;&#13;&#10;print("Moo Moo Code!");&#13;&#10;&#13;&#10;</textarea>
+				</div>
+				<div class = "lesson-codebed-submit" onclick="submitCode()"><div class = "bracket-hover"><p>Run Code</p></div></div>
+				<div class = "lesson-codebed-output"><pre id = "lesson-code-output"></pre></div>
+			</div>
 		</div>
+		<script>
+			var codeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
+				height:"100%",
+				theme: "monokai",
+				lineNumbers: true,
+				mode: "javascript",
+				autoCloseBrackets: true,
+				matchBrackets: true,
+				showCursorWhenSelecting: true
+			});
+			codeMirror.setSize("100%","60%");
+			
+			function submitCode() {
+				$.post("RawCodeExec", {code: codeMirror.getValue()}, function (data) {
+					console.log(data);
+					var json = JSON.parse(data);
+					
+					var output = $("#lesson-code-output");
+					output.html(json["data"]);
+					
+					if (json["error"]) {
+						output.css("color", "red");
+					}
+					else {
+						output.css("color", "inherit");
+					}
+				});
+			}
+		</script>
 		<script>makeMenu("<%=request.getSession().getAttribute("signed_in")%>","<%=request.getSession().getAttribute("username")%>");</script>
 	</body>
 </html>

@@ -1,3 +1,5 @@
+<%--@elvariable id="signed_in" type="Boolean"--%>
+<%--@elvariable id="account_name" type="java.lang.String"--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 	<head>
@@ -39,7 +41,7 @@
 			<p class="banner-text">Moo Moo Code</p>
 		</div>
 		<div id="menu">
-			<div class="menu-item bracket-hover" onclick = "location.href='Home';">
+			<div class="menu-item bracket-hover">
 				<p class="menu-text">Home</p>
 			</div>
 			<div class="menu-item bracket-hover" onclick = "location.href='Learn';">
@@ -55,20 +57,9 @@
 				<p class="menu-text">Compete</p>
 			</div>
 		</div>
-		<div id="content">
-			<div class="content-header" style ="margin:20px">Create Account</div>
-			<div style = "text-align: center;">
-				<div class="content-container">
-					<form action="CreateAccount" method = "POST">
-						<p class = "content-container-header">Username</p>
-						<input type ="text" name = "username" class = "content-container-input" />
-						<p class = "content-container-header">Password</p>
-						<input type ="password" name = "password" class = "content-container-input" />
-						<button class = "content-container-button">Create Account</button>
-					</form>
-					<p class = "login-failed" style="<% if(!(Boolean) request.getAttribute("failed")){out.print("display:none");}%>">username taken</p>
-				</div>
-			</div>
+		<div id="content" style = "text-align:center;">
+			<p style="font-size:20px;padding: 40px 20px;">You need to be logged in to <%=request.getAttribute("action_text")%></p>
+			<div class="bracket-hover lesson-codebed-submit" onclick = "location.href='Login?action=<%=request.getAttribute("action")%>'"><p>Log in</p></div>
 		</div>
 		<script>makeMenu("<%=request.getSession().getAttribute("signed_in")%>","<%=request.getSession().getAttribute("username")%>");</script>
 	</body>
