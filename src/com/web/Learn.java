@@ -2,7 +2,7 @@ package com.web;
 
 import com.dao.LessonDao;
 import com.dao.UserDao;
-import com.data.UserProgress;
+import com.data.LessonId;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -32,7 +32,7 @@ public class Learn extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(LoginUtil.TestLogin(session))
 		{
-			UserProgress progress = UserDao.GetUserProgress((int)session.getAttribute("user_id"));
+			LessonId progress = UserDao.GetUserLessonProgress((int)session.getAttribute("user_id"));
 			request.setAttribute("progress_category",progress.Category);
 			request.setAttribute("progress_lesson",progress.Lesson);
 			

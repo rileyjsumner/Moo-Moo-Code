@@ -2,7 +2,7 @@ package com.dao;
 
 import com.data.Lesson;
 import com.data.LessonCategory;
-import com.data.UserProgress;
+import com.data.LessonId;
 import com.util.DbUtil;
 
 import java.sql.Connection;
@@ -63,7 +63,7 @@ public class LessonDao {
 		}
 		return lessonCategories;
 	}
-	public static UserProgress GetLessonFromId(int lessonId)
+	public static LessonId GetLessonFromId(int lessonId)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
@@ -75,16 +75,16 @@ public class LessonDao {
 			preparedStatement.setInt(1, lessonId);
 			ResultSet set = preparedStatement.executeQuery();
 			if(set.first()){
-				return new UserProgress(set.getInt("category_num"),set.getInt("lesson_num"));
+				return new LessonId(set.getInt("category_num"),set.getInt("lesson_num"));
 			}
 			con.close();
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return new UserProgress(-1,-1);
+		return new LessonId(-1,-1);
 	}
-	public static int GetIdFromLesson(UserProgress lesson)
+	public static int GetIdFromLesson(LessonId lesson)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
@@ -106,7 +106,7 @@ public class LessonDao {
 		}
 		return -1;
 	}
-	public static boolean CheckLessonAccessible(UserProgress lesson,UserProgress userProgress)
+	public static boolean CheckLessonAccessible(LessonId lesson,LessonId userProgress)
 	{
 		// Check validity
 		if(lesson.Lesson != -1 && lesson.Category != -1 && userProgress.Lesson != -1 && userProgress.Category != -1)
@@ -121,7 +121,7 @@ public class LessonDao {
 	}
 	public static boolean CheckLessonAccessible(int lessonId,int userId)
 	{
-		return CheckLessonAccessible(GetLessonFromId(lessonId),UserDao.GetUserProgress(userId));
+		return CheckLessonAccessible(GetLessonFromId(lessonId),UserDao.GetUserLessonProgress(userId));
 	}
 	public static String GetLessonText(int lesson)
 	{

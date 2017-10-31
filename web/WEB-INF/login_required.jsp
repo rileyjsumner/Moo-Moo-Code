@@ -41,7 +41,7 @@
 			<p class="banner-text">Moo Moo Code</p>
 		</div>
 		<div id="menu">
-			<div class="menu-item bracket-hover">
+			<div class="menu-item bracket-hover" onclick = "location.href='Home';">
 				<p class="menu-text">Home</p>
 			</div>
 			<div class="menu-item bracket-hover" onclick = "location.href='Learn';">

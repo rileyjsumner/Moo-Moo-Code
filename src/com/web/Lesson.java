@@ -41,7 +41,7 @@ public class Lesson extends HttpServlet {
 			}
 			else
 			{
-				request.setAttribute("user_progress", LessonDao.GetIdFromLesson(UserDao.GetUserProgress((int)session.getAttribute("user_id"))));
+				request.setAttribute("user_progress", LessonDao.GetIdFromLesson(UserDao.GetUserLessonProgress((int)session.getAttribute("user_id"))));
 				request.getRequestDispatcher("/WEB-INF/lesson_invalid.jsp").forward(request, response);
 			}
 		}
