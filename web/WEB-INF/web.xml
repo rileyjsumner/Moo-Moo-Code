@@ -108,5 +108,16 @@
 		<servlet-name>RawCodeExec</servlet-name>
 		<url-pattern>/RawCodeExec</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>Admin</display-name>
+		<servlet-name>Admin</servlet-name>
+		<servlet-class>com.web.Admin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Admin</servlet-name>
+		<url-pattern>/Admin</url-pattern>
+	</servlet-mapping>
 
 </web-app>

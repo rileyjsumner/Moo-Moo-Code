@@ -3,6 +3,7 @@ package com.dao;
 import com.data.LessonId;
 import com.util.DbUtil;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +29,22 @@ public class UserDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
+	}
+	public static boolean isAdmin(int user_id) {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT admin FROM users WHERE id = ?");
+			preparedStatement.setInt(1, user_id);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()) {
+				return set.getInt("admin") == 1;
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return false;
 	}
 	public static boolean TestUserExists(String username)
 	{

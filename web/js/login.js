@@ -17,7 +17,7 @@ function makeMenu(signed_in,account)
 			"\t<table><tr><td><p id =\"account-signed-in\">Signed in as</p><p id =\"account-name\">" + account + "</p><td><div id =\"account-picture\"></div></td></tr></table>\n" +
 			"</div>\n" +
 			"<div id = \"account-dropdown\" style=\"display:none\">\n" +
-			"\t<div class=\"account-dropdown-option\"><i class=\"fa fa-sliders account-icon\"></i>Options</div>\n" +
+			"\t<div class=\"account-dropdown-option\" onclick=\"location.href = 'Admin'\"><i class=\"fa fa-sliders account-icon\"></i>Options</div>\n" +
 			"<div class=\"account-dropdown-option\" onclick = \"location.href = 'Logout'\" ><i class=\"fa fa-sign-out account-icon\"></i>Sign out</div></div></div>");
 	}
 	else
