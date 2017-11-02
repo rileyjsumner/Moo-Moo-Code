@@ -65,8 +65,11 @@ public class Login extends HttpServlet {
 		else{
 			if(request.getParameterMap().containsKey("action"))
 			{
-				response.sendRedirect(request.getParameter("action"));
-				return;
+				String action = request.getParameter("action");
+				if(action != null && !action.equals("null"))
+				{
+					response.sendRedirect(action);return;
+				}
 			}
 			response.sendRedirect("Home");
 		}

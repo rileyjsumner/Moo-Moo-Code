@@ -65,6 +65,30 @@ INSERT INTO `lesson_categories` (`id`, `name`, `lesson_num`) VALUES
 /*!40000 ALTER TABLE `lesson_categories` ENABLE KEYS */;
 
 
+-- Dumping structure for table moo_moo_code.levels
+CREATE TABLE IF NOT EXISTS `levels` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `unlock_from` int(11) NOT NULL DEFAULT '-1',
+  `unlock_from_2` int(11) NOT NULL DEFAULT '-1',
+  `unlock_from_3` int(11) NOT NULL DEFAULT '-1',
+  `pos_x` int(11) NOT NULL DEFAULT '0',
+  `pos_y` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table moo_moo_code.levels: ~5 rows (approximately)
+DELETE FROM `levels`;
+/*!40000 ALTER TABLE `levels` DISABLE KEYS */;
+INSERT INTO `levels` (`id`, `name`, `unlock_from`, `unlock_from_2`, `unlock_from_3`, `pos_x`, `pos_y`) VALUES
+	(1, 'Hello, World!', -1, -1, -1, 0, 0),
+	(2, 'Movement', 1, -1, -1, 10, 0),
+	(3, 'Obstacles', 2, -1, -1, 10, 10),
+	(4, 'Attacks', 1, -1, -1, -10, 0),
+	(5, 'Enemies', 4, -1, -1, -10, -10);
+/*!40000 ALTER TABLE `levels` ENABLE KEYS */;
+
+
 -- Dumping structure for table moo_moo_code.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -72,17 +96,35 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(45) NOT NULL,
   `progress_learn_category` int(11) NOT NULL DEFAULT '0',
   `progress_learn_lesson` int(11) NOT NULL DEFAULT '0',
-  `progress_game_level` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table moo_moo_code.users: ~2 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `username`, `password`, `progress_learn_category`, `progress_learn_lesson`, `progress_game_level`) VALUES
-	(1, 'root', 'admin', 2, 2, 0),
-	(2, 'nixon', 'TESTRichard', 0, 0, 0);
+INSERT INTO `users` (`id`, `username`, `password`, `progress_learn_category`, `progress_learn_lesson`) VALUES
+	(1, 'root', 'admin', 2, 2),
+	(2, 'nixon', 'TESTRichard', 0, 0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+
+-- Dumping structure for table moo_moo_code.user_levels
+CREATE TABLE IF NOT EXISTS `user_levels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `level_id` int(10) unsigned NOT NULL,
+  `bindings` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_level_idx` (`user_id`),
+  KEY `user_level_level_idx` (`level_id`),
+  CONSTRAINT `user_level` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_level_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table moo_moo_code.user_levels: ~0 rows (approximately)
+DELETE FROM `user_levels`;
+/*!40000 ALTER TABLE `user_levels` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_levels` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

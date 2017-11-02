@@ -1,5 +1,6 @@
 package com.web;
 
+import com.dao.LevelsDao;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -29,7 +30,7 @@ public class Play extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(LoginUtil.TestLogin(session))
 		{
-			request.setAttribute("level","Play");
+			request.setAttribute("levels", LevelsDao.GetAllLevels());
 			request.getRequestDispatcher("/WEB-INF/play.jsp").forward(request, response);
 			return;
 		}

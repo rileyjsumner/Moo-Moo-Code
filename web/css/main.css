@@ -6,6 +6,50 @@ body, html {
 	display: flex;
 	flex-direction: column;
 }
+.vertical-fill
+{
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	position: relative;
+}
+.levels_container
+{
+	position: relative;display: block;
+	height:500px;
+}
+.levels_container_svg
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+.levels_container_level
+{
+	z-index: 1;
+	position: absolute;
+	display: table;
+	background-color: #49483E;
+	cursor: pointer;
+	width: 75px;
+	border-radius: 5px;
+	text-align: center;
+	height: 75px;
+	font-size: 12px;
+}
+.levels_container_center
+{
+	position: absolute;
+	right: 0;
+	height: 50%;
+	width: 50%;
+}
+.levels_container_level_name
+{
+	display: table-cell;
+	vertical-align: middle;
+	color: #A6E22E;
+}
 .lesson-codebed-output
 {
 	padding:10px;

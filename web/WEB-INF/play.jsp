@@ -1,4 +1,6 @@
-<%--@elvariable id="signed_in" type="Boolean"--%>
+<%@ page import="com.data.LevelId" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.data.LevelIds" %><%--@elvariable id="signed_in" type="Boolean"--%>
 <%--@elvariable id="account_name" type="java.lang.String"--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
@@ -57,9 +59,79 @@
 				<p class="menu-text">Compete</p>
 			</div>
 		</div>
-		<div id="content">
-		
+		<div id="content" class = "vertical-fill">
+			<div class = "levels_container vertical-fill">
+				<div class = "levels_container_center">
+					<%
+						LevelIds levelObj = (LevelIds)request.getAttribute("levels");
+						for(LevelId level : levelObj.levels)
+						{
+							out.print("<div class=\"levels_container_level\" style=\"left: "+(level.PosX*10 - 37.5)+"px; bottom: "+(level.PosY*10 - 37.5)+"px\"><p class=\"levels_container_level_name\">"+level.Name+"</p></div>");
+						}
+					%>
+				</div>
+				<svg class = "levels_container_svg vertical-fill" id = "svg_container">
+					<%
+						for(LevelId level : levelObj.levels)
+						{
+							if(level.UnlocksFrom_1 != -1)
+							{
+								LevelId connectTo = levelObj.find(level.UnlocksFrom_1);
+								out.print("<line class = 'test-line' x1='"+level.PosX+"' y1 = '"+level.PosY+"' x2 = '"+connectTo.PosX+"' y2 = '"+connectTo.PosY+"' style = 'stroke:#75715E;stroke-width:5' >" +
+										"<animate id = 'anim1' attributeType=\"XML\" attributeName=\"stroke\" from=\"#A6E22E\" to=\"#49483E\"" +
+										"        dur=\".5s\" begin=\"0s; anim2.end\"/>" +
+										"<animate id = 'anim2' attributeType=\"XML\" attributeName=\"stroke\" from=\"#49483E\" to=\"#A6E22E\"" +
+										"        dur=\".5s\" begin=\"anim1.end\"/>" +
+										"</line>");
+							}
+						}
+					%>
+				</svg>
+			</div>
 		</div>
 		<script>makeMenu("<%=request.getSession().getAttribute("signed_in")%>","<%=request.getSession().getAttribute("username")%>");</script>
+		<script>
+			var svgEl = $("#svg_container");
+			var svgWidth = svgEl.width();
+			var svgHeight = svgEl.height();
+			svgEl.children("line").each(function(){
+				console.log($(this));
+				console.log($(this).attr("x1"));
+				$(this).attr("x1",$(this).attr("x1") * 10 + svgWidth * .5);
+				$(this).attr("x2",$(this).attr("x2") * 10 + svgWidth * .5);
+				$(this).attr("y1",$(this).attr("y1") * -10 + svgHeight * .5);
+				$(this).attr("y2",$(this).attr("y2") * -10 + svgHeight * .5);
+			});
+			/*
+			var pulseFunc = function(targetElement){
+				console.log("HERE");
+				targetElement.css({left:'-200px'});
+				targetElement.animate({'stroke': "#75715E"},
+					{
+						duration: 400,
+						step: function(foo){
+							$(this).attr('stroke', foo);
+						}
+					});
+				targetElement.animate(
+					{
+						'stroke': "black"
+					},
+					{
+						step: function(foo){
+							$(this).attr('stroke', foo);
+						},
+						duration: 400,
+						complete: function(){
+							pulseFunc(targetElement);
+						}
+					}
+				);
+			};
+			$("line").each(function(){
+				console.log($(this));
+				pulseFunc($(this));
+			});*/
+		</script>
 	</body>
 </html>
