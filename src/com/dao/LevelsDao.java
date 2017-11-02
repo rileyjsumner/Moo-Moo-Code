@@ -35,4 +35,25 @@ public class LevelsDao {
 		}
 		return levels;
 	}
+	public static boolean LevelExists(int levelId)
+	{
+		LevelIds levels = new LevelIds();
+		
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT id FROM levels WHERE id = ?");
+			preparedStatement.setInt(1,levelId);
+			ResultSet set = preparedStatement.executeQuery();
+			
+			if (set.first())
+			{
+				return true;
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return false;
+	}
 }

@@ -17,4 +17,15 @@ public class LevelIds {
 		}
 		return new LevelId();
 	}
+	public int findRef(int id)
+	{
+		for(int i=0;i<levels.size();i++)
+		{
+			if(levels.get(i).Id == id)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
 }
