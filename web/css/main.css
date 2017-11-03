@@ -13,6 +13,15 @@ body, html {
 	flex-direction: column;
 	position: relative;
 }
+.levels_container_level_complete
+{
+	color: #272822;
+	font-weight:bold;
+}
+.levels_container_level_active
+{
+	color: #A6E22E;
+}
 .levels_container
 {
 	position: relative;display: block;
@@ -48,7 +57,7 @@ body, html {
 {
 	display: table-cell;
 	vertical-align: middle;
-	color: #A6E22E;
+	color:inherit;
 }
 .lesson-codebed-output
 {

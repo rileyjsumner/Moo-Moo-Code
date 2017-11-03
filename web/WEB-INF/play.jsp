@@ -66,7 +66,9 @@
 						LevelIds levelObj = (LevelIds)request.getAttribute("levels");
 						for(LevelId level : levelObj.levels)
 						{
-							out.print("<div class=\"levels_container_level\" style=\"left: "+(level.PosX*10 - 37.5)+"px; bottom: "+(level.PosY*10 - 37.5)+"px\"><p class=\"levels_container_level_name\">"+level.Name+"</p></div>");
+							if(level.State == 2){out.print("<div style=\"left: "+(level.PosX*10 - 37.5)+"px; bottom: "+(level.PosY*10 - 37.5)+"px\" class=\"levels_container_level levels_container_level_complete\"><p class=\"levels_container_level_name\">"+level.Name+"</p></div>");}
+							else if(level.State == 1){out.print("<div style=\"left: "+(level.PosX*10 - 37.5)+"px; bottom: "+(level.PosY*10 - 37.5)+"px\" class=\"levels_container_level levels_container_level_active\"><p class=\"levels_container_level_name\">"+level.Name+"</p></div>");}
+							//else if(level.State == 0){out.print("></div>");}
 						}
 					%>
 				</div>
@@ -77,12 +79,53 @@
 							if(level.UnlocksFrom_1 != -1)
 							{
 								LevelId connectTo = levelObj.find(level.UnlocksFrom_1);
-								out.print("<line class = 'test-line' x1='"+level.PosX+"' y1 = '"+level.PosY+"' x2 = '"+connectTo.PosX+"' y2 = '"+connectTo.PosY+"' style = 'stroke:#75715E;stroke-width:5' >" +
-										"<animate id = 'anim1' attributeType=\"XML\" attributeName=\"stroke\" from=\"#A6E22E\" to=\"#49483E\"" +
-										"        dur=\".5s\" begin=\"0s; anim2.end\"/>" +
-										"<animate id = 'anim2' attributeType=\"XML\" attributeName=\"stroke\" from=\"#49483E\" to=\"#A6E22E\"" +
-										"        dur=\".5s\" begin=\"anim1.end\"/>" +
-										"</line>");
+								if(level.PathState_1 == 1)
+								{
+									out.print("<line class = 'test-line' x1='"+level.PosX+"' y1 = '"+level.PosY+"' x2 = '"+connectTo.PosX+"' y2 = '"+connectTo.PosY+"' style = 'stroke:#75715E;stroke-width:5' >" +
+											"<animate id = 'anim1' attributeType=\"XML\" attributeName=\"stroke\" from=\"#A6E22E\" to=\"#49483E\"" +
+											"        dur=\".5s\" begin=\"0s; anim2.end\"/>" +
+											"<animate id = 'anim2' attributeType=\"XML\" attributeName=\"stroke\" from=\"#49483E\" to=\"#A6E22E\"" +
+											"        dur=\".5s\" begin=\"anim1.end\"/>" +
+											"</line>");
+								}
+								else if(level.PathState_1 == 2)
+								{
+									out.print("<line class = 'test-line' x1='"+level.PosX+"' y1 = '"+level.PosY+"' x2 = '"+connectTo.PosX+"' y2 = '"+connectTo.PosY+"' style = 'stroke:#75715E;stroke-width:5' ></line>");
+								}
+							}
+							if(level.UnlocksFrom_2 != -1)
+							{
+								LevelId connectTo = levelObj.find(level.UnlocksFrom_2);
+								if(level.PathState_2 == 1)
+								{
+									out.print("<line class = 'test-line' x1='"+level.PosX+"' y1 = '"+level.PosY+"' x2 = '"+connectTo.PosX+"' y2 = '"+connectTo.PosY+"' style = 'stroke:#75715E;stroke-width:5' >" +
+											"<animate id = 'anim1' attributeType=\"XML\" attributeName=\"stroke\" from=\"#A6E22E\" to=\"#49483E\"" +
+											"        dur=\".5s\" begin=\"0s; anim2.end\"/>" +
+											"<animate id = 'anim2' attributeType=\"XML\" attributeName=\"stroke\" from=\"#49483E\" to=\"#A6E22E\"" +
+											"        dur=\".5s\" begin=\"anim1.end\"/>" +
+											"</line>");
+								}
+								else if(level.PathState_2 == 2)
+								{
+									out.print("<line class = 'test-line' x1='"+level.PosX+"' y1 = '"+level.PosY+"' x2 = '"+connectTo.PosX+"' y2 = '"+connectTo.PosY+"' style = 'stroke:#75715E;stroke-width:5' ></line>");
+								}
+							}
+							if(level.UnlocksFrom_3 != -1)
+							{
+								LevelId connectTo = levelObj.find(level.UnlocksFrom_3);
+								if(level.PathState_3 == 1)
+								{
+									out.print("<line class = 'test-line' x1='"+level.PosX+"' y1 = '"+level.PosY+"' x2 = '"+connectTo.PosX+"' y2 = '"+connectTo.PosY+"' style = 'stroke:#75715E;stroke-width:5' >" +
+											"<animate id = 'anim1' attributeType=\"XML\" attributeName=\"stroke\" from=\"#A6E22E\" to=\"#49483E\"" +
+											"        dur=\".5s\" begin=\"0s; anim2.end\"/>" +
+											"<animate id = 'anim2' attributeType=\"XML\" attributeName=\"stroke\" from=\"#49483E\" to=\"#A6E22E\"" +
+											"        dur=\".5s\" begin=\"anim1.end\"/>" +
+											"</line>");
+								}
+								else if(level.PathState_3 == 2)
+								{
+									out.print("<line class = 'test-line' x1='"+level.PosX+"' y1 = '"+level.PosY+"' x2 = '"+connectTo.PosX+"' y2 = '"+connectTo.PosY+"' style = 'stroke:#75715E;stroke-width:5' ></line>");
+								}
 							}
 						}
 					%>
