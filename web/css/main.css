@@ -13,14 +13,44 @@ body, html {
 	flex-direction: column;
 	position: relative;
 }
+.levels_container_level_locked
+{
+	color: #75715E;
+	font-weight:bold;
+}
 .levels_container_level_complete
 {
-	color: #272822;
-	font-weight:bold;
+	color: #A6E22E;
+	font-weight: bold;
+	cursor: pointer;
+	transition: box-shadow .25s;
+}
+.levels_container_level_complete:hover
+{
+	box-shadow: 0 0 20px 3pt #49483E;
 }
 .levels_container_level_active
 {
 	color: #A6E22E;
+	cursor: pointer;
+	transition: box-shadow .2s;
+	box-shadow: 0 0 14px 0pt #A6E22E;
+}
+.levels_container_level_active:hover
+{
+	box-shadow: 0 0 20px 3pt #A6E22E;
+}
+.levels_container_level
+{
+	z-index: 1;
+	position: absolute;
+	display: table;
+	background-color: #49483E;
+	width: 75px;
+	border-radius: 5px;
+	text-align: center;
+	height: 75px;
+	font-size: 12px;
 }
 .levels_container
 {
@@ -32,19 +62,6 @@ body, html {
 	position: absolute;
 	height: 100%;
 	width: 100%;
-}
-.levels_container_level
-{
-	z-index: 1;
-	position: absolute;
-	display: table;
-	background-color: #49483E;
-	cursor: pointer;
-	width: 75px;
-	border-radius: 5px;
-	text-align: center;
-	height: 75px;
-	font-size: 12px;
 }
 .levels_container_center
 {

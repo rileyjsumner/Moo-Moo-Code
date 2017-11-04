@@ -8,7 +8,7 @@ public class LevelId {
 	public int UnlocksFrom_3;
 	public int PosX;
 	public int PosY;
-	public int State;// 0 = Invisible, 1 = Active, 2 = Complete
+	public int State;// 0 = Invisible, 1 = Locked, 2 = Active, 3 = Complete
 	public int PathState_1;// 0 = Locked, 1 = Active, 2 = Complete
 	public int PathState_2;// 0 = Locked, 1 = Active, 2 = Complete
 	public int PathState_3;// 0 = Locked, 1 = Active, 2 = Complete

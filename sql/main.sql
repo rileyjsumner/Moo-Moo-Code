@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `lesson_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.lesson_categories: ~3 rows (approximately)
+-- Dumping data for table moo_moo_code.lesson_categories: ~4 rows (approximately)
 DELETE FROM `lesson_categories`;
 /*!40000 ALTER TABLE `lesson_categories` DISABLE KEYS */;
 INSERT INTO `lesson_categories` (`id`, `name`, `lesson_num`) VALUES
@@ -89,7 +89,8 @@ INSERT INTO `levels` (`id`, `name`, `unlock_from`, `unlock_from_2`, `unlock_from
 	(2, 'Movement', 1, -1, -1, 10, 0, 0, 0, 0, 0),
 	(3, 'Obstacles', 2, -1, -1, 10, 10, 0, 0, 0, 0),
 	(4, 'Attacks', 1, -1, -1, -10, 0, 0, 0, 0, 0),
-	(5, 'Enemies', 4, -1, -1, -10, -10, 0, 0, 0, 0);
+	(5, 'Enemies', 4, -1, -1, -10, -10, 0, 0, 0, 0),
+	(6, 'Mazes', 3, 4, -1, 0, 10, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `levels` ENABLE KEYS */;
 
 
@@ -156,9 +157,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table moo_moo_code.users: ~2 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `username`, `password`, `progress_learn_category`, `progress_learn_lesson`) VALUES
-	(1, 'root', 'admin', 2, 2),
-	(2, 'nixon', 'TESTRichard', 0, 0);
+INSERT INTO `users` (`id`, `username`, `password`, `progress_learn_category`, `progress_learn_lesson`, `admin`) VALUES
+	(1, 'root', 'admin', 2, 2, 1),
+	(2, 'nixon', 'TESTRichard', 0, 0, 1),
+	(3, 'admin', 'admin', 0, 0, 1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 
@@ -179,9 +181,8 @@ CREATE TABLE IF NOT EXISTS `user_levels` (
 DELETE FROM `user_levels`;
 /*!40000 ALTER TABLE `user_levels` DISABLE KEYS */;
 INSERT INTO `user_levels` (`id`, `user_id`, `level_id`, `bindings`) VALUES
-	(1, 1, 1, NULL),
-	(2, 2, 1, NULL),
-	(3, 1, 2, NULL);
+	(2, 1, 1, NULL),
+	(7, 1, 2, NULL);
 /*!40000 ALTER TABLE `user_levels` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
