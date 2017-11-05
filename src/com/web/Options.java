@@ -1,5 +1,6 @@
 package com.web;
 
+import com.beans.UserBean;
 import com.dao.UserDao;
 import com.util.LoginUtil;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -30,6 +32,13 @@ public class Options extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		int user_id = (int)session.getAttribute(("user_id"));
+		boolean admin = UserDao.isAdmin(user_id);
+		List<UserBean> userBeanList = UserDao.GetUsers();
+		request.setAttribute("users", userBeanList);
+		request.setAttribute("admin", admin);
+		request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+
 		if(LoginUtil.TestLogin(session))
 		{
 			request.getRequestDispatcher("/WEB-INF/options.jsp").forward(request, response);
@@ -41,6 +50,7 @@ public class Options extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/login_required.jsp").forward(request, response);
 		}
 		
+
 	}
 	
 	/**
