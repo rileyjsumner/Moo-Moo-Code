@@ -16,8 +16,8 @@ public class UserLevelsDao {
 	{
 		LevelIds levelIds = LevelsDao.GetAllLevels();
 		
-		// Set the Hello world level to a minimum of unlocked
-		levelIds.levels.get(levelIds.findRef(1)).State = 1;
+		// Set the default hello world to active at minimum
+		for(LevelId level : levelIds.levels){if(level.UnlocksFrom_1 == -1){level.State = 2;}}
 		
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
@@ -30,17 +30,70 @@ public class UserLevelsDao {
 			{
 				int userLevel = set.getInt("level_id");
 				
-				for(int i=0;i<levelIds.levels.size();i++) // go through all available levels to update their state
+				for(LevelId level : levelIds.levels) // go through all available levels to update their state
 				{
-					// If the level exists in userLevel, it is complete
-					if(levelIds.levels.get(i).Id == userLevel)
+					if (level.State != 3)// Skip the whole thing if it's already complete
 					{
-						levelIds.levels.get(i).State = 2;
+						if(level.Id == userLevel) // If it exists, complete it
+						{
+							level.State = 3;level.PathState_1 = 2;level.PathState_2 = 2;level.PathState_3 = 2;continue;
+						}
+						else if(level.UnlocksFrom_1 == userLevel) // otherwise update the paths
+						{
+							level.PathState_1 = 1;
+						}
+						else if(level.UnlocksFrom_2 == userLevel)
+						{
+							level.PathState_2 = 1;
+						}
+						else if(level.UnlocksFrom_3 == userLevel)
+						{
+							level.PathState_3 = 1;
+						}
+						else // If nothing changed, skip the next part
+						{
+							continue;
+						}
+						// Check to see if all necessary paths are complete
+						if(level.PathState_1 == 1)
+						{
+							if(level.PathState_2 == 1)
+							{
+								if(level.PathState_3 == 1)
+								{
+									level.State = 2; // All 3 paths are complete
+								}
+								else if(level.UnlocksFrom_3 == -1)
+								{
+									level.State = 2; // 2 paths are complete, the third isn't required
+								}
+							}
+							else if(level.UnlocksFrom_2 == -1)
+							{
+								level.State = 2; // 1 path is complete, the second isn't required
+							}
+						}
+						else if(level.UnlocksFrom_1 == -1)
+						{
+							level.State = 2; // No paths are complete, none are required
+						}
 					}
-					// If the level unlocks from a finished level, unlock it
-					else if(levelIds.levels.get(i).UnlocksFrom_1 == userLevel || levelIds.levels.get(i).UnlocksFrom_2 == userLevel || levelIds.levels.get(i).UnlocksFrom_3 == userLevel)
+					
+				}
+			}
+			// Now that the preliminary active check is done, add locked levels as well
+			for(LevelId level : levelIds.levels)
+			{
+				if(level.State==0) // If it's currently an invisible level that could become locked,
+				{
+					// Go through all the levels again and check if any it unlocks from are active
+					for(LevelId levelCheck : levelIds.levels)
 					{
-						levelIds.levels.get(i).State = 1;
+						if(levelCheck.State >= 2 && (level.UnlocksFrom_1 == levelCheck.Id || level.UnlocksFrom_2 == levelCheck.Id || level.UnlocksFrom_3 == levelCheck.Id)) // If a level it unlocks from is active, set to locked
+						{
+							level.State=1;
+							break;// Then we don't need this loop anymore, we already found the level.
+						}
 					}
 				}
 			}

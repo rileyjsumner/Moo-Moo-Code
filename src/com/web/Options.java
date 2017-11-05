@@ -2,6 +2,7 @@ package com.web;
 
 import com.beans.UserBean;
 import com.dao.UserDao;
+import com.util.LoginUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,10 +16,10 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class Admin extends HttpServlet {
+public class Options extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public Admin() {
+	public Options() {
 		super();
 	}
 	
@@ -30,8 +31,6 @@ public class Admin extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Get the admin page
-		
 		HttpSession session = request.getSession();
 		int user_id = (int)session.getAttribute(("user_id"));
 		boolean admin = UserDao.isAdmin(user_id);
@@ -39,6 +38,19 @@ public class Admin extends HttpServlet {
 		request.setAttribute("users", userBeanList);
 		request.setAttribute("admin", admin);
 		request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+
+		if(LoginUtil.TestLogin(session))
+		{
+			request.getRequestDispatcher("/WEB-INF/options.jsp").forward(request, response);
+		}
+		else
+		{
+			request.setAttribute("action_text","access account options");
+			request.setAttribute("action","Options");
+			request.getRequestDispatcher("/WEB-INF/login_required.jsp").forward(request, response);
+		}
+		
+
 	}
 	
 	/**
@@ -49,7 +61,6 @@ public class Admin extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Log the user in
 		doGet(request, response);
 	}
 }

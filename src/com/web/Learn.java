@@ -42,8 +42,9 @@ public class Learn extends HttpServlet {
 		}
 		else
 		{
-			request.setAttribute("show_lessons",false);
-			request.getRequestDispatcher("/WEB-INF/learn.jsp").forward(request, response);
+			request.setAttribute("action_text","access lessons");
+			request.setAttribute("action","Learn");
+			request.getRequestDispatcher("/WEB-INF/login_required.jsp").forward(request, response);
 		}
 		
 	}

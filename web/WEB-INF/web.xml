@@ -11,6 +11,28 @@
 	</welcome-file-list>
 	
 	<servlet>
+		<description>Admin Levels</description>
+		<display-name>Admin/Levels</display-name>
+		<servlet-name>AdminLevels</servlet-name>
+		<servlet-class>com.web.Admin.Levels</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminLevels</servlet-name>
+		<url-pattern>/Admin/Levels</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>Admin/Home</display-name>
+		<servlet-name>AdminHome</servlet-name>
+		<servlet-class>com.web.Admin.Home</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminHome</servlet-name>
+		<url-pattern>/Admin/Home</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<description></description>
 		<display-name>Play</display-name>
 		<servlet-name>Play</servlet-name>
@@ -111,13 +133,13 @@
 	
 	<servlet>
 		<description></description>
-		<display-name>Admin</display-name>
-		<servlet-name>Admin</servlet-name>
-		<servlet-class>com.web.Admin</servlet-class>
+		<display-name>Options</display-name>
+		<servlet-name>Options</servlet-name>
+		<servlet-class>com.web.Options</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Admin</servlet-name>
-		<url-pattern>/Admin</url-pattern>
+		<servlet-name>Options</servlet-name>
+		<url-pattern>/Options</url-pattern>
 	</servlet-mapping>
 
 </web-app>

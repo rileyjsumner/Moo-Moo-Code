@@ -2,7 +2,10 @@ package com.util;
 
 import com.dao.UserDao;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class LoginUtil {
 	public static boolean TestLogin(HttpSession session)
@@ -15,7 +18,13 @@ public class LoginUtil {
 			if(user_id != -1)
 			{
 				session.setAttribute("signed_in",true);
+				session.setAttribute("username",username);
+				session.setAttribute("password",password);
 				session.setAttribute("user_id",user_id);
+				
+				// Admin test
+				if(UserDao.isAdmin(user_id)){session.setAttribute("admin",true);}
+				else{session.setAttribute("admin",false);}
 				return true;
 			}
 			else{
@@ -29,6 +38,18 @@ public class LoginUtil {
 			session.setAttribute("user_id",-1);
 			session.setAttribute("signed_in",false);
 		}
+		return false;
+	}
+	public static boolean TestAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession();
+		if(TestLogin(session))
+		{
+			if((boolean)session.getAttribute("admin"))
+			{
+				return true;
+			}
+		}
+		response.sendRedirect("/Home");
 		return false;
 	}
 }
