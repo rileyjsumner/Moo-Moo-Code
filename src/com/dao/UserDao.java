@@ -2,12 +2,15 @@ package com.dao;
 
 import com.data.LessonId;
 import com.util.DbUtil;
+import com.beans.UserBean;
 
 import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -116,5 +119,33 @@ public class UserDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
+	}
+	public static List<UserBean> GetUsers()
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		List<UserBean> users = new ArrayList<UserBean>();
+		try
+		{
+			preparedStatement = con.prepareStatement("SELECT * FROM users");
+			ResultSet set = preparedStatement.executeQuery();
+			while(set.next()) {
+				users.add(
+						new UserBean(
+								set.getInt("id"),
+								set.getString("username"),
+								set.getString("password"),
+								set.getInt("progress_learn_category"),
+								set.getInt("progress_learn_lesson"),
+								set.getInt("progress_game_level"),
+								set.getInt("admin") == 1
+						)
+				);
+			}
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return users;
 	}
 }

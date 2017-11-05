@@ -1,3 +1,5 @@
+<%@ page import="com.beans.UserBean" %>
+<%@ page import="java.util.ArrayList" %>
 <html>
 	<head>
 		<script src="../js/jquery-3.2.1.js"></script>
@@ -59,7 +61,23 @@
 			<%
 				System.out.println(request.getAttribute("admin"));
 				if((boolean)request.getAttribute("admin")){
-				out.print("hacks");
+				
+					out.print("<h2>Users</h2>" +
+							"<table>");
+					for (UserBean user : (ArrayList<UserBean>)request.getAttribute("users")) {
+						out.print(
+								"<tr>" +
+									"<td>Id:" + user.getId() + "</td>" +
+									"<td>Username:" + user.getUsername() + "</td>" +
+									"<td>Password:" + user.getPassword() + "</td>" +
+									"<td>Category Progress:" + user.getCategoryProgress() + "</td>" +
+									"<td>Lesson Progress:" + user.getLessonProgress() + "</td>" +
+									"<td>Game Level:" + user.getGameLevel() + "</td>" +
+									"<td>Admin:" + user.isAdmin() + "</td>" +
+								"</tr>"
+						);
+					}
+					out.print("</table>");
 				
 			} else {
 				out.print("You ain't no admin boi check how you sound");

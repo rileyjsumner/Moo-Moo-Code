@@ -1,5 +1,6 @@
 package com.web;
 
+import com.beans.UserBean;
 import com.dao.UserDao;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -33,9 +35,9 @@ public class Admin extends HttpServlet {
 		HttpSession session = request.getSession();
 		int user_id = (int)session.getAttribute(("user_id"));
 		boolean admin = UserDao.isAdmin(user_id);
-		
+		List<UserBean> userBeanList = UserDao.GetUsers();
+		request.setAttribute("users", userBeanList);
 		request.setAttribute("admin", admin);
-		System.out.println(admin);
 		request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
 	}
 	
