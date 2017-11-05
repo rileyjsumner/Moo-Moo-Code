@@ -48,9 +48,6 @@ public class Play extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("signed_in",true);
-		request.setAttribute("account_name","Bob");
-		LoginUtil.TestLogin(request.getSession());
-		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+		doGet(request,response);
 	}
 }

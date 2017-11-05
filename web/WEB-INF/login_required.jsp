@@ -1,66 +1,11 @@
-<%--@elvariable id="signed_in" type="Boolean"--%>
-<%--@elvariable id="account_name" type="java.lang.String"--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<html>
-	<head>
-		<script src="../js/jquery-3.2.1.js"></script>
-		
-		<script src="../codemirror/lib/codemirror.js"></script>
-		<link rel="stylesheet" href="../codemirror/lib/codemirror.css">
-		<link rel="stylesheet" href="../codemirror/theme/monokai.css">
-		<script src="../codemirror/mode/javascript/javascript.js"></script>
-		<script src="../codemirror/addon/edit/closebrackets.js"></script>
-		
-		<title>Moo Moo Code</title>
-		
-		<script src = "../js/login.js"></script>
-		<link rel="stylesheet" href="../css/main.css">
-		<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
-		
-		<!-- FAVICONS -->
-		<link rel="apple-touch-icon" sizes="57x57" href="../icons/apple-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="../icons/apple-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="../icons/apple-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="../icons/apple-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="../icons/apple-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="../icons/apple-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="../icons/apple-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="../icons/apple-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-icon-180x180.png">
-		<link rel="icon" type="image/png" sizes="192x192"  href="../icons/android-icon-192x192.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="../icons/favicon-96x96.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
-		<link rel="manifest" href="../manifest.json">
-		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content="../icons/ms-icon-144x144.png">
-		<meta name="theme-color" content="#ffffff">
-	</head>
-	<body>
-		<div id="banner">
-			<p class="banner-text">Moo Moo Code</p>
-		</div>
-		<div id="menu">
-			<div class="menu-item bracket-hover" onclick = "location.href='Home';">
-				<p class="menu-text">Home</p>
-			</div>
-			<div class="menu-item bracket-hover" onclick = "location.href='Learn';">
-				<p class="menu-text">Learn</p>
-			</div>
-			<div class="menu-item bracket-hover" onclick="location.href='Code';">
-				<p class="menu-text">Code</p>
-			</div>
-			<div class="menu-item bracket-hover" onclick="location.href='Play';">
-				<p class="menu-text">Play</p>
-			</div>
-			<div class="menu-item bracket-hover">
-				<p class="menu-text">Compete</p>
-			</div>
-		</div>
-		<div id="content" style = "text-align:center;">
-			<p style="font-size:20px;padding: 40px 20px;">You need to be logged in to <%=request.getAttribute("action_text")%></p>
-			<div class="bracket-hover lesson-codebed-submit" onclick = "location.href='Login?action=<%=request.getAttribute("action")%>'"><p>Log in</p></div>
-		</div>
-		<script>makeMenu("<%=request.getSession().getAttribute("signed_in")%>","<%=request.getSession().getAttribute("username")%>");</script>
-	</body>
-</html>
+
+<c:import url="/WEB-INF/page_defaults/header.jsp" />
+<title>Moo Moo Code - Login</title>
+<c:import url="/WEB-INF/page_defaults/menu.jsp" />
+
+<p style="font-size:20px;padding: 40px 20px;">You need to be logged in to <%=request.getAttribute("action_text")%></p>
+<div class="bracket-hover lesson-codebed-submit" onclick = "location.href='Login?action=<%=request.getAttribute("action")%>'"><p>Log in</p></div>
+
+<c:import url="/WEB-INF/page_defaults/footer.jsp" />

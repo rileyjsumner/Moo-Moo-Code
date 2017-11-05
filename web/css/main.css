@@ -6,12 +6,86 @@ body, html {
 	display: flex;
 	flex-direction: column;
 }
+.admin-levels-input
+{
+	background-color: inherit;
+	border:0;
+	color:#F8F8F2;
+	border-bottom: 1px solid #49483E;
+	font-size:16px;
+	width: calc(100% - 10px);
+	padding:5px;
+	margin:5px;
+}
+.admin-levels-label
+{
+	font-size: 16px;
+	margin:5px;
+	padding:5px 0px;
+}
+.vertical-fill-container
+{
+	display: table;
+	width: 100%;
+	height:100%;
+}
 .vertical-fill
 {
-	display: flex;
-	flex-grow: 1;
-	flex-direction: column;
-	position: relative;
+	display: table-row;
+}
+.vertical-compact
+{
+	display: table-row;
+	height:1px;
+}
+.levels_admin_selection_container {
+
+}
+.levels_container_line_horizontal
+{
+	display: inline-block;
+	position: absolute;
+	left: -100%;
+	width: 200%;
+	background-color: #535248;
+	height: 1px;
+}
+.levels_container_line_horizontal.levels_container_line_minor
+{
+	background-color: #31332B;
+}
+.levels_container_line_vertical.levels_container_line_minor
+{
+	background-color: #31332B;
+}
+.levels_container_line_unit_horizontal
+{
+	display: inline-block;
+	position: absolute;
+	left: -100%;
+	text-align: right;
+	background-color: inherit;
+	color: #c5c4b1;
+	width: 20px;
+	font-size: 12px;
+}
+.levels_container_line_vertical
+{
+	display: inline-block;
+	position: absolute;
+	height: 200%;
+	background-color: #535248;
+	width: 1px;
+}
+.levels_container_line_unit_vertical
+{
+	display: inline-block;
+	position: absolute;
+	text-align: left;
+	background-color: inherit;
+	color: #c5c4b1;
+	margin-left: 5px;
+	font-size: 12px;
 }
 .levels_container_level_locked
 {
@@ -54,14 +128,15 @@ body, html {
 }
 .levels_container
 {
-	position: relative;display: block;
-	height:500px;
+	position: relative;
+	overflow: hidden;
 }
 .levels_container_svg
 {
 	position: absolute;
 	height: 100%;
 	width: 100%;
+	left: 0;
 }
 .levels_container_center
 {
@@ -79,6 +154,7 @@ body, html {
 .lesson-codebed-output
 {
 	padding:10px;
+	text-align:left;
 }
 .lesson-codebed-submit
 {
@@ -110,6 +186,7 @@ body, html {
 	width:50%;
 	bottom:0;
 	top:0;
+	text-align:left;
 }
 .category-container
 {
@@ -312,34 +389,25 @@ div#account-box:hover
 .code-submit:hover {
 	color: #A6E22E;
 }
-
-#banner {
-	display: block;
+#content
+{
 	text-align: center;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	vertical-align: middle;
-	cursor: default;
 }
-
-#banner-compact {
-	display: block;
+#banner {
 	text-align: center;
-	padding-top: 20px;
-	padding-bottom: 20px;
 	vertical-align: middle;
 	cursor: default;
 }
 
 .banner-text {
 	display: inline-block;
+	padding:20px;
 	font-size: 60px;
 	font-weight: bold;
 	font-family: Consolas, serif;
 }
 
 #menu {
-	display: block;
 	text-align: center;
 	background-color: #49483E;
 }
@@ -431,11 +499,4 @@ div#account-box:hover
 	font-size: 25px;
 	font-family: Consolas, serif;
 	cursor: pointer;
-}
-
-#content {
-	display: flex;
-	flex-grow: 1;
-	flex-direction: column;
-	position: relative;
 }

@@ -35,7 +35,6 @@ public class Code extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/code.jsp");
-		view.forward(request, response);
+		doGet(request,response);
 	}
 }

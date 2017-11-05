@@ -45,7 +45,12 @@ public class Lesson extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/lesson_invalid.jsp").forward(request, response);
 			}
 		}
-		response.sendRedirect("/Home");
+		else
+		{
+			request.setAttribute("action_text","access lessons");
+			request.setAttribute("action","Learn");
+			request.getRequestDispatcher("/WEB-INF/login_required.jsp").forward(request, response);
+		}
 	}
 	
 	/**

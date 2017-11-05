@@ -24,8 +24,6 @@ public class Home extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    request.setAttribute("signed_in",false);
-		request.setAttribute("account_name","Phil");
 		LoginUtil.TestLogin(request.getSession());
 		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 	}
@@ -38,9 +36,6 @@ public class Home extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("signed_in",true);
-		request.setAttribute("account_name","Bob");
-		LoginUtil.TestLogin(request.getSession());
-		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+		doGet(request,response);
 	}
 }
