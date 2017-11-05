@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `lesson_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.lesson_categories: ~4 rows (approximately)
+-- Dumping data for table moo_moo_code.lesson_categories: ~3 rows (approximately)
 DELETE FROM `lesson_categories`;
 /*!40000 ALTER TABLE `lesson_categories` DISABLE KEYS */;
 INSERT INTO `lesson_categories` (`id`, `name`, `lesson_num`) VALUES
@@ -74,23 +74,23 @@ CREATE TABLE IF NOT EXISTS `levels` (
   `unlock_from_3` int(11) NOT NULL DEFAULT '-1',
   `pos_x` int(11) NOT NULL DEFAULT '0',
   `pos_y` int(11) NOT NULL DEFAULT '0',
-  `dim_x` int(10) unsigned NOT NULL,
-  `dim_y` int(10) unsigned NOT NULL,
-  `start_x` float unsigned NOT NULL,
-  `start_y` float unsigned NOT NULL,
+  `dim_x` int(10) unsigned NOT NULL DEFAULT '0',
+  `dim_y` int(10) unsigned NOT NULL DEFAULT '0',
+  `start_x` float unsigned NOT NULL DEFAULT '0',
+  `start_y` float unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.levels: ~5 rows (approximately)
+-- Dumping data for table moo_moo_code.levels: ~6 rows (approximately)
 DELETE FROM `levels`;
 /*!40000 ALTER TABLE `levels` DISABLE KEYS */;
 INSERT INTO `levels` (`id`, `name`, `unlock_from`, `unlock_from_2`, `unlock_from_3`, `pos_x`, `pos_y`, `dim_x`, `dim_y`, `start_x`, `start_y`) VALUES
 	(1, 'Hello, World!', -1, -1, -1, 0, 0, 0, 0, 0, 0),
 	(2, 'Movement', 1, -1, -1, 10, 0, 0, 0, 0, 0),
-	(3, 'Obstacles', 2, -1, -1, 10, 10, 0, 0, 0, 0),
+	(3, 'Obstacles', 2, -1, -1, 20, 10, 0, 0, 0, 0),
 	(4, 'Attacks', 1, -1, -1, -10, 0, 0, 0, 0, 0),
-	(5, 'Enemies', 4, -1, -1, -10, -10, 0, 0, 0, 0),
-	(6, 'Mazes', 3, 4, -1, 0, 10, 0, 0, 0, 0);
+	(6, 'Mazes', 3, -1, -1, 20, 20, 0, 0, 0, 0),
+	(7, 'Enemies', 4, -1, -1, -20, -10, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `levels` ENABLE KEYS */;
 
 
@@ -151,16 +151,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(45) NOT NULL,
   `progress_learn_category` int(11) NOT NULL DEFAULT '0',
   `progress_learn_lesson` int(11) NOT NULL DEFAULT '0',
+  `admin` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.users: ~2 rows (approximately)
+-- Dumping data for table moo_moo_code.users: ~3 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `password`, `progress_learn_category`, `progress_learn_lesson`, `admin`) VALUES
 	(1, 'root', 'admin', 2, 2, 1),
 	(2, 'nixon', 'TESTRichard', 0, 0, 1),
-	(3, 'admin', 'admin', 0, 0, 1);
+	(3, 'admin', 'admin', 0, 0, 0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 
@@ -175,9 +176,9 @@ CREATE TABLE IF NOT EXISTS `user_levels` (
   KEY `user_level_level_idx` (`level_id`),
   CONSTRAINT `user_level` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_level_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.user_levels: ~3 rows (approximately)
+-- Dumping data for table moo_moo_code.user_levels: ~2 rows (approximately)
 DELETE FROM `user_levels`;
 /*!40000 ALTER TABLE `user_levels` DISABLE KEYS */;
 INSERT INTO `user_levels` (`id`, `user_id`, `level_id`, `bindings`) VALUES
