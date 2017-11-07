@@ -11,18 +11,31 @@
 <div id = "total_container" style="height: 100%;">
 	<div id = "level-editor" style="width:298px; background-color:#272822;height:100%; display: inline-block;position: relative;float:left;border-right:2px solid #49483E;"><!-- -->
 		<p style="margin:20px;font-size:20px">Level Properties:</p>
-		<form>
+		<form action = "<c:url value="/Admin/Levels"/>" method = "POST">
+			<% LevelIds levelObj = (LevelIds)request.getAttribute("levels"); %>
+			<input type = "hidden" name = "id" id = "data-id"/>
 			<table style = "width: 100%;overflow: hidden;white-space: nowrap;">
-				<tr><td><label class = "admin-levels-label" for="data-name">Name:</label></td><td><input class = "admin-levels-input" id = "data-name" name = "name" type = "text"/></td></tr>
-				<tr><td><label class = "admin-levels-label" for="data-x-position">X Position:</label></td><td><input class = "admin-levels-input" id= "data-x-position" name ="x_position" type = "text" /></td></tr>
-				<tr><td><label class = "admin-levels-label" for="data-y-position">Y Position:</label></td><td><input class = "admin-levels-input" id= "data-y-position" name ="y_position" type = "text" /></td></tr>
+				<tr><td><label class = "admin-levels-label" for="data-name">Name:</label></td><td><input autocomplete="off" class = "admin-levels-input" id = "data-name" name = "name" type = "text"/></td></tr>
+				<tr><td><label class = "admin-levels-label" for="data-x-position">X Position:</label></td><td><input autocomplete="off" class = "admin-levels-input" id= "data-x-position" name ="x_position" type = "text" /></td></tr>
+				<tr><td><label class = "admin-levels-label" for="data-y-position">Y Position:</label></td><td><input autocomplete="off" class = "admin-levels-input" id= "data-y-position" name ="y_position" type = "text" /></td></tr>
+				<tr><td><label class = "admin-levels-label" for="data-unlock-1">Unlocks from:</label></td><td><select class = "admin-levels-input" id= "data-unlock-1" name ="unlock_1"><option value = "-1">None</option><%for(LevelId level : levelObj.levels){out.print("<option value='"+level.Id+"'>"+level.Name+"</option>");}%></select></td></tr>
+				<tr><td><label class = "admin-levels-label" for="data-unlock-2">Unlocks from:</label></td><td><select class = "admin-levels-input" id= "data-unlock-2" name ="unlock_2"><option value = "-1">None</option><%for(LevelId level : levelObj.levels){out.print("<option value='"+level.Id+"'>"+level.Name+"</option>");}%></select></td></tr>
+				<tr><td><label class = "admin-levels-label" for="data-unlock-3">Unlocks from:</label></td><td><select class = "admin-levels-input" id= "data-unlock-3" name ="unlock_3"><option value = "-1">None</option><%for(LevelId level : levelObj.levels){out.print("<option value='"+level.Id+"'>"+level.Name+"</option>");}%></select></td></tr>
 			</table>
+			<div id = "level-existing">
+				<button name="action" value = "update" class = "level-submit level-submit-set">Save</button>
+				<button name="action" value = "editor" class = "level-submit level-submit-edit" >Level Editor</button>
+				<input type = "button" value = "Add New Child Level" class = "level-submit level-submit-set" onclick = "newLevel()"/>
+				<button name="action" value = "delete" class = "level-submit level-submit-delete" >Delete</button>
+			</div>
+			<div id = "level-new" style = "display:none">
+				<button name="action" value = "new" class = "level-submit level-submit-set">Add new level</button>
+			</div>
 		</form>
 	</div>
 	<div style="width:calc(100% - 300px);height: 100%; display: inline-block;float:right;" class = "levels_container">
 		<div class = "levels_container_center">
 			<%
-				LevelIds levelObj = (LevelIds)request.getAttribute("levels");
 				for(LevelId level : levelObj.levels)
 				{
 					out.print("<div data-pos-x='"+level.PosX+"' data-pos-y='"+level.PosY+"' data-name='"+level.Name+"' data-id='"+level.Id+"' data-unlock-1='"+level.UnlocksFrom_1+"' data-unlock-2='"+level.UnlocksFrom_2+"' data-unlock-3='"+level.UnlocksFrom_3+"' "+
@@ -122,10 +135,45 @@
 			}
 		});
 		// Add data to the left
+		$("#data-id").val(clicked.data("id"));
 		$("#data-name").val(clicked.data("name"));
 		$("#data-x-position").val(clicked.data("pos-x"));
 		$("#data-y-position").val(clicked.data("pos-y"));
+		$("#data-unlock-1").children().each(function(){
+			if($(this).val() == clicked.data("unlock-1"))
+			{$(this).prop("selected",true);}else{$(this).prop("selected",false);}
+		});
+		$("#data-unlock-2").children().each(function(){
+			if($(this).val() == clicked.data("unlock-2"))
+			{$(this).prop("selected",true);}else{$(this).prop("selected",false);}
+		});
+		$("#data-unlock-3").children().each(function(){
+			if($(this).val() == clicked.data("unlock-3"))
+			{$(this).prop("selected",true);}else{$(this).prop("selected",false);}
+		});
+		$("#level-new").css("display","none");
+		$("#level-existing").css("display","block");
 	});
+	function newLevel()
+	{
+		var oldId = $("#data-id").val();
+		// Add data to the left
+		$("#data-id").val(-1);
+		$("#data-name").val($("#data-name").val() + " - Child");
+		$("#data-unlock-1").children().each(function(){
+			if($(this).val() == oldId)
+			{$(this).prop("selected",true);}else{$(this).prop("selected",false);}
+		});
+		$("#data-unlock-2").children().each(function(){
+			$(this).prop("selected",false);
+		});
+		$("#data-unlock-3").children().each(function(){
+			$(this).prop("selected",false);
+		});
+		$("#level-new").css("display","block");
+		$("#level-existing").css("display","none");
+	}
+	$("#level-existing").css("display","none");
 </script>
 
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

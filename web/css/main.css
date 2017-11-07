@@ -6,6 +6,32 @@ body, html {
 	display: flex;
 	flex-direction: column;
 }
+select.admin-levels-input>option
+{
+	color:#F8F8F2;
+	background-color: #272822;
+}
+.level-submit-set{background-color:#517900;}
+.level-submit-edit{background-color:#01454F;}
+.level-submit-delete{background-color:#821B00;}
+
+.level-submit-set:hover{background-color:#6C9815;}
+.level-submit-edit:hover{background-color:#035763;}
+.level-submit-delete:hover{background-color:#A33316;}
+
+.level-submit
+{
+	transition: background-color .2s;
+	border: 0;
+	padding: 10px 3px;
+	cursor: pointer;
+	font-size: 15px;
+	color: #F8F8F2;
+	display: inline-block;
+	margin: 5px 0;
+	width: 90%;
+	font-weight: bold;
+}
 .admin-levels-input
 {
 	background-color: inherit;
@@ -24,14 +50,25 @@ body, html {
 	padding:5px 0px;
 }
 .vertical-fill-container
-{
-	display: table;
-	width: 100%;
-	height:100%;
-}
+ {
+	 display: table;
+	 width: 100%;
+	 height:100%;
+ }
 .vertical-fill
 {
 	display: table-row;
+}
+.horizontal-fill-container
+{
+	display: table;
+	width: 100%;
+}
+.horizontal-fill
+{
+	display: table-cell;
+	width: auto;
+	white-space: nowrap;
 }
 .vertical-compact
 {
