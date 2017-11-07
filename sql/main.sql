@@ -16,6 +16,7 @@ USE `moo_moo_code`;
 
 
 -- Dumping structure for table moo_moo_code.lessons
+DROP TABLE IF EXISTS `lessons`;
 CREATE TABLE IF NOT EXISTS `lessons` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lesson_name` varchar(60) DEFAULT NULL,
@@ -47,6 +48,7 @@ INSERT INTO `lessons` (`id`, `lesson_name`, `lesson_num`, `category_id`, `lesson
 
 
 -- Dumping structure for table moo_moo_code.lesson_categories
+DROP TABLE IF EXISTS `lesson_categories`;
 CREATE TABLE IF NOT EXISTS `lesson_categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -54,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `lesson_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.lesson_categories: ~3 rows (approximately)
+-- Dumping data for table moo_moo_code.lesson_categories: ~4 rows (approximately)
 DELETE FROM `lesson_categories`;
 /*!40000 ALTER TABLE `lesson_categories` DISABLE KEYS */;
 INSERT INTO `lesson_categories` (`id`, `name`, `lesson_num`) VALUES
@@ -66,6 +68,7 @@ INSERT INTO `lesson_categories` (`id`, `name`, `lesson_num`) VALUES
 
 
 -- Dumping structure for table moo_moo_code.levels
+DROP TABLE IF EXISTS `levels`;
 CREATE TABLE IF NOT EXISTS `levels` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -95,6 +98,7 @@ INSERT INTO `levels` (`id`, `name`, `unlock_from`, `unlock_from_2`, `unlock_from
 
 
 -- Dumping structure for table moo_moo_code.level_enemies
+DROP TABLE IF EXISTS `level_enemies`;
 CREATE TABLE IF NOT EXISTS `level_enemies` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `level_id` int(10) unsigned NOT NULL,
@@ -113,6 +117,7 @@ DELETE FROM `level_enemies`;
 
 
 -- Dumping structure for table moo_moo_code.level_tiles
+DROP TABLE IF EXISTS `level_tiles`;
 CREATE TABLE IF NOT EXISTS `level_tiles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `level_id` int(11) unsigned NOT NULL,
@@ -133,6 +138,7 @@ INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
 
 
 -- Dumping structure for table moo_moo_code.tiles
+DROP TABLE IF EXISTS `tiles`;
 CREATE TABLE IF NOT EXISTS `tiles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
@@ -149,6 +155,7 @@ INSERT INTO `tiles` (`id`, `name`, `icon`) VALUES
 
 
 -- Dumping structure for table moo_moo_code.users
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
@@ -170,6 +177,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `progress_learn_category`, `p
 
 
 -- Dumping structure for table moo_moo_code.user_levels
+DROP TABLE IF EXISTS `user_levels`;
 CREATE TABLE IF NOT EXISTS `user_levels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
