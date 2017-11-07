@@ -1,6 +1,8 @@
 package com.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Tiles {
 	public HashMap<Integer,Tile> Tiles;
@@ -19,5 +21,15 @@ public class Tiles {
 	public Tile get(int id)
 	{
 		return Tiles.get(id);
+	}
+	public ArrayList<Tile> getAllTiles()
+	{
+		Set<Integer> tileSet =  Tiles.keySet();
+		ArrayList<Tile> tiles = new ArrayList<>();
+		for(int tileId : tileSet)
+		{
+			tiles.add(Tiles.get(tileId));
+		}
+		return tiles;
 	}
 }
