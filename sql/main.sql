@@ -90,7 +90,7 @@ INSERT INTO `levels` (`id`, `name`, `unlock_from`, `unlock_from_2`, `unlock_from
 	(3, 'Obstacles', 2, -1, -1, 20, 10, 0, 0, 0, 0),
 	(4, 'Attacks', 1, -1, -1, -10, 0, 0, 0, 0, 0),
 	(6, 'Mazes', 3, -1, -1, 20, 20, 0, 0, 0, 0),
-	(7, 'Enemies', 4, -1, -1, -20, -10, 0, 0, 0, 0);
+	(7, 'Enemies', 4, -1, -1, -20, -10, 4, 4, 0, 0);
 /*!40000 ALTER TABLE `levels` ENABLE KEYS */;
 
 
@@ -116,17 +116,19 @@ DELETE FROM `level_enemies`;
 CREATE TABLE IF NOT EXISTS `level_tiles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `level_id` int(11) unsigned NOT NULL,
-  `coord_x` int(11) unsigned NOT NULL,
-  `coord_y` int(11) unsigned NOT NULL DEFAULT '0',
+  `x` int(11) unsigned NOT NULL,
+  `y` int(11) unsigned NOT NULL DEFAULT '0',
   `tile_type` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `tile_level_idx` (`level_id`),
   CONSTRAINT `tile_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.level_tiles: ~0 rows (approximately)
+-- Dumping data for table moo_moo_code.level_tiles: ~1 rows (approximately)
 DELETE FROM `level_tiles`;
 /*!40000 ALTER TABLE `level_tiles` DISABLE KEYS */;
+INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
+	(1, 7, 1, 1, 1);
 /*!40000 ALTER TABLE `level_tiles` ENABLE KEYS */;
 
 
@@ -136,11 +138,13 @@ CREATE TABLE IF NOT EXISTS `tiles` (
   `name` varchar(45) NOT NULL,
   `icon` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.tiles: ~0 rows (approximately)
+-- Dumping data for table moo_moo_code.tiles: ~1 rows (approximately)
 DELETE FROM `tiles`;
 /*!40000 ALTER TABLE `tiles` DISABLE KEYS */;
+INSERT INTO `tiles` (`id`, `name`, `icon`) VALUES
+	(1, 'Wall', 'grey');
 /*!40000 ALTER TABLE `tiles` ENABLE KEYS */;
 
 
