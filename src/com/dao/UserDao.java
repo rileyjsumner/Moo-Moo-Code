@@ -137,7 +137,7 @@ public class UserDao {
 								set.getString("password"),
 								set.getInt("progress_learn_category"),
 								set.getInt("progress_learn_lesson"),
-								set.getInt("progress_game_level"),
+								/*set.getInt("progress_game_level"),*/ 1,
 								set.getInt("admin") == 1
 						)
 				);

@@ -59,21 +59,23 @@
 		</div>
 		<div id="content">
 			<%
-				System.out.println(request.getAttribute("admin"));
-				if((boolean)request.getAttribute("admin")){
 				
+				if((boolean)request.getAttribute("admin")){
+					
 					out.print("<h2>Users</h2>" +
 							"<table>");
 					for (UserBean user : (ArrayList<UserBean>)request.getAttribute("users")) {
+						System.out.println("kek");
 						out.print(
 								"<tr>" +
-									"<td>Id:" + user.getId() + "</td>" +
-									"<td>Username:" + user.getUsername() + "</td>" +
-									"<td>Password:" + user.getPassword() + "</td>" +
-									"<td>Category Progress:" + user.getCategoryProgress() + "</td>" +
-									"<td>Lesson Progress:" + user.getLessonProgress() + "</td>" +
-									"<td>Game Level:" + user.getGameLevel() + "</td>" +
-									"<td>Admin:" + user.isAdmin() + "</td>" +
+									"<td><label for='id'>Id:</label><input id='id' type='text' value='" + user.getId() + "'/></td>" +
+									"<td><label for='user'>Username:</label><input id='user' type='text' value='Username:" + user.getUsername() + "'/></td>" +
+									"<td><label for='pass'>Password:</label><input id='pass' type='text' value='Username:" + user.getPassword() + "'/></td>" +
+									"<td><label for='catProg'>Category Progress:</label><input id='catProg' type='text' value='Username:" + user.getCategoryProgress() + "'/></td>" +
+									"<td><label for='lesProg'>Lesson Progress:</label><input id='lesProg' type='text' value='Username:" + user.getLessonProgress() + "'/></td>" +
+									"<td><label for='gameLvl'>Game Level:</label><input id='gameLvl' type='text' value='Username:" + user.getGameLevel() + "'/></td>" +
+									"<td><label for='admin'>Admin:</label><input id='admin' type='text' value='Username:" + user.isAdmin() + "'/></td>" +
+									"<td><input type='submit' value='Update'/></td>" +
 								"</tr>"
 						);
 					}

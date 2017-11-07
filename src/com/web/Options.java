@@ -35,6 +35,7 @@ public class Options extends HttpServlet {
 		int user_id = (int)session.getAttribute(("user_id"));
 		boolean admin = UserDao.isAdmin(user_id);
 		List<UserBean> userBeanList = UserDao.GetUsers();
+		
 		request.setAttribute("users", userBeanList);
 		request.setAttribute("admin", admin);
 		request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
