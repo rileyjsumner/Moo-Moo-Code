@@ -1,25 +1,23 @@
-package com.web;
+package com.web.Admin;
 
-import com.beans.UserBean;
+import com.data.User;
 import com.dao.UserDao;
 import com.util.LoginUtil;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Objects;
+
+import static com.dao.UserDao.DeleteUser;
+import static com.dao.UserDao.UpdateUsers;
+import static com.dao.UserDao.isAdmin;
 
 
-public class Options extends HttpServlet {
+public class Users extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public Options() {
+	public Users() {
 		super();
 	}
 	
@@ -33,21 +31,20 @@ public class Options extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int user_id = (int)session.getAttribute(("user_id"));
-		boolean admin = UserDao.isAdmin(user_id);
-		List<UserBean> userBeanList = UserDao.GetUsers();
+		boolean admin = isAdmin(user_id);
+		List<User> userList = UserDao.GetUsers();
 		
-		request.setAttribute("users", userBeanList);
+		request.setAttribute("users", userList);
 		request.setAttribute("admin", admin);
-		request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
 
 		if(LoginUtil.TestLogin(session))
 		{
-			request.getRequestDispatcher("/WEB-INF/options.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/admin/users.jsp").forward(request, response);
 		}
 		else
 		{
 			request.setAttribute("action_text","access account options");
-			request.setAttribute("action","Options");
+			request.setAttribute("action","Users");
 			request.getRequestDispatcher("/WEB-INF/login_required.jsp").forward(request, response);
 		}
 		
@@ -62,6 +59,16 @@ public class Options extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		System.out.println("kek1: ");
+		String type = request.getParameter("type");
+		String value = request.getParameter("value");
+		int user = Integer.parseInt(request.getParameter("user"));
+		
+		if(type.equals("username") || type.equals("password") || type.equals("progress_learn_category") || type.equals("progress_learn_lesson")) {
+			UpdateUsers(user, type, value);
+		} else if(type.equals("delete") && !isAdmin(user)) {
+			System.out.println("delete me" + user);
+			DeleteUser(user);
+		}
 	}
 }

@@ -2,9 +2,8 @@ package com.dao;
 
 import com.data.LessonId;
 import com.util.DbUtil;
-import com.beans.UserBean;
+import com.data.User;
 
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -120,24 +119,23 @@ public class UserDao {
 		}
 		return -1;
 	}
-	public static List<UserBean> GetUsers()
+	public static List<User> GetUsers()
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
-		List<UserBean> users = new ArrayList<UserBean>();
+		List<User> users = new ArrayList<User>();
 		try
 		{
 			preparedStatement = con.prepareStatement("SELECT * FROM users");
 			ResultSet set = preparedStatement.executeQuery();
 			while(set.next()) {
 				users.add(
-						new UserBean(
+						new User(
 								set.getInt("id"),
 								set.getString("username"),
 								set.getString("password"),
 								set.getInt("progress_learn_category"),
 								set.getInt("progress_learn_lesson"),
-								/*set.getInt("progress_game_level"),*/ 1,
 								set.getInt("admin") == 1
 						)
 				);
@@ -147,5 +145,44 @@ public class UserDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return users;
+	}
+	public static void UpdateUsers(int userID, String column, String value)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		PreparedStatement preparedStatement2;
+		try
+		{
+			if(column.equals("username") || column.equals("password")) {
+				preparedStatement = con.prepareStatement("UPDATE users SET " + column + " = ? WHERE id=?");
+				preparedStatement.setString(1, value);
+				preparedStatement.setInt(2, userID);
+				preparedStatement.executeQuery();
+			} else {
+				preparedStatement2 = con.prepareStatement("UPDATE users SET " + column + " = ? WHERE id=?");
+				preparedStatement2.setInt(1, Integer.parseInt(value));
+				preparedStatement2.setInt(2, userID);
+				preparedStatement2.execute();
+			}
+			
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	public static void DeleteUser(int userID)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("DELETE FROM users WHERE id = ?");
+			preparedStatement.setInt(1, userID);
+			preparedStatement.executeQuery();
+			
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 }
