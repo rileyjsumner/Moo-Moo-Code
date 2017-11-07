@@ -6,6 +6,24 @@ body, html {
 	display: flex;
 	flex-direction: column;
 }
+.map-table
+{
+	border-collapse:collapse;
+	border:1px solid #49483E;
+	margin-left: auto;margin-right: auto;
+}
+.map-table>tbody>tr>td
+{
+	padding:0;
+	border:1px solid #49483E;
+}
+.map-tile
+{
+	width:40px;
+	height:40px;
+	text-align:center;
+	vertical-align: middle;
+}
 select.admin-levels-input>option
 {
 	color:#F8F8F2;
@@ -47,7 +65,7 @@ select.admin-levels-input>option
 {
 	font-size: 16px;
 	margin:5px;
-	padding:5px 0px;
+	padding:5px 0;
 }
 .vertical-fill-container
  {

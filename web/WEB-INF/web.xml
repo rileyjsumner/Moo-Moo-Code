@@ -11,6 +11,17 @@
 	</welcome-file-list>
 	
 	<servlet>
+		<description>Admin Level Editor</description>
+		<display-name>Admin/LevelEditor</display-name>
+		<servlet-name>AdminLevelEditor</servlet-name>
+		<servlet-class>com.web.Admin.LevelEditor</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminLevelEditor</servlet-name>
+		<url-pattern>/Admin/LevelEditor</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<description>Admin Levels</description>
 		<display-name>Admin/Levels</display-name>
 		<servlet-name>AdminLevels</servlet-name>
