@@ -7,7 +7,8 @@
 
 <div class="content-header" style ="margin:20px">Admin Panel</div>
 <div class="content-container">
-	<button class = "content-container-button" onclick = "location.href='/Admin/Levels'">Go to level editor</button>
+	<button class = "content-container-button" onclick = "location.href='/Admin/Levels'">Go to Level Editor</button>
+	<button class = "content-container-button" onclick = "location.href='/Admin/Users'">Go to User Editor</button>
 </div>
 
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

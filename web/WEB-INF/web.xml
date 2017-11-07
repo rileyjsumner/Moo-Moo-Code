@@ -144,13 +144,13 @@
 	
 	<servlet>
 		<description></description>
-		<display-name>Options</display-name>
-		<servlet-name>Options</servlet-name>
-		<servlet-class>com.web.Options</servlet-class>
+		<display-name>Users</display-name>
+		<servlet-name>Users</servlet-name>
+		<servlet-class>com.web.Admin.Users</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Options</servlet-name>
-		<url-pattern>/Options</url-pattern>
+		<servlet-name>Users</servlet-name>
+		<url-pattern>/Admin/Users</url-pattern>
 	</servlet-mapping>
 
 </web-app>
