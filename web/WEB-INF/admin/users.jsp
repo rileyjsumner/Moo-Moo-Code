@@ -17,7 +17,7 @@
 					"<th>Username</th>" +
 					"<th>Password</th>" +
 					"<th>Category Progress</th>" +
-					"<th>Lesson Progress</th>" +
+					"<th>LessonEditor Progress</th>" +
 					"<th>Admin</th>" +
 					"<th>Delete</th>" +
 				"</tr>");
