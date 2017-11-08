@@ -7,8 +7,7 @@ if((boolean)session.getAttribute("signed_in"))
 	"<div id=\"account-box\" onclick=\"toggleAccountDropdown()\">" +
 	"<table><tr><td><p id =\"account-signed-in\">Signed in as</p><p id =\"account-name\">" + session.getAttribute("username") + "</p><td><div id =\"account-picture\"></div></td></tr></table>" +
 	"</div>" +
-	"<div id = \"account-dropdown\" style=\"display:none\">" +
-	"<div class=\"account-dropdown-option\" onclick=\"location.href = '/Options'\"><i class=\"fa fa-sliders account-icon\"></i>Options</div>");
+	"<div id = \"account-dropdown\" style=\"display:none\">");
 	if((boolean)session.getAttribute("admin"))
 	{
 		out.print("<div class=\"account-dropdown-option\" onclick=\"location.href = '/Admin/Home'\"><i class=\"fa fa-sliders account-icon\"></i>Admin Panel</div>");
