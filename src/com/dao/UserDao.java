@@ -65,6 +65,26 @@ public class UserDao {
 		}
 		return false;
 	}
+	public static void AddUser(String username, String password, int categoryProgress, int lessonProgress, int admin) {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			if(!TestUserExists(username))
+			{
+				preparedStatement = con.prepareStatement("INSERT INTO users (username,password, progress_learn_category, progress_learn_lesson, admin) VALUES (?,?,?,?,?)");
+				preparedStatement.setString(1, username);
+				preparedStatement.setString(2, password);
+				preparedStatement.setInt(3, categoryProgress);
+				preparedStatement.setInt(4, lessonProgress);
+				preparedStatement.setInt(5, admin);
+				preparedStatement.execute();
+			}
+			
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 	public static boolean AddUser(String username,String password)
 	{
 		Connection con = DbUtil.getConnection();
@@ -178,7 +198,7 @@ public class UserDao {
 		{
 			preparedStatement = con.prepareStatement("DELETE FROM users WHERE id = ?");
 			preparedStatement.setInt(1, userID);
-			preparedStatement.executeQuery();
+			preparedStatement.execute();
 			
 		}
 		catch(SQLException ex) {
