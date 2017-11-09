@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `lesson_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.lesson_categories: ~4 rows (approximately)
+-- Dumping data for table moo_moo_code.lesson_categories: ~3 rows (approximately)
 DELETE FROM `lesson_categories`;
 /*!40000 ALTER TABLE `lesson_categories` DISABLE KEYS */;
 INSERT INTO `lesson_categories` (`id`, `name`, `lesson_num`) VALUES
@@ -125,15 +125,31 @@ CREATE TABLE IF NOT EXISTS `level_tiles` (
   `y` int(11) unsigned NOT NULL DEFAULT '0',
   `tile_type` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_tile` (`level_id`,`x`,`y`),
   KEY `tile_level_idx` (`level_id`),
   CONSTRAINT `tile_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.level_tiles: ~1 rows (approximately)
+-- Dumping data for table moo_moo_code.level_tiles: ~16 rows (approximately)
 DELETE FROM `level_tiles`;
 /*!40000 ALTER TABLE `level_tiles` DISABLE KEYS */;
 INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
-	(1, 7, 1, 1, 1);
+	(8, 7, 2, 2, 1),
+	(14, 7, 1, 2, 0),
+	(15, 7, 1, 1, 0),
+	(16, 7, 2, 1, 1),
+	(18, 7, 0, 3, 1),
+	(19, 7, 0, 2, 1),
+	(21, 7, 0, 1, 1),
+	(22, 7, 1, 0, 0),
+	(24, 7, 2, 0, 0),
+	(25, 7, 3, 1, 0),
+	(26, 7, 3, 2, 0),
+	(27, 7, 3, 3, 0),
+	(28, 7, 2, 3, 1),
+	(29, 7, 1, 3, 1),
+	(34, 7, 3, 0, 0),
+	(37, 7, 0, 0, 1);
 /*!40000 ALTER TABLE `level_tiles` ENABLE KEYS */;
 
 
@@ -143,14 +159,16 @@ CREATE TABLE IF NOT EXISTS `tiles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `icon` varchar(50) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.tiles: ~1 rows (approximately)
+-- Dumping data for table moo_moo_code.tiles: ~2 rows (approximately)
 DELETE FROM `tiles`;
 /*!40000 ALTER TABLE `tiles` DISABLE KEYS */;
-INSERT INTO `tiles` (`id`, `name`, `icon`) VALUES
-	(1, 'Wall', 'grey');
+INSERT INTO `tiles` (`id`, `name`, `icon`, `type`) VALUES
+	(1, 'Wall', 'stone_test', 1),
+	(2, 'Ground', 'grass_test', 0);
 /*!40000 ALTER TABLE `tiles` ENABLE KEYS */;
 
 

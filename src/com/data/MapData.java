@@ -14,7 +14,7 @@ public class MapData {
 	}
 	public Tile GetTile(int x,int y)
 	{
-		int tile = Map.GetTile(x,y).Id;
+		int tile = Map.GetTile(x,y).TileType;
 		
 		if(tile != -1){return Tiles.get(tile);}
 		else{return null;}

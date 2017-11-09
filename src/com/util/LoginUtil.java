@@ -40,7 +40,7 @@ public class LoginUtil {
 		}
 		return false;
 	}
-	public static boolean TestAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public static boolean TestAdmin(HttpServletRequest request, HttpServletResponse response,boolean redirect) throws IOException {
 		HttpSession session = request.getSession();
 		if(TestLogin(session))
 		{
@@ -49,7 +49,10 @@ public class LoginUtil {
 				return true;
 			}
 		}
-		response.sendRedirect("/Home");
+		if(redirect){response.sendRedirect("/Home");}
 		return false;
+	}
+	public static boolean TestAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return TestAdmin(request,response,true);
 	}
 }

@@ -58,9 +58,23 @@ public class LevelEditor extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		if(LoginUtil.TestAdmin(request,response))
+		if(LoginUtil.TestAdmin(request,response,false))
 		{
-		
+			if(request.getParameterMap().containsKey("action"))
+			{
+				String action = request.getParameter("action");
+				if(action.equals("tile"))
+				{
+					try{
+						int tileX = Integer.parseInt(request.getParameter("x"));
+						int tileY = Integer.parseInt(request.getParameter("y"));
+						int tileType = Integer.parseInt(request.getParameter("type"));
+						int mapId = Integer.parseInt(request.getParameter("map"));
+						MapsDao.SetMapTile(mapId,tileX,tileY,tileType);
+					}
+					catch(NumberFormatException ex){/**/}
+				}
+			}
 		}
 	}
 }

@@ -28,7 +28,7 @@ public class MapsDao {
 			if(set.first()) // The level exists
 			{
 				// Make the blank map
-				TileMap tileMap = new TileMap(set.getInt("dim_x"),set.getInt("dim_y"),set.getFloat("start_x"),set.getFloat("start_y"));
+				TileMap tileMap = new TileMap(id,set.getInt("dim_x"),set.getInt("dim_y"),set.getFloat("start_x"),set.getFloat("start_y"));
 				
 				preparedStatement = con.prepareStatement("SELECT x,y,id,tile_type FROM level_tiles WHERE level_id = ?");
 				preparedStatement.setInt(1,id);
@@ -48,7 +48,7 @@ public class MapsDao {
 				set = preparedStatement.executeQuery();
 				while(set.next())
 				{
-					tiles.add(set.getInt("id"),set.getString("name"),set.getString("icon"));
+					tiles.add(set.getInt("id"),set.getString("name"),set.getString("icon"),set.getInt("type"));
 				}
 				
 				// Combine them, and set valid = true
@@ -59,5 +59,23 @@ public class MapsDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return map;
+	}
+	public static void SetMapTile(int mapId, int x, int y, int tileType)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("INSERT INTO level_tiles (level_id, x,y,tile_type) VALUES ( ?, ?, ?, ?) ON DUPLICATE KEY UPDATE tile_type = ?");
+			preparedStatement.setInt(1,mapId);
+			preparedStatement.setInt(2,x);
+			preparedStatement.setInt(3,y);
+			preparedStatement.setInt(4,tileType);
+			preparedStatement.setInt(5,tileType);
+			preparedStatement.execute();
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 }

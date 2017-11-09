@@ -10,17 +10,17 @@ public class Tiles {
 	{
 		Tiles = new HashMap<>();
 	}
-	public void add(int id, Tile data)
+	public void add(int type, Tile data)
 	{
-		Tiles.put(id,data);
+		Tiles.put(type,data);
 	}
-	public void add(int id, String name, String icon)
+	public void add(int id, String name, String icon,int type)
 	{
-		Tiles.put(id,new Tile(id,name,icon));
+		Tiles.put(type,new Tile(id,name,icon,type));
 	}
-	public Tile get(int id)
+	public Tile get(int type)
 	{
-		return Tiles.get(id);
+		return Tiles.get(type);
 	}
 	public ArrayList<Tile> getAllTiles()
 	{

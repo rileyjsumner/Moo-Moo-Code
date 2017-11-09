@@ -22,6 +22,7 @@
 	.tile-name
 	{
 		display: inline-block;
+		margin:10px;
 	}
 	.tile-icon
 	{
@@ -30,10 +31,12 @@
 		text-align:center;
 		display: inline-block;
 		vertical-align: middle;
+		margin:10px;
 	}
 </style>
 <div style="display:inline-block;width:295px;height:100%;float:left;border-right:5px solid #49483E;">
 	<p style="font-size:18px;padding:20px;">Select a tile to apply:</p>
+	<table style = "border-collapse: collapse;width:100%;text-align:center;">
 		<%
 			MapData mapData = (MapData) request.getAttribute("map_data");
 			
@@ -41,9 +44,10 @@
 			
 			for(Tile tile : tiles)
 			{
-				out.print("<div class = 'level-tile-select horizontal-fill-container' data-tile-id = '"+tile.Id+"'><div class = 'horizontal-fill'><div class = 'tile-icon' style = 'background-color:"+tile.Icon+"'></div></div><div class = 'horizontal-fill'><div class = 'tile-name'>"+tile.Name+"</div></div></div>");
+				out.print("<tr class = 'level-tile-select' data-tile-icon='"+tile.Icon+"' data-tile-type = '"+tile.Type+"' data-tile-id = '"+tile.Id+"'><td><div class = 'tile-icon pixel' style = 'background-image: url(/map_tiles/"+tile.Icon+".png)'></div></td><td><div class = 'tile-name'>"+tile.Name+"</div></td></tr>");
 			}
 		%>
+	</table>
 </div>
 <div style="display:inline-block;width:calc(100% - 300px);height:100%;text-align:center;">
 	<table class = "map-table" style = "position: relative; top: 50%;transform: translateY(-50%);">
@@ -53,21 +57,72 @@
 			out.print("<tr>");
 			for(int x = 0 ;x<mapData.Map.DimX;x++)
 			{
-				out.print("<td><div class = \"map-tile\" data-x = '"+x+"' data-y='"+y+"' style = \"background-color:");
 				final Tile tile = mapData.GetTile(x, y);
 				if(tile != null)
 				{
+					out.print("<td><div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\""+tile.Type+"\" data-id=\""+tile.Id+"\" style = \"cursor:pointer;background-image: url(/map_tiles/");
 					out.print(tile.Icon);
 				}
 				else
 				{
-					out.print("green");
+					out.print("<td><div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\"0\" style = \"cursor:pointer;background-image: url(/map_tiles/");
+					out.print("null");
 				}
-				out.print(";\"></div></td>");
+				out.print(".png);\"></div></td>");
 			}
 			out.print("</tr>");
 		}
 	%>
 	</table>
 </div>
+<script>
+	$(document).ready(function(){
+		var selected_tile_type=null;
+		var selected_tile_icon=null;
+		$(".level-tile-select").click(function(){
+			
+			var selected = $(this).data("tile-id");
+			selected_tile_type = $(this).data("tile-type");
+			selected_tile_icon = $(this).data("tile-icon");
+			
+			$(".level-tile-select").each(function(){
+				if($(this).data("tile-id") === selected)
+				{
+					$(this).css("background-color","#75715E");
+				}
+				else
+				{
+					$(this).css("background-color","");
+				}
+			});
+		});
+		
+		// make the stuff draggable
+		var isMouseDown = false;
+		$('body').mousedown(function() {isMouseDown = true;}).mouseup(function() {isMouseDown = false;});
+		$(".map-tile").mouseenter(function()
+		{
+			if(isMouseDown)
+			{
+				changeTile($(this));
+			}
+		});
+		$(".map-tile").mousedown(function(){
+			changeTile($(this));
+		});
+		function changeTile(selected_el)
+		{
+			if(selected_tile_type !== null)
+			{
+				selected_el.css("background-image","url(/map_tiles/"+selected_tile_icon+".png)");
+				$.post("/Admin/LevelEditor",{
+						action:"tile",
+						x:selected_el.data("x"),
+						y:selected_el.data("y"),
+						type:selected_tile_type,
+						map: "<%= mapData.Map.Id%>"})
+			}
+		}
+	});
+</script>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

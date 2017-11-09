@@ -2,13 +2,13 @@ package com.data;
 
 public class MapTile {
 	public int Id;
-	public int TileId;
+	public int TileType;
 	public MapTile()
 	{
-		Id=-1;TileId=-1;
+		Id=-1;TileType=-1;
 	}
-	public MapTile(int id, int tileId)
+	public MapTile(int id, int tileType)
 	{
-		Id=id;TileId=tileId;
+		Id=id;TileType=tileType;
 	}
 }

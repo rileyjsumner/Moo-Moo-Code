@@ -6,16 +6,22 @@ body, html {
 	display: flex;
 	flex-direction: column;
 }
+.pixel
+{
+	image-rendering: pixelated;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
 .map-table
 {
 	border-collapse:collapse;
-	border:1px solid #49483E;
+	border:2px solid #49483E;
 	margin-left: auto;margin-right: auto;
 }
 .map-table>tbody>tr>td
 {
 	padding:0;
-	border:1px solid #49483E;
+	outline: 1px dashed #49483E;
 }
 .map-tile
 {
@@ -23,6 +29,13 @@ body, html {
 	height:40px;
 	text-align:center;
 	vertical-align: middle;
+	background-blend-mode: color;
+	background-color: rgba(0, 0, 0, 0.01);
+	transition: background-color .1s;
+}
+.map-tile:hover
+{
+	background-color: rgba(0, 0, 0, 0.4);
 }
 select.admin-levels-input>option
 {
