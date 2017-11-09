@@ -128,25 +128,25 @@ CREATE TABLE IF NOT EXISTS `level_tiles` (
   UNIQUE KEY `unique_tile` (`level_id`,`x`,`y`),
   KEY `tile_level_idx` (`level_id`),
   CONSTRAINT `tile_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table moo_moo_code.level_tiles: ~16 rows (approximately)
 DELETE FROM `level_tiles`;
 /*!40000 ALTER TABLE `level_tiles` DISABLE KEYS */;
 INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
-	(8, 7, 2, 2, 1),
+	(8, 7, 2, 2, 0),
 	(14, 7, 1, 2, 0),
 	(15, 7, 1, 1, 0),
-	(16, 7, 2, 1, 1),
-	(18, 7, 0, 3, 1),
-	(19, 7, 0, 2, 1),
-	(21, 7, 0, 1, 1),
-	(22, 7, 1, 0, 0),
-	(24, 7, 2, 0, 0),
+	(16, 7, 2, 1, 0),
+	(18, 7, 0, 3, 0),
+	(19, 7, 0, 2, 0),
+	(21, 7, 0, 1, 0),
+	(22, 7, 1, 0, 1),
+	(24, 7, 2, 0, 1),
 	(25, 7, 3, 1, 0),
 	(26, 7, 3, 2, 0),
-	(27, 7, 3, 3, 0),
-	(28, 7, 2, 3, 1),
+	(27, 7, 3, 3, 1),
+	(28, 7, 2, 3, 0),
 	(29, 7, 1, 3, 1),
 	(34, 7, 3, 0, 0),
 	(37, 7, 0, 0, 1);

@@ -33,7 +33,45 @@
 		vertical-align: middle;
 		margin:10px;
 	}
+	.action
+	{
+		margin:3px;
+		padding: 2px;
+		border: 1px solid #75715E;
+		height: 83px;
+		vertical-align: middle;
+		overflow: hidden;
+		cursor:pointer;
+		transition: background-color .15s, box-shadow .15s;
+		border-radius:5px;
+		box-shadow: inset 0 0 1px 1pt #49483E;
+	}
+	.action:hover
+	{
+		background-color: #49483E;
+		box-shadow: inset 0 0 1px 1pt #A6E22E;
+	}
+	.action:hover>i.action-icon
+	{
+		color:#A6E22E;
+	}
+	.action-icon
+	{
+		transition: color .15s;
+		font-size: 65px;
+		color: #75715E;
+		margin-bottom: 5px;
+	}
+	.action-text
+	{
+		font-size:10px;
+	}
 </style>
+<div style="display:inline-block;width:95px;height:100%;float:left;border-right:5px solid #49483E;">
+	<div class = "action"><i class = "fa fa-gear action-icon"></i><p class = "action-text">Level Settings</p></div>
+	<div class = "action"><i class = "fa fa-th action-icon"></i><p class = "action-text">Tile Editor</p></div>
+	<div class = "action"><i class = "fa fa-street-view action-icon"></i><p class = "action-text">Entity Editor</p></div>
+</div>
 <div style="display:inline-block;width:295px;height:100%;float:left;border-right:5px solid #49483E;">
 	<p style="font-size:18px;padding:20px;">Select a tile to apply:</p>
 	<table style = "border-collapse: collapse;width:100%;text-align:center;">
@@ -49,7 +87,7 @@
 		%>
 	</table>
 </div>
-<div style="display:inline-block;width:calc(100% - 300px);height:100%;text-align:center;">
+<div style="display:inline-block;width:calc(100% - 400px);height:100%;text-align:center;">
 	<table class = "map-table" style = "position: relative; top: 50%;transform: translateY(-50%);">
 	<%
 		for(int y =mapData.Map.DimY-1;y>=0;y--)
@@ -123,6 +161,7 @@
 						map: "<%= mapData.Map.Id%>"})
 			}
 		}
+		$(".")
 	});
 </script>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />
