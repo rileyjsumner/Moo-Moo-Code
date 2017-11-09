@@ -6,40 +6,58 @@
 
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 <title>Moo Moo Code - Login</title>
+<link rel="stylesheet" href="<c:url value="/css/table.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
+<div class="wrapper">
 <%
+	int nextId = 0;
 	if((boolean)request.getAttribute("admin")){
 		
 		out.print("<h2>Users</h2>" +
-				"<table>" +
-				"<tr>" +
-					"<th>Id</th>" +
-					"<th>Username</th>" +
-					"<th>Password</th>" +
-					"<th>Category Progress</th>" +
-					"<th>LessonEditor Progress</th>" +
-					"<th>Admin</th>" +
-					"<th>Delete</th>" +
-				"</tr>");
+				"<div class='table'>" +
+				"<div class='row header'>" +
+					"<div class='cell'>Id</div>" +
+					"<div class='cell'>Username</div>" +
+					"<div class='cell'>Password</div>" +
+					"<div class='cell'>Category Progress</div>" +
+					"<div class='cell'>LessonEditor Progress</div>" +
+					"<div class='cell'>Admin</div>" +
+					"<div class='cell'>Delete</div>" +
+				"</div>");
 		for (User user : (ArrayList<User>)request.getAttribute("users")) {
 			out.print(
-					"<tr>" +
-						"<td><input data-user='" + user.id + "' data-type='id' type='text' value='" + user.id + "'/></td>" +
-						"<td><input data-user='" + user.id + "' class='autoupdate' data-type='username' type='text' value='" + user.username + "'/></td>" +
-						"<td><input data-user='" + user.id + "' class='autoupdate' data-type='password' type='text' value='" + user.password + "'/></td>" +
-						"<td><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_category' type='text' value='" + user.categoryProgress + "'/></td>" +
-						"<td><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_lesson' type='text' value='" + user.lessonProgress + "'/></td>" +
-						"<td><input data-user='" + user.id + "' class='autoupdate' data-type='admin' type='text' value='" + user.admin + "'/></td>" +
-						"<td><input data-user='" + user.id + "' class='delete' type='button' value='Delete'/></td>" +
-					"</tr>"
+					"<div class='row'>" +
+							"<div class='cell'><input data-user='" + user.id + "' data-type='id' type='text' value='" + user.id + "'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='username' type='text' value='" + user.username + "'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='password' type='text' value='" + user.password + "'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_category' type='text' value='" + user.categoryProgress + "'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_lesson' type='text' value='" + user.lessonProgress + "'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='admin' type='text' value='" + user.admin + "'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='delete' type='button' value='Delete'/></div>" +
+					"</div>"
 			);
+			nextId = user.id+1;
 		}
-		out.print("</table>");
-	
+		out.print("</div>");
 	} else {
 		out.print("You ain't no admin boi check how you sound");
 	}
 %>
+		<form method="post" action="/Admin/Users">
+			<div class="table">
+				<div class="row">
+					<div class="cell"><input type="number" name="id" value="<% out.print(nextId);%>"/></div>
+					<div class="cell"><input type='text' name='username' placeholder='username' /></div>
+					<div class="cell"><input type='text' name='password' placeholder='password' /></div>
+					<div class="cell"><input type='number' name='categoryProgress' placeholder='category progress'/></div>
+					<div class="cell"><input type='number' name='lessonProgress' placeholder='lesson progress'/></div>
+					<div class="cell"><input type='number' name='admin' placeholder='admin'/></div>
+					<input type="hidden" name="type" value="add"/>
+					<div class="cell"><input type='submit' name='add' value='Add User'/></div>
+				</div>
+			</div>
+		</form>
+	</div>
 <script>
 	$(".autoupdate").blur(function() {
 		var test = {
@@ -48,14 +66,16 @@
 			user: $(this).data("user")
 		};
 		$.post("/Admin/Users", test);
+		location.reload();
 	});
-	$(".delete").onclick(function() {
+	$(".delete").click(function() {
 		var test = {
 			type: "delete",
 			user: $(this).data("user")
 		};
 		$.post("/Admin/Users", test);
-	})
+		location.reload();
+	});
 </script>
 
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

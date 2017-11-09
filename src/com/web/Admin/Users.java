@@ -9,9 +9,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-import static com.dao.UserDao.DeleteUser;
-import static com.dao.UserDao.UpdateUsers;
-import static com.dao.UserDao.isAdmin;
+import static com.dao.UserDao.*;
 
 
 public class Users extends HttpServlet {
@@ -59,16 +57,23 @@ public class Users extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("kek1: ");
 		String type = request.getParameter("type");
 		String value = request.getParameter("value");
-		int user = Integer.parseInt(request.getParameter("user"));
 		
 		if(type.equals("username") || type.equals("password") || type.equals("progress_learn_category") || type.equals("progress_learn_lesson")) {
+			int user = Integer.parseInt(request.getParameter("user"));
 			UpdateUsers(user, type, value);
-		} else if(type.equals("delete") && !isAdmin(user)) {
-			System.out.println("delete me" + user);
+		} else if(type.equals("delete") && !isAdmin(Integer.parseInt(request.getParameter("user")))) {
+			int user = Integer.parseInt(request.getParameter("user"));
 			DeleteUser(user);
+		} else if(type.equals("add")) {
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			int categoryProgress = Integer.parseInt(request.getParameter("categoryProgress"));
+			int lessonProgress = Integer.parseInt(request.getParameter("lessonProgress"));
+			int admin = Integer.parseInt(request.getParameter("admin"));
+			AddUser(username, password, categoryProgress, lessonProgress, admin);
+			response.sendRedirect("/Admin/Users");
 		}
 	}
 }
