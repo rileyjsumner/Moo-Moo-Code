@@ -85,7 +85,7 @@ else
 	// Go to a lesson
 	$(".lesson-complete, .lesson-active").click(function()
 	{
-		location.href = "Lesson?lesson="+$(this).data("lesson");
+		location.href = "LessonEditor?lesson="+$(this).data("lesson");
 	});
 </script>
 
