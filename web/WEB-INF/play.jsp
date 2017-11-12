@@ -9,6 +9,7 @@
 
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 <title>Moo Moo Code - Level Select</title>
+<link rel="stylesheet" href="<c:url value="/css/levels.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
 
 <div class = "levels_container" style="height:100%">

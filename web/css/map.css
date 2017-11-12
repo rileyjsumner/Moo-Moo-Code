@@ -1,0 +1,151 @@
+.level-tile-select
+{
+	transition: background-color .2s;
+	cursor: pointer;
+	padding: 10px;
+	width: calc(100% - 20px);
+}
+.level-tile-select:hover
+{
+	background-color: #49483E;
+}
+.tile-name
+{
+	display: inline-block;
+	margin:10px;
+}
+.tile-icon
+{
+	width:40px;
+	height:40px;
+	text-align:center;
+	display: inline-block;
+	vertical-align: middle;
+	margin:10px;
+}
+.action
+{
+	margin:3px;
+	padding: 2px;
+	border: 1px solid #75715E;
+	height: 83px;
+	vertical-align: middle;
+	overflow: hidden;
+	cursor:pointer;
+	transition: background-color .15s, box-shadow .15s;
+	border-radius:5px;
+	box-shadow: inset 0 0 1px 1pt #49483E;
+	position:relative;
+}
+.action:hover
+{
+	background-color: #49483E;
+	box-shadow: inset 0 0 1px 1pt #A6E22E;
+}
+.action:hover>i.action-icon
+{
+	color:#A6E22E;
+}
+.action-icon
+{
+	transition: color .15s;
+	font-size: 65px;
+	color: #75715E;
+	margin-bottom: 5px;
+}
+.action-text
+{
+	font-size:10px;
+}
+.action-menu
+{
+	position: absolute;
+	left:100px;
+	display:inline-block;
+	width:295px;
+	height:100%;
+	border-right:5px solid #49483E;
+}
+.map_label_y
+{
+	height: 40px;
+	line-height: 40px;
+	color: #cac6b4;
+	user-select: none;
+	width: 15px;
+}
+.map_label_x
+{
+	text-align: center;
+	line-height: 30px;
+	color: #cac6b4;
+	user-select: none;
+}
+.entity-player
+{
+	background-image: url(/icons/characters/farmer_dan.png);
+	border-radius: 25px;
+	box-shadow: inset 0 0 20px 4px greenyellow;
+}
+#entity-reference
+{
+	position: relative;
+}
+.pixel
+{
+	image-rendering: pixelated;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.map-table
+{
+	border-collapse:collapse;
+	margin-left: auto;
+	margin-right: auto;
+	display: table;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.map-table>tbody>tr>td
+{
+	padding:0;
+	/*outline: 1px dashed #49483E;*/
+}
+.map-tile-cell
+{
+	display:table-cell;
+}
+.map-label-cell
+{
+	display:table-cell;
+	float:left;
+}
+.map-entity
+{
+	width:40px;
+	height:40px;
+	text-align:center;
+	vertical-align: middle;
+	transition: background-color .1s;
+	user-select: none;
+	position: absolute;
+	pointer-events:none;
+}
+.map-tile
+{
+	width:40px;
+	height:40px;
+	text-align:center;
+	vertical-align: middle;
+	background-blend-mode: color-burn;
+	background-color: rgba(0, 0, 0, 0.01);
+	transition: background-color .1s;
+	user-select: none;
+}
+.map-tile:hover
+{
+	background-color: rgba(0, 0, 0, 0.4) !important;
+}
+.map-table>tbody>tr:nth-child(even)>td.map-tile-cell:nth-child(even)>div.map-tile{background-color: #80808026;}
+.map-table>tbody>tr:nth-child(odd)>td.map-tile-cell:nth-child(odd)>div.map-tile{background-color: #80808026;}

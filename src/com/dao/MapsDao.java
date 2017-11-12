@@ -78,4 +78,36 @@ public class MapsDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+	public static void SetMapDim(int mapId, int x, int y)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("UPDATE levels SET dim_x = ?, dim_y = ? WHERE id = ?");
+			preparedStatement.setInt(1,x);
+			preparedStatement.setInt(2,y);
+			preparedStatement.setInt(3,mapId);
+			preparedStatement.execute();
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	public static void SetMapSpawn(int mapId, float x, float y)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("UPDATE levels SET start_x = ?, start_y = ? WHERE id = ?");
+			preparedStatement.setFloat(1,x);
+			preparedStatement.setFloat(2,y);
+			preparedStatement.setInt(3,mapId);
+			preparedStatement.execute();
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 }

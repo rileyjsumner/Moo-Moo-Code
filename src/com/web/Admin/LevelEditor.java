@@ -74,6 +74,32 @@ public class LevelEditor extends HttpServlet {
 					}
 					catch(NumberFormatException ex){/**/}
 				}
+				else if(action.equals("dim"))
+				{
+					try{
+						int dimX = Integer.parseInt(request.getParameter("x"));
+						int dimY = Integer.parseInt(request.getParameter("y"));
+						int mapId = Integer.parseInt(request.getParameter("map"));
+						
+						MapsDao.SetMapDim(mapId,dimX,dimY);
+						
+						response.sendRedirect("/Admin/LevelEditor?level="+mapId);
+					}
+					catch(NumberFormatException ex){response.sendRedirect("/Admin/Levels");}
+				}
+				else if(action.equals("spawn"))
+				{
+					try{
+						float spawnX = Float.parseFloat(request.getParameter("x"));
+						float spawnY = Float.parseFloat(request.getParameter("y"));
+						int mapId = Integer.parseInt(request.getParameter("map"));
+						
+						MapsDao.SetMapSpawn(mapId,spawnX,spawnY);
+						
+						response.sendRedirect("/Admin/LevelEditor?level="+mapId+"&mode=1");
+					}
+					catch(NumberFormatException ex){response.sendRedirect("/Admin/Levels");}
+				}
 			}
 		}
 	}

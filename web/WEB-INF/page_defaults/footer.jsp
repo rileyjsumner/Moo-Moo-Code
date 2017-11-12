@@ -1,5 +1,6 @@
 </div>
 </div>
+</div>
 <%
 if((boolean)session.getAttribute("signed_in"))
 {

@@ -6,6 +6,7 @@
 
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 <title>Moo Moo Code - Learn</title>
+<link rel="stylesheet" href="<c:url value="/css/lesson.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
 
 <%
@@ -85,7 +86,7 @@ else
 	// Go to a lesson
 	$(".lesson-complete, .lesson-active").click(function()
 	{
-		location.href = "LessonEditor?lesson="+$(this).data("lesson");
+		location.href = "/Lesson?lesson="+$(this).data("lesson");
 	});
 </script>
 

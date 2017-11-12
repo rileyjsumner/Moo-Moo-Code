@@ -1,0 +1,93 @@
+.lesson-codebed-output
+{
+	padding:10px;
+	text-align:left;
+}
+.lesson-codebed-submit
+{
+	text-align:center;
+	padding:10px;
+	transition: color 0.2s;
+	cursor: pointer;
+	font-size:20px;
+	background-color:  #49483E;
+}
+.lesson-codebed-submit:hover
+{
+	color: #A6E22E;
+}
+.lesson-content-container
+{
+	position: absolute;
+	left:0;
+	width:50%;
+	bottom:0;
+	top:0;
+	padding: 10px;
+}
+.lesson-codebed-container
+{
+	border-left: 5px solid #49483E;
+	position: absolute;
+	right:0;
+	width:50%;
+	bottom:0;
+	top:0;
+	text-align:left;
+}
+.category-container
+{
+	padding: 10px 0;
+	text-align: center;
+}
+.lesson
+{
+	display: inline-block;
+	font-size: 12px;
+	padding: 5px 15px;
+	cursor: pointer;
+}
+.lesson.lesson-complete
+{
+
+}
+.lesson.lesson-complete:hover
+{
+	background-color: #49483E;
+}
+.lesson.lesson-active
+{
+	color: #A6E22E;
+}
+.lesson.lesson-active:hover
+{
+	background-color: #49483E;
+}
+.lesson.lesson-locked
+{
+	cursor: default;
+	color: #75715E;
+}
+.lesson-category
+{
+	font-size: 20px;
+	padding: 5px;
+}
+.lesson-category.lesson-category-locked{
+	cursor: default;
+	color: #75715E;
+}
+.lesson-category.lesson-category-active
+{
+	background-color: #49483E;
+	color: #A6E22E;
+	cursor:pointer;
+}
+.lesson-category.lesson-category-complete
+{
+	cursor:pointer;
+}
+.lesson-text
+{
+	display: inline-block;
+}
