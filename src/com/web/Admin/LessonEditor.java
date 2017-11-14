@@ -1,5 +1,7 @@
 package com.web.Admin;
 
+import com.dao.MapsDao;
+import com.data.MapData;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -12,15 +14,10 @@ import java.io.IOException;
 public class LessonEditor extends HttpServlet
 {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		
-		
-		if(LoginUtil.TestLogin(session))
+		if(LoginUtil.TestAdmin(request,response))
 		{
 			request.getRequestDispatcher("/WEB-INF/admin/lessons.jsp").forward(request, response);
 		}
-		
-		
 	}
 	
 	/**
