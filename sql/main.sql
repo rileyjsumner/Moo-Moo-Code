@@ -11,6 +11,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- Dumping database structure for moo_moo_code
+DROP DATABASE IF EXISTS `moo_moo_code`;
 CREATE DATABASE IF NOT EXISTS `moo_moo_code` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `moo_moo_code`;
 
@@ -74,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `lesson_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.lesson_categories: ~3 rows (approximately)
+-- Dumping data for table moo_moo_code.lesson_categories: ~4 rows (approximately)
 DELETE FROM `lesson_categories`;
 /*!40000 ALTER TABLE `lesson_categories` DISABLE KEYS */;
 INSERT INTO `lesson_categories` (`id`, `name`, `lesson_num`) VALUES
@@ -154,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `level_tiles` (
   CONSTRAINT `tile_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1450 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.level_tiles: ~169 rows (approximately)
+-- Dumping data for table moo_moo_code.level_tiles: ~173 rows (approximately)
 DELETE FROM `level_tiles`;
 /*!40000 ALTER TABLE `level_tiles` DISABLE KEYS */;
 INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
@@ -344,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `tiles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.tiles: ~1 rows (approximately)
+-- Dumping data for table moo_moo_code.tiles: ~2 rows (approximately)
 DELETE FROM `tiles`;
 /*!40000 ALTER TABLE `tiles` DISABLE KEYS */;
 INSERT INTO `tiles` (`id`, `name`, `icon`, `type`) VALUES
