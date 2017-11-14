@@ -20,7 +20,7 @@
 					"<div class='cell'>Username</div>" +
 					"<div class='cell'>Password</div>" +
 					"<div class='cell'>Category Progress</div>" +
-					"<div class='cell'>LessonEditor Progress</div>" +
+					"<div class='cell'>Lesson Progress</div>" +
 					"<div class='cell'>Admin</div>" +
 					"<div class='cell'>Delete</div>" +
 				"</div>");
@@ -33,7 +33,7 @@
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_category' type='text' value='" + user.categoryProgress + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_lesson' type='text' value='" + user.lessonProgress + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='admin' type='text' value='" + user.admin + "'/></div>" +
-							"<div class='cell'><input data-user='" + user.id + "' class='delete' type='button' value='Delete'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='delete' type='button' value=' Delete '/></div>" +
 					"</div>"
 			);
 			nextId = user.id+1;
