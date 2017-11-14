@@ -3,6 +3,10 @@ select.admin-levels-input>option
 	color:#F8F8F2;
 	background-color: #272822;
 }
+select.admin-levels-input
+{
+	border: 1px solid #49483E;
+}
 .level-submit-set{background-color:#517900;}
 .level-submit-edit{background-color:#01454F;}
 .level-submit-delete{background-color:#821B00;}

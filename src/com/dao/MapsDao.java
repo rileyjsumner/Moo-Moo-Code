@@ -1,15 +1,13 @@
 package com.dao;
 
-import com.data.MapData;
-import com.data.MapTile;
-import com.data.TileMap;
-import com.data.Tiles;
+import com.data.*;
 import com.util.DbUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,9 +48,29 @@ public class MapsDao {
 				{
 					tiles.add(set.getInt("id"),set.getString("name"),set.getString("icon"),set.getInt("type"));
 				}
+				preparedStatement = con.prepareStatement("SELECT * FROM level_entities WHERE level_id = ?");
+				preparedStatement.setInt(1,id);
+				set = preparedStatement.executeQuery();
+				
+				ArrayList<Entity> mapEntities = new ArrayList<>();
+				
+				while(set.next())
+				{
+					mapEntities.add(new Entity(set.getFloat("pos_x"),set.getFloat("pos_y"),set.getInt("entity_type"),set.getInt("id"),set.getString("name")));
+				}
+				
+				preparedStatement = con.prepareStatement("SELECT * FROM entities");
+				set = preparedStatement.executeQuery();
+				
+				ArrayList<Entity> entities = new ArrayList<>();
+				
+				while(set.next())
+				{
+					entities.add(new Entity(set.getInt("type"),set.getInt("id"),set.getString("name"),set.getString("icon")));
+				}
 				
 				// Combine them, and set valid = true
-				map = new MapData(tileMap,tiles);
+				map = new MapData(tileMap,tiles,mapEntities,entities);
 			}
 		}
 		catch (SQLException ex) {
@@ -104,6 +122,64 @@ public class MapsDao {
 			preparedStatement.setFloat(1,x);
 			preparedStatement.setFloat(2,y);
 			preparedStatement.setInt(3,mapId);
+			preparedStatement.execute();
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	public static void AddEntity(int mapId, int type)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("SELECT name FROM entities WHERE type = ?");
+			preparedStatement.setInt(1,type);
+			ResultSet set = preparedStatement.executeQuery();
+			
+			if(set.first())
+			{
+				String defaultName = set.getString("name");
+				preparedStatement = con.prepareStatement("INSERT INTO level_entities (level_id, pos_x, pos_y, entity_type, name) VALUES (?,0,0,?,?)");
+				preparedStatement.setInt(1,mapId);
+				preparedStatement.setInt(2,type);
+				preparedStatement.setString(3,defaultName);
+				preparedStatement.execute();
+			}
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	public static void AddEntity(int mapId, int type,String name)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("INSERT INTO level_entities (level_id, pos_x, pos_y, entity_type, name) VALUES (?,0,0,?,?)");
+			preparedStatement.setInt(1,mapId);
+			preparedStatement.setInt(2,type);
+			preparedStatement.setString(3,name);
+			preparedStatement.execute();
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	public static void UpdateEntity(int id,  int type, String name,float spawnX,float spawnY)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("UPDATE level_entities SET entity_type = ?, name = ?, pos_x = ?,pos_y = ? WHERE id = ?");
+			preparedStatement.setInt(1,type);
+			preparedStatement.setString(2,name);
+			preparedStatement.setFloat(3,spawnX);
+			preparedStatement.setFloat(4,spawnY);
+			preparedStatement.setInt(5,id);
 			preparedStatement.execute();
 		}
 		catch(SQLException ex) {
