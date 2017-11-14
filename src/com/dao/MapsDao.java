@@ -152,6 +152,20 @@ public class MapsDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+	public static void DeleteEntity(int id)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("DELETE FROM level_entities WHERE id = ?");
+			preparedStatement.setInt(1,id);
+			preparedStatement.execute();
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 	public static void AddEntity(int mapId, int type,String name)
 	{
 		Connection con = DbUtil.getConnection();

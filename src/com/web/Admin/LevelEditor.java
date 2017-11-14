@@ -115,13 +115,25 @@ public class LevelEditor extends HttpServlet {
 				else if(action.equals("entity"))
 				{
 					try{
+						int id = Integer.parseInt(request.getParameter("id"));
+						String name = request.getParameter("name");
 						int type = Integer.parseInt(request.getParameter("type"));
-						float spawn_x = Integer.parseInt(request.getParameter("x"));
-						float spawn_y = Integer.parseInt(request.getParameter("y"));
+						float spawn_x = Float.parseFloat(request.getParameter("spawn_x"));
+						float spawn_y = Float.parseFloat(request.getParameter("spawn_y"));
 						int mapId = Integer.parseInt(request.getParameter("map"));
 						
-						MapsDao.AddEntity(mapId,type);
+						MapsDao.UpdateEntity(id,type,name,spawn_x,spawn_y);
+						response.sendRedirect("/Admin/LevelEditor?level="+mapId+"&mode=1&selected_ent="+id);
+					}
+					catch(NumberFormatException ex){response.sendRedirect("/Admin/Levels");}
+				}
+				else if(action.equals("entity_delete"))
+				{
+					try{
+						int id = Integer.parseInt(request.getParameter("id"));
+						int mapId = Integer.parseInt(request.getParameter("map"));
 						
+						MapsDao.DeleteEntity(id);
 						response.sendRedirect("/Admin/LevelEditor?level="+mapId+"&mode=1");
 					}
 					catch(NumberFormatException ex){response.sendRedirect("/Admin/Levels");}

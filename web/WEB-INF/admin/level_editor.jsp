@@ -76,14 +76,18 @@
 		<div class = 'vertical-fill'>
 			<div style = 'overflow-y:scroll;width:100%;height:100%;'>
 				<%
+					int selected = -1;
+					if(request.getParameterMap().containsKey("selected_ent")){try {selected = Integer.parseInt(request.getParameter("selected_ent"));}catch(NumberFormatException ex){/**/}}
+					
 					for(Entity entity : mapData.MapEntities)
 					{
 						out.print("<div class='entity-container' data-id='"+entity.Id+"'><div class='entity-header' data-id='"+entity.Id+"'>"+entity.Name+"</div>" +
-								"<form class = 'entity-content'><table style=\"width: 100%;overflow: hidden; white-space: nowrap;\">" +
-								"<tr><td><label class = \"admin-levels-label\" for='entity-type-"+entity.Id+"'>Entity Type:</label></td><td>"+mapData.GetTypeDD(entity.Type,false,false)+"</div>" +
-								"<tr><td><label class = \"admin-levels-label\" for='entity-x-"+entity.Id+"'>Spawn X:</label></td><td><input class = 'admin-levels-input' type='number' id = 'entity-x-"+entity.Id+"' value='"+entity.X+"' /></td></tr>" +
-								"<tr><td><label class = \"admin-levels-label\" for='entity-y-"+entity.Id+"'>Spawn Y:</label></td><td><input class = 'admin-levels-input' type='number' id = 'entity-y-"+entity.Id+"' value='"+entity.Y+"' /></td></tr>" +
-								"</table></form></div>");
+								"<form method = 'post' action = '/Admin/LevelEditor' class = 'entity-content' "+((selected == entity.Id) ? "style='display:block;'" : "")+"><table style=\"width: 100%;overflow: hidden; white-space: nowrap;\">" +
+								"<tr><td><label class = \"admin-levels-label\" for='entity-type-"+entity.Id+"'>Entity Type:</label></td><td>"+mapData.GetTypeDD(entity.Type,false,false)+"</td></tr>" +
+								"<tr><td><label class = \"admin-levels-label\" for='entity-name-"+entity.Id+"'>Custom Name:</label></td><td><input name = 'name' class = 'admin-levels-input' type='text' id = 'entity-name-"+entity.Id+"' value='"+entity.Name+"' /></td></tr>" +
+								"<tr><td><label class = \"admin-levels-label\" for='entity-x-"+entity.Id+"'>Spawn X:</label></td><td><input name = 'spawn_x' class = 'admin-levels-input' type='number' id = 'entity-x-"+entity.Id+"' value='"+entity.X+"' /></td></tr>" +
+								"<tr><td><label class = \"admin-levels-label\" for='entity-y-"+entity.Id+"'>Spawn Y:</label></td><td><input name = 'spawn_y' class = 'admin-levels-input' type='number' id = 'entity-y-"+entity.Id+"' value='"+entity.Y+"' /></td></tr>" +
+								"</table><input type='hidden' value='"+entity.Id+"' name = 'id' /><input type='hidden' value='"+mapData.Map.Id+"' name = 'map' /><button name = 'action' value='entity' class = \"bracket-hover menu-text\">Save</button><button name = 'action' value='entity_delete' class = \"bracket-hover menu-text\">Delete</button></form></div>");
 					}
 				%>
 			</div>
@@ -287,5 +291,16 @@
 			"top:" + (( max_y - y - 1) * 50) + "px\">");
 	}
 	addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>);
+	<%
+		for(Entity entity : mapData.MapEntities)
+		{
+			out.print("addEntity('");
+			if(entity.Type==0)
+			{
+				out.print("entity-cow");
+			}
+			out.print("',"+entity.X+","+entity.Y+");");
+		}
+	%>
 </script>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />
