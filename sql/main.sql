@@ -15,6 +15,24 @@ CREATE DATABASE IF NOT EXISTS `moo_moo_code` /*!40100 DEFAULT CHARACTER SET utf8
 USE `moo_moo_code`;
 
 
+-- Dumping structure for table moo_moo_code.entities
+DROP TABLE IF EXISTS `entities`;
+CREATE TABLE IF NOT EXISTS `entities` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(11) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `icon` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table moo_moo_code.entities: ~1 rows (approximately)
+DELETE FROM `entities`;
+/*!40000 ALTER TABLE `entities` DISABLE KEYS */;
+INSERT INTO `entities` (`id`, `type`, `name`, `icon`) VALUES
+	(2, 0, 'Cow', 'cow');
+/*!40000 ALTER TABLE `entities` ENABLE KEYS */;
+
+
 -- Dumping structure for table moo_moo_code.lessons
 DROP TABLE IF EXISTS `lessons`;
 CREATE TABLE IF NOT EXISTS `lessons` (
@@ -88,32 +106,38 @@ CREATE TABLE IF NOT EXISTS `levels` (
 DELETE FROM `levels`;
 /*!40000 ALTER TABLE `levels` DISABLE KEYS */;
 INSERT INTO `levels` (`id`, `name`, `unlock_from`, `unlock_from_2`, `unlock_from_3`, `pos_x`, `pos_y`, `dim_x`, `dim_y`, `start_x`, `start_y`) VALUES
-	(1, 'Hello, World!', -1, -1, -1, 0, 0, 0, 0, 0, 0),
+	(1, 'Hello, World!', -1, -1, -1, 0, 0, 15, 7, 3, 3),
 	(2, 'Movement', 1, -1, -1, 10, 0, 0, 0, 0, 0),
 	(3, 'Obstacles', 2, -1, -1, 20, 10, 0, 0, 0, 0),
 	(4, 'Attacks', 1, -1, -1, -10, 0, 0, 0, 0, 0),
 	(6, 'Mazes', 3, -1, -1, 20, 20, 0, 0, 0, 0),
-	(7, 'Enemies', 4, -1, -1, -20, -10, 4, 4, 0, 0);
+	(7, 'Enemies', 4, -1, -1, -20, -10, 10, 10, 4, 4);
 /*!40000 ALTER TABLE `levels` ENABLE KEYS */;
 
 
--- Dumping structure for table moo_moo_code.level_enemies
-DROP TABLE IF EXISTS `level_enemies`;
-CREATE TABLE IF NOT EXISTS `level_enemies` (
+-- Dumping structure for table moo_moo_code.level_entities
+DROP TABLE IF EXISTS `level_entities`;
+CREATE TABLE IF NOT EXISTS `level_entities` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `level_id` int(10) unsigned NOT NULL,
   `pos_x` float unsigned NOT NULL,
   `pos_y` float unsigned NOT NULL,
   `name` varchar(45) NOT NULL,
+  `entity_type` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `enemy_level_idx` (`level_id`),
   CONSTRAINT `enemy_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.level_enemies: ~0 rows (approximately)
-DELETE FROM `level_enemies`;
-/*!40000 ALTER TABLE `level_enemies` DISABLE KEYS */;
-/*!40000 ALTER TABLE `level_enemies` ENABLE KEYS */;
+-- Dumping data for table moo_moo_code.level_entities: ~4 rows (approximately)
+DELETE FROM `level_entities`;
+/*!40000 ALTER TABLE `level_entities` DISABLE KEYS */;
+INSERT INTO `level_entities` (`id`, `level_id`, `pos_x`, `pos_y`, `name`, `entity_type`) VALUES
+	(1, 7, 4, 4, 'Cow', 1),
+	(2, 7, 0, 0, '', 0),
+	(3, 7, 0, 0, '', 0),
+	(4, 1, 0, 0, 'Cow', 0);
+/*!40000 ALTER TABLE `level_entities` ENABLE KEYS */;
 
 
 -- Dumping structure for table moo_moo_code.level_tiles
@@ -128,16 +152,16 @@ CREATE TABLE IF NOT EXISTS `level_tiles` (
   UNIQUE KEY `unique_tile` (`level_id`,`x`,`y`),
   KEY `tile_level_idx` (`level_id`),
   CONSTRAINT `tile_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1450 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.level_tiles: ~16 rows (approximately)
+-- Dumping data for table moo_moo_code.level_tiles: ~169 rows (approximately)
 DELETE FROM `level_tiles`;
 /*!40000 ALTER TABLE `level_tiles` DISABLE KEYS */;
 INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
 	(8, 7, 2, 2, 0),
 	(14, 7, 1, 2, 0),
-	(15, 7, 1, 1, 0),
-	(16, 7, 2, 1, 0),
+	(15, 7, 1, 1, 1),
+	(16, 7, 2, 1, 1),
 	(18, 7, 0, 3, 0),
 	(19, 7, 0, 2, 0),
 	(21, 7, 0, 1, 0),
@@ -145,11 +169,168 @@ INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
 	(24, 7, 2, 0, 1),
 	(25, 7, 3, 1, 0),
 	(26, 7, 3, 2, 0),
-	(27, 7, 3, 3, 1),
-	(28, 7, 2, 3, 0),
+	(27, 7, 3, 3, 0),
+	(28, 7, 2, 3, 1),
 	(29, 7, 1, 3, 1),
-	(34, 7, 3, 0, 0),
-	(37, 7, 0, 0, 1);
+	(34, 7, 3, 0, 1),
+	(37, 7, 0, 0, 0),
+	(190, 7, 1, 5, 0),
+	(191, 7, 2, 5, 0),
+	(192, 7, 3, 5, 0),
+	(193, 7, 0, 5, 0),
+	(194, 7, 3, 4, 0),
+	(198, 7, 4, 0, 0),
+	(199, 7, 5, 0, 0),
+	(200, 7, 5, 1, 1),
+	(201, 7, 5, 2, 1),
+	(202, 7, 5, 3, 1),
+	(203, 7, 5, 5, 0),
+	(204, 7, 6, 5, 1),
+	(205, 7, 7, 5, 1),
+	(206, 7, 7, 4, 1),
+	(207, 7, 7, 3, 0),
+	(208, 7, 7, 2, 0),
+	(209, 7, 7, 1, 0),
+	(210, 7, 8, 1, 1),
+	(211, 7, 9, 3, 0),
+	(212, 7, 9, 4, 0),
+	(213, 7, 9, 5, 0),
+	(214, 7, 9, 6, 0),
+	(215, 7, 1, 7, 1),
+	(216, 7, 2, 7, 1),
+	(217, 7, 3, 7, 1),
+	(218, 7, 4, 7, 0),
+	(219, 7, 5, 7, 0),
+	(220, 7, 6, 7, 1),
+	(221, 7, 7, 7, 1),
+	(222, 7, 8, 7, 0),
+	(224, 7, 7, 9, 0),
+	(225, 7, 6, 9, 0),
+	(226, 7, 5, 9, 1),
+	(227, 7, 4, 9, 1),
+	(228, 7, 3, 9, 1),
+	(229, 7, 2, 9, 1),
+	(230, 7, 1, 9, 1),
+	(231, 7, 0, 9, 1),
+	(235, 7, 2, 8, 1),
+	(236, 7, 8, 2, 1),
+	(237, 7, 6, 0, 0),
+	(247, 7, 1, 4, 0),
+	(250, 7, 4, 5, 0),
+	(253, 7, 6, 4, 1),
+	(255, 7, 4, 3, 0),
+	(257, 7, 2, 4, 1),
+	(259, 7, 2, 6, 1),
+	(261, 7, 4, 8, 1),
+	(262, 7, 5, 8, 0),
+	(263, 7, 6, 8, 0),
+	(265, 7, 6, 6, 1),
+	(267, 7, 4, 4, 0),
+	(272, 7, 5, 4, 1),
+	(275, 7, 8, 4, 1),
+	(278, 7, 8, 5, 1),
+	(280, 7, 5, 6, 1),
+	(281, 7, 4, 6, 0),
+	(282, 7, 3, 6, 0),
+	(296, 7, 1, 6, 0),
+	(303, 7, 6, 2, 0),
+	(305, 7, 8, 0, 0),
+	(306, 7, 9, 1, 0),
+	(307, 7, 7, 8, 1),
+	(318, 7, 7, 6, 1),
+	(319, 7, 8, 6, 1),
+	(324, 7, 3, 8, 1),
+	(369, 7, 1, 8, 1),
+	(377, 7, 0, 8, 0),
+	(394, 7, 0, 6, 0),
+	(395, 7, 0, 7, 0),
+	(417, 7, 9, 7, 0),
+	(444, 7, 0, 4, 0),
+	(459, 7, 6, 1, 1),
+	(466, 7, 4, 2, 1),
+	(475, 7, 9, 0, 0),
+	(477, 7, 9, 2, 0),
+	(479, 7, 8, 3, 1),
+	(492, 7, 8, 8, 0),
+	(548, 7, 4, 1, 0),
+	(566, 7, 6, 3, 0),
+	(594, 1, 0, 0, 0),
+	(595, 1, 3, 0, 0),
+	(596, 1, 9, 0, 0),
+	(597, 1, 7, 0, 0),
+	(598, 1, 7, 1, 0),
+	(599, 1, 7, 2, 0),
+	(600, 1, 6, 2, 0),
+	(601, 1, 5, 2, 0),
+	(602, 1, 5, 3, 0),
+	(603, 1, 4, 3, 0),
+	(604, 1, 4, 2, 0),
+	(605, 1, 3, 2, 0),
+	(606, 1, 3, 1, 0),
+	(607, 1, 4, 1, 0),
+	(608, 1, 4, 0, 0),
+	(609, 1, 5, 0, 0),
+	(610, 1, 7, 3, 0),
+	(611, 1, 8, 3, 0),
+	(612, 1, 8, 2, 0),
+	(613, 1, 9, 2, 0),
+	(614, 1, 9, 1, 0),
+	(615, 1, 10, 1, 0),
+	(616, 1, 10, 0, 0),
+	(619, 1, 11, 0, 0),
+	(620, 1, 12, 0, 0),
+	(621, 1, 12, 1, 0),
+	(622, 1, 12, 2, 0),
+	(623, 1, 11, 3, 0),
+	(624, 1, 10, 2, 0),
+	(628, 1, 11, 1, 0),
+	(637, 1, 8, 0, 0),
+	(639, 1, 6, 0, 0),
+	(643, 1, 2, 0, 0),
+	(644, 1, 1, 1, 0),
+	(645, 1, 1, 2, 0),
+	(646, 1, 0, 2, 0),
+	(647, 1, 0, 3, 0),
+	(648, 1, 0, 4, 0),
+	(649, 1, 1, 4, 0),
+	(650, 1, 2, 4, 0),
+	(651, 1, 3, 4, 0),
+	(652, 1, 3, 3, 0),
+	(660, 1, 4, 4, 0),
+	(663, 1, 6, 3, 0),
+	(666, 1, 9, 3, 0),
+	(669, 1, 11, 2, 0),
+	(680, 1, 8, 1, 0),
+	(689, 1, 5, 1, 0),
+	(699, 1, 2, 2, 0),
+	(701, 1, 1, 3, 0),
+	(706, 1, 0, 1, 0),
+	(708, 1, 2, 1, 0),
+	(712, 1, 1, 0, 0),
+	(719, 1, 6, 1, 0),
+	(735, 1, 2, 3, 0),
+	(804, 1, 5, 4, 0),
+	(847, 1, 6, 4, 0),
+	(907, 1, 7, 4, 0),
+	(908, 1, 6, 5, 0),
+	(909, 1, 5, 5, 0),
+	(976, 1, 4, 5, 0),
+	(1030, 1, 10, 3, 0),
+	(1031, 1, 11, 4, 0),
+	(1032, 1, 12, 4, 0),
+	(1033, 1, 13, 4, 0),
+	(1034, 1, 14, 4, 0),
+	(1035, 1, 14, 3, 0),
+	(1036, 1, 13, 3, 0),
+	(1037, 1, 12, 3, 0),
+	(1308, 1, 1, 5, 0),
+	(1309, 1, 0, 5, 0),
+	(1390, 1, 10, 4, 0),
+	(1391, 1, 11, 5, 0),
+	(1392, 1, 13, 5, 0),
+	(1393, 1, 14, 5, 0),
+	(1394, 1, 12, 6, 0),
+	(1446, 7, 9, 8, 0);
 /*!40000 ALTER TABLE `level_tiles` ENABLE KEYS */;
 
 
@@ -163,7 +344,7 @@ CREATE TABLE IF NOT EXISTS `tiles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.tiles: ~2 rows (approximately)
+-- Dumping data for table moo_moo_code.tiles: ~1 rows (approximately)
 DELETE FROM `tiles`;
 /*!40000 ALTER TABLE `tiles` DISABLE KEYS */;
 INSERT INTO `tiles` (`id`, `name`, `icon`, `type`) VALUES

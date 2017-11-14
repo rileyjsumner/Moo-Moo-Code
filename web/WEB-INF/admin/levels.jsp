@@ -6,6 +6,7 @@
 
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 <title>Moo Moo Code - Admin</title>
+<link rel="stylesheet" href="<c:url value="/css/levels.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
 
 <div id = "total_container" style="height: 100%;">

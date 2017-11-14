@@ -3,6 +3,7 @@
 
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 <title>Moo Moo Code - Lesson</title>
+<link rel="stylesheet" href="<c:url value="/css/lesson.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
 
 <div class = "lesson-content-container">
