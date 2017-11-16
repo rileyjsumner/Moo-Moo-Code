@@ -12,10 +12,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-public class Play extends HttpServlet {
+public class LevelSelect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public Play() {
+	public LevelSelect() {
 		super();
 	}
 	
@@ -32,11 +32,11 @@ public class Play extends HttpServlet {
 		if(LoginUtil.TestLogin(session))
 		{
 			request.setAttribute("levels", UserLevelsDao.GetAllUserLevels((int)session.getAttribute("user_id")));
-			request.getRequestDispatcher("/WEB-INF/play.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/level_select.jsp").forward(request, response);
 			return;
 		}
 		request.setAttribute("action_text","play");
-		request.setAttribute("action","Play");
+		request.setAttribute("action","LevelSelect");
 		request.getRequestDispatcher("/WEB-INF/login_required.jsp").forward(request, response);
 	}
 	

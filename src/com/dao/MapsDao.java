@@ -26,7 +26,7 @@ public class MapsDao {
 			if(set.first()) // The level exists
 			{
 				// Make the blank map
-				TileMap tileMap = new TileMap(id,set.getInt("dim_x"),set.getInt("dim_y"),set.getFloat("start_x"),set.getFloat("start_y"));
+				TileMap tileMap = new TileMap(id,set.getInt("dim_x"),set.getInt("dim_y"),set.getFloat("start_x"),set.getFloat("start_y"),set.getString("desc"),set.getString("help"));
 				
 				preparedStatement = con.prepareStatement("SELECT x,y,id,tile_type FROM level_tiles WHERE level_id = ?");
 				preparedStatement.setInt(1,id);
@@ -96,6 +96,24 @@ public class MapsDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+	public static void SetMapSettings(int mapId, int x, int y,String desc,String help)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("UPDATE levels SET dim_x = ?, dim_y = ?, `desc` = ?, help = ? WHERE id = ?");
+			preparedStatement.setInt(1,x);
+			preparedStatement.setInt(2,y);
+			preparedStatement.setString(3,desc);
+			preparedStatement.setString(4,help);
+			preparedStatement.setInt(5,mapId);
+			preparedStatement.execute();
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 	public static void SetMapDim(int mapId, int x, int y)
 	{
 		Connection con = DbUtil.getConnection();
@@ -147,6 +165,20 @@ public class MapsDao {
 				preparedStatement.setString(3,defaultName);
 				preparedStatement.execute();
 			}
+		}
+		catch(SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	public static void DeleteEntity(int id)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("DELETE FROM level_entities WHERE id = ?");
+			preparedStatement.setInt(1,id);
+			preparedStatement.execute();
 		}
 		catch(SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);

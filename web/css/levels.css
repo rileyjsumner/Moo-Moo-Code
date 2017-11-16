@@ -3,6 +3,7 @@ select.admin-levels-input>option
 	color:#F8F8F2;
 	background-color: #272822;
 }
+
 select.admin-levels-input
 {
 	border: 1px solid #49483E;
@@ -105,6 +106,19 @@ select.admin-levels-input
 	font-weight: bold;
 	cursor: pointer;
 	transition: box-shadow .25s;
+}
+.levels_container_level_complete::after {
+	content: "< completed >";
+	display: inline-block;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	text-align: center;
+	margin-bottom: 2px;
+	width: 100%;
+	color: #e9f3db;
+	font-style: italic;
+	font-size: 10px;
 }
 .levels_container_level_complete:hover
 {

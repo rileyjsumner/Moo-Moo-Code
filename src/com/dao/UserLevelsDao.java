@@ -106,25 +106,7 @@ public class UserLevelsDao {
 	}
 	public static boolean UserCanAccessLevel(int userId,int levelId)
 	{
-		LevelIds levels = LevelsDao.GetAllLevels();
-		
-		Connection con = DbUtil.getConnection();
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = con.prepareStatement("SELECT * FROM user_levels WHERE user_id = ?");
-			preparedStatement.setInt(1,userId);
-			ResultSet set = preparedStatement.executeQuery();
-			
-			if (set.first())
-			{
-				levels.add(new LevelId(set.getInt("id"),set.getString("name"),
-						set.getInt("unlock_from"),set.getInt("unlock_from_2"),set.getInt("unlock_from_3"),
-						set.getInt("pos_x"),set.getInt("pos_y")));
-			}
-		}
-		catch (SQLException ex) {
-			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return false;
+		LevelIds levelIds = GetAllUserLevels(userId);
+		return levelIds.find(levelId).State >=1;
 	}
 }
