@@ -23,16 +23,30 @@ public class LessonEditor extends HttpServlet
 {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		int user_id = (int)session.getAttribute(("user_id"));
-		boolean admin = isAdmin(user_id);
-		ArrayList<Lesson> lessonList = LessonDao.GetLessonContent();
-		
-		request.setAttribute("lessons", lessonList);
-		request.setAttribute("admin", admin);
 		
 		if(LoginUtil.TestAdmin(request,response))
 		{
-			request.getRequestDispatcher("/WEB-INF/admin/lessons.jsp").forward(request, response);
+			int user_id = (int)session.getAttribute(("user_id"));
+			boolean admin = isAdmin(user_id);
+			ArrayList<Lesson> lessonList = LessonDao.GetLessonContent();
+			
+			request.setAttribute("lessons", lessonList);
+			System.out.println(lessonList.size());
+			request.setAttribute("admin", admin);
+			int lessonId = -1;
+			if(request.getParameterMap().containsKey("lesson")) {
+				try {
+					lessonId = Integer.parseInt(request.getParameter("lesson"));
+					request.setAttribute("lesson_id", lessonId);
+				}
+				catch(NumberFormatException e)
+				{
+					// error.isbad()
+				}
+			}
+			
+			request.setAttribute("lesson_id", lessonId);
+			request.getRequestDispatcher("/WEB-INF/admin/lesson.jsp").forward(request, response);
 		}
 	}
 	
