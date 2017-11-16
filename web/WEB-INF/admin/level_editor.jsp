@@ -8,8 +8,6 @@
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 
 <title>Moo Moo Code - Level Editor</title>
-<script src="<c:url value="/dd/dd.js"/>"></script>
-<link rel="stylesheet" href="<c:url value="/dd/dd.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/map.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/levels.css"/>">
 
@@ -23,13 +21,17 @@
 </div>
 <div id = "menu-settings" class = "action-menu" <%if(entityMode){out.print("style=\"left:-400px\"");}else{out.print("style=\"left:100px\"");}%>>
 	<p style="font-size:18px;padding:20px;">Level Settings:</p>
-	<form action = "<c:url value="/Admin/LevelEditor"/>?action=dim" method = "post">
+	<form action = "<c:url value="/Admin/LevelEditor"/>?action=settings" method = "post">
 		<table style="width: 100%;overflow: hidden; white-space: nowrap;">
 			<tr><td><label class = "admin-levels-label" for="settings-x">Width:</label></td><td><input id = 'settings-x' name = "x" class = "admin-levels-input" type = "number" value="<%=mapData.Map.DimX%>"/></td></tr>
 			<tr><td><label class = "admin-levels-label" for="settings-y">Height:</label></td><td><input id = 'settings-y'  name = "y" class = "admin-levels-input" type = "number" value="<%=mapData.Map.DimY%>"/></td></tr>
 		</table>
+		<label for = 'level-desc' class = 'admin-levels-label'>Level Description:</label>
+		<textarea name = 'desc' id = 'level-desc' style = 'resize:vertical;' class="admin-levels-input"><%=mapData.Map.Desc%></textarea>
+		<label for = 'level-help' class = 'admin-levels-label'>Level Help:</label>
+		<textarea name = 'help' id = 'level-help' style = 'resize:vertical;' class="admin-levels-input"><%=mapData.Map.Help%></textarea>
 		<input name = "map" type = "hidden" value="<%=mapData.Map.Id%>"/>
-		<button class = "bracket-hover menu-text">Save</button>
+		<button class = "edit-btn">Save</button>
 	</form>
 </div>
 <div id = "menu-tiles" class = "action-menu" style="left:-400px;">
@@ -55,7 +57,7 @@
 					<tr><td><label class = "admin-levels-label" for="spawn-y">Spawn Y:</label></td><td><input step="0.001" min = "0" max="<%=mapData.Map.DimY-1%>" id = 'spawn-y'  name = "y" class = "admin-levels-input" type = "number" value="<%=mapData.Map.SpawnY%>"/></td></tr>
 				</table>
 				<input name = "map" type = "hidden" value="<%=mapData.Map.Id%>"/>
-				<button class = "bracket-hover menu-text">Save</button>
+				<button class = "edit-btn">Save</button>
 			</form>
 			<p style="font-size:18px;padding:20px;">Add a new entity:</p>
 			<form method = 'post' action = '<c:url value="/Admin/LevelEditor?action=entity_new"/>'>
@@ -87,14 +89,14 @@
 								"<tr><td><label class = \"admin-levels-label\" for='entity-name-"+entity.Id+"'>Custom Name:</label></td><td><input name = 'name' class = 'admin-levels-input' type='text' id = 'entity-name-"+entity.Id+"' value='"+entity.Name+"' /></td></tr>" +
 								"<tr><td><label class = \"admin-levels-label\" for='entity-x-"+entity.Id+"'>Spawn X:</label></td><td><input name = 'spawn_x' class = 'admin-levels-input' type='number' id = 'entity-x-"+entity.Id+"' value='"+entity.X+"' /></td></tr>" +
 								"<tr><td><label class = \"admin-levels-label\" for='entity-y-"+entity.Id+"'>Spawn Y:</label></td><td><input name = 'spawn_y' class = 'admin-levels-input' type='number' id = 'entity-y-"+entity.Id+"' value='"+entity.Y+"' /></td></tr>" +
-								"</table><input type='hidden' value='"+entity.Id+"' name = 'id' /><input type='hidden' value='"+mapData.Map.Id+"' name = 'map' /><button name = 'action' value='entity' class = \"bracket-hover menu-text\">Save</button><button name = 'action' value='entity_delete' class = \"bracket-hover menu-text\">Delete</button></form></div>");
+								"</table><input type='hidden' value='"+entity.Id+"' name = 'id' /><input type='hidden' value='"+mapData.Map.Id+"' name = 'map' /><button name = 'action' value='entity' class = \"edit-btn\">Save</button><button name = 'action' value='entity_delete' class = \"edit-btn edit-btn-red\">Delete</button></form></div>");
 					}
 				%>
 			</div>
 		</div>
 	</div>
 </div>
-<div style="display:inline-block;width:calc(100% - 400px);height:100%;text-align:center;float:right">
+<div style="display:inline-block;width:calc(100% - 500px);height:100%;text-align:center;float:right">
 	<table class = 'map-table'>
 	<%
 		for(int y =mapData.Map.DimY-1;y>=0;y--)

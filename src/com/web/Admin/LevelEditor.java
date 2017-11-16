@@ -74,14 +74,16 @@ public class LevelEditor extends HttpServlet {
 					}
 					catch(NumberFormatException ex){/**/}
 				}
-				else if(action.equals("dim"))
+				else if(action.equals("settings"))
 				{
 					try{
 						int dimX = Integer.parseInt(request.getParameter("x"));
 						int dimY = Integer.parseInt(request.getParameter("y"));
+						String desc = request.getParameter("desc");
+						String help = request.getParameter("help");
 						int mapId = Integer.parseInt(request.getParameter("map"));
 						
-						MapsDao.SetMapDim(mapId,dimX,dimY);
+						MapsDao.SetMapSettings(mapId,dimX,dimY,desc,help);
 						
 						response.sendRedirect("/Admin/LevelEditor?level="+mapId);
 					}

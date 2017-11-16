@@ -14,7 +14,7 @@
 <div class="menu-item bracket-hover" onclick="location.href='/Code';">
 <p class="menu-text">Code</p>
 </div>
-<div class="menu-item bracket-hover" onclick="location.href='/Play';">
+<div class="menu-item bracket-hover" onclick="location.href='/LevelSelect';">
 <p class="menu-text">Play</p>
 </div>
 <div class="menu-item bracket-hover">

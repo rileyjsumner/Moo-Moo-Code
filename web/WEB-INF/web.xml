@@ -45,13 +45,24 @@
 	
 	<servlet>
 		<description></description>
-		<display-name>Play</display-name>
-		<servlet-name>Play</servlet-name>
-		<servlet-class>com.web.Play</servlet-class>
+		<display-name>Game</display-name>
+		<servlet-name>Game</servlet-name>
+		<servlet-class>com.web.Game</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Play</servlet-name>
-		<url-pattern>/Play</url-pattern>
+		<servlet-name>Game</servlet-name>
+		<url-pattern>/Game</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>LevelSelect</display-name>
+		<servlet-name>LevelSelect</servlet-name>
+		<servlet-class>com.web.LevelSelect</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LevelSelect</servlet-name>
+		<url-pattern>/LevelSelect</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

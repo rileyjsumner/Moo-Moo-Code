@@ -1,8 +1,6 @@
 package com.web;
 
-import com.dao.LessonDao;
-import com.dao.LevelsDao;
-import com.dao.UserDao;
+import com.dao.*;
 import com.data.LessonId;
 import com.util.LoginUtil;
 
@@ -39,19 +37,20 @@ public class Game extends HttpServlet {
 				try
 				{
 					int levelIntRequested = Integer.parseInt(levelRequested);
-					
+					if(UserLevelsDao.UserCanAccessLevel((int)session.getAttribute("user_id"),levelIntRequested))
+					{
+						request.setAttribute("level_data", MapsDao.GetMap(levelIntRequested));
+						request.getRequestDispatcher("/WEB-INF/game.jsp").forward(request, response);return;
+					}
 				}
-				catch (NumberFormatException ex)
-				{
-					// level isn't an integer
-				}
+				catch (NumberFormatException ex){/* level isn't an integer */}
 			}
-			response.sendRedirect("Play");
+			response.sendRedirect("/LevelSelect");
 		}
 		else
 		{
 			request.setAttribute("action_text","play");
-			request.setAttribute("action","Play");
+			request.setAttribute("action","LevelSelect");
 			request.getRequestDispatcher("/WEB-INF/login_required.jsp").forward(request, response);
 		}
 	}
