@@ -152,5 +152,15 @@
 		<servlet-name>Users</servlet-name>
 		<url-pattern>/Admin/Users</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>LessonEditor</display-name>
+		<servlet-name>LessonEditor</servlet-name>
+		<servlet-class>com.web.Admin.LessonEditor</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LessonEditor</servlet-name>
+		<url-pattern>/Admin/Lessons</url-pattern>
+	</servlet-mapping>
 
 </web-app>

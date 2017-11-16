@@ -141,4 +141,29 @@ public class LessonDao {
 		}
 		return "No lesson here";
 	}
+	public static ArrayList<Lesson> GetLessonContent()
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		ArrayList<Lesson> lessons = new ArrayList<>();
+		try {
+			preparedStatement = con.prepareStatement("SELECT * FROM lessons");
+			
+			ResultSet set = preparedStatement.executeQuery();
+			
+			while(set.next()) {
+				int id = set.getInt("id");
+				String lesson_name = set.getString("lesson_name");
+				int lesson_num = set.getInt("lesson_num");
+				int category_id = set.getInt("category_id");
+				String lesson_text = set.getString("lesson_text");
+				String start_code = set.getString("start_code");
+				lessons.add(new Lesson(id, lesson_name, category_id, lesson_num, lesson_text, start_code));
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return lessons;
+	}
 }
