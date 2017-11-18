@@ -107,6 +107,13 @@ public class UserLevelsDao {
 	public static boolean UserCanAccessLevel(int userId,int levelId)
 	{
 		LevelIds levelIds = GetAllUserLevels(userId);
-		return levelIds.find(levelId).State >=1;
+		for(LevelId level : levelIds.levels)
+		{
+			if(level.Id==levelId && level.State >=2)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -3,8 +3,19 @@ body, html {
 	background-color: #272822;
 	color: #F8F8F2;
 	cursor: default;
-	display: flex;
-	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+}
+.play-code-panel
+{
+	display: inline-block;
+	width: calc(30% - 2px);
+	height: 100%;
+	text-align: left;
+	float: right;
+	position: relative;
+	z-index: 0;
+	border-left: 2px solid #49483E;
 }
 .modal {
 	display: none; /* Hidden by default */
@@ -21,11 +32,12 @@ body, html {
 
 /* Modal Content/Box */
 .modal-content {
-	background-color: #fefefe;
-	margin: 15% auto; /* 15% from the top and centered */
+	background-color: #5f5c4e;
+	margin: 15% auto;
 	padding: 20px;
-	border: 1px solid #888;
-	width: 80%; /* Could be more or less, depending on screen size */
+	z-index: 10;
+	border: 1px solid #908c77;
+	width: 80%;
 }
 
 /* The Close Button */
@@ -33,6 +45,7 @@ body, html {
 	color: #aaa;
 	float: right;
 	font-size: 28px;
+	margin-top: -10px;
 	font-weight: bold;
 }
 

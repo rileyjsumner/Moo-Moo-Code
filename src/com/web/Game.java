@@ -3,6 +3,7 @@ package com.web;
 import com.dao.*;
 import com.data.LessonId;
 import com.util.LoginUtil;
+import com.web.Admin.Levels;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 
 public class Game extends HttpServlet {
@@ -40,6 +42,7 @@ public class Game extends HttpServlet {
 					if(UserLevelsDao.UserCanAccessLevel((int)session.getAttribute("user_id"),levelIntRequested))
 					{
 						request.setAttribute("level_data", MapsDao.GetMap(levelIntRequested));
+						request.setAttribute("exec", false);
 						request.getRequestDispatcher("/WEB-INF/game.jsp").forward(request, response);return;
 					}
 				}
@@ -63,6 +66,34 @@ public class Game extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request,response);
+		HttpSession session = request.getSession();
+		if(LoginUtil.TestLogin(session))
+		{
+			Map<String, String[]> keys = request.getParameterMap();
+			if (keys.containsKey("player-code") && keys.containsKey("level"))
+			{
+				String code = request.getParameter("player-code");
+				String level = request.getParameter("level");
+				try
+				{
+					int levelIntRequested = Integer.parseInt(level);
+					if(UserLevelsDao.UserCanAccessLevel((int)session.getAttribute("user_id"),levelIntRequested))
+					{
+						// Everything is valid, now we run the code:
+						request.setAttribute("level_data", MapsDao.GetMap(levelIntRequested));
+						request.setAttribute("exec", true);
+						request.getRequestDispatcher("/WEB-INF/game.jsp").forward(request, response);return;
+					}
+				}
+				catch (NumberFormatException ex){/* level isn't an integer */}
+			}
+			response.sendRedirect("/Game");
+		}
+		else
+		{
+			request.setAttribute("action_text","play");
+			request.setAttribute("action","LevelSelect");
+			request.getRequestDispatcher("/WEB-INF/login_required.jsp").forward(request, response);
+		}
 	}
 }

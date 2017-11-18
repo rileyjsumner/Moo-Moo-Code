@@ -11,22 +11,33 @@
 <link rel="stylesheet" href="<c:url value="/css/levels.css"/>">
 
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
-<% MapData mapData = (MapData) request.getAttribute("level_data");%>
+<% MapData mapData = (MapData) request.getAttribute("level_data");boolean exec = (boolean) request.getAttribute("exec");%>
 
-<div id="myModal" class="modal">
+<div id="myModal" class="modal" <%if(!exec){%>style = 'display:block'<%}%>>
 	<!-- Modal content -->
 	<div class="modal-content">
 		<span class="close">&times;</span>
-		<p><%=mapData.Map.Desc%></p>
+		<pre class = 'map-desc'><%=mapData.Map.Desc%></pre>
 	</div>
 </div>
 
-<div style="display:inline-block;width:40%;height:100%;text-align:left;float:right;position: relative">
-	<textarea style = "text-align:left;display: none;" id = 'code'><%=mapData.Map.Code%></textarea>
+<div class = 'play-code-panel' style = 'position: relative'>
+	<form action = '<c:url value="/Game?level="/><%=mapData.Map.Id%>'  method = 'post'>
+	<div style = 'width:100%;height:400px;position: relative;overflow: hidden'>
+		<textarea name = 'player-code' style = "text-align:left;display: none;" id = 'code'><%=mapData.Map.Code%></textarea>
+	</div>
+	<div style = 'width:100%;height:50px;'>
+		<div class = 'bracket-hover'><p style = 'font-size: 22px;text-align: center;color: greenyellow;cursor: pointer;padding: 10px;background-color: #181916;' onclick="$(this).closest('form').submit();">Run</p></div>
+	</div>
+	</form>
+	<div style = 'height:calc(100% - 450px);width:100%'>
+		<p style="display: block;text-align: center;font-size: 18px;font-weight: bold;">Output:</p>
+		<p id = 'code-output' style="display: block;text-align: left;padding: 5px;margin: 5px;border-left: 1px solid #49483E;"></p>
+	</div>
 </div>
-<div style="display:inline-block;width:60%;height:100%;text-align:center;float:right">
+<div style="display:inline-block;width:70%;height:100%;text-align:center;float:right">
 	<div style = 'position:absolute;display: inline-block;left:0;top:0'>
-		<i class = 'fa fa-sliders'></i>
+		<i id = 'desc-open' class = 'fa fa-sliders'></i>
 	</div>
 	<table class = 'map-table'>
 		<%
