@@ -1,6 +1,8 @@
-<%@ page import="com.data.MapData" %>
-<%@ page import="com.data.Tile" %>
-<%@ page import="com.data.Entity" %>
+<%@ page import="com.data.Map.MapData" %>
+<%@ page import="com.data.Map.Tile" %>
+<%@ page import="com.data.Map.Entity" %>
+<%@ page import="com.data.Game.GameOutput" %>
+<%@ page import="com.data.Game.GameFrame" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -11,7 +13,8 @@
 <link rel="stylesheet" href="<c:url value="/css/levels.css"/>">
 
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
-<% MapData mapData = (MapData) request.getAttribute("level_data");boolean exec = (boolean) request.getAttribute("exec");%>
+<% MapData mapData = (MapData) request.getAttribute("level_data");
+boolean exec = (boolean) request.getAttribute("exec");%>
 
 <div id="myModal" class="modal" <%if(!exec){%>style = 'display:block'<%}%>>
 	<!-- Modal content -->
@@ -21,10 +24,10 @@
 	</div>
 </div>
 
-<div class = 'play-code-panel' style = 'position: relative'>
+<div class = 'play-code-panel'>
 	<form action = '<c:url value="/Game?level="/><%=mapData.Map.Id%>'  method = 'post'>
 	<div style = 'width:100%;height:400px;position: relative;overflow: hidden'>
-		<textarea name = 'player-code' style = "text-align:left;display: none;" id = 'code'><%=mapData.Map.Code%></textarea>
+		<textarea name = 'player-code' style = "text-align:left;display: none;" id = 'code'><%if(exec){out.print((String)request.getAttribute("code"));}else{out.print(mapData.Map.Code);}%></textarea>
 	</div>
 	<div style = 'width:100%;height:50px;'>
 		<div class = 'bracket-hover'><p style = 'font-size: 22px;text-align: center;color: greenyellow;cursor: pointer;padding: 10px;background-color: #181916;' onclick="$(this).closest('form').submit();">Run</p></div>
@@ -35,7 +38,7 @@
 		<p id = 'code-output' style="display: block;text-align: left;padding: 5px;margin: 5px;border-left: 1px solid #49483E;"></p>
 	</div>
 </div>
-<div style="display:inline-block;width:70%;height:100%;text-align:center;float:right">
+<div style="display:inline-block;width:calc(100% - 552px);height:100%;text-align:center;float:right">
 	<div style = 'position:absolute;display: inline-block;left:0;top:0'>
 		<i id = 'desc-open' class = 'fa fa-sliders'></i>
 	</div>
@@ -101,17 +104,23 @@
 		showCursorWhenSelecting: true
 	});
 	codeMirror.setSize("100%","100%");
-	$(document).ready(function(){
-		
-		var max_x = <%= mapData.Map.DimX %>;
-		var max_y = <%= mapData.Map.DimY %>;
-		function addEntity(entity_class,x,y)
-		{
-			$("#entity-reference").append("<div class = 'map-entity pixel "+entity_class+"' style=\"" +
-				"right:" + (( max_x - x - 1) * 50) + "px;" +
-				"top:" + (( max_y - y - 1) * 50) + "px\">");
-		}
-		addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>);
+	var max_x = <%= mapData.Map.DimX %>;
+	var max_y = <%= mapData.Map.DimY %>;
+	function moveEntity(id,x,y)
+	{
+		var ent = $("#entity-ref-"+id);
+		ent.css("right",(( max_x - x - 1) * 50) + "px");
+		ent.css("top",(( max_y - y - 1) * 50) + "px");
+	}
+	function addEntity(entity_class,x,y,id)
+	{
+		$("#entity-reference").append("<div id = 'entity-ref-"+id+"' class = 'map-entity pixel "+entity_class+"' style=\"" +
+			"right:" + (( max_x - x - 1) * 50) + "px;" +
+			"top:" + (( max_y - y - 1) * 50) + "px\">");
+	}
+	$(document).ready(function()
+	{
+		addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>,0);
 		<%
 			for(Entity entity : mapData.MapEntities)
 			{
@@ -120,7 +129,21 @@
 				{
 					out.print("entity-cow");
 				}
-				out.print("',"+entity.X+","+entity.Y+");");
+				out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
+			}
+			if(exec)
+			{
+				GameOutput animations = (GameOutput) request.getAttribute("game_data");
+				// Add the animations
+				for(GameFrame frame: animations.GameChanges)
+				{
+					int time =((200*10) - (frame.TimeLeft*200));
+					out.print("\nsetTimeout(function(){moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");},"+time+");");
+					for(Entity entity : frame.Data.Entities)
+					{
+						out.print("\nsetTimeout(function(){moveEntity("+entity.Id+","+entity.X+","+entity.Y+");},"+time+");");
+					}
+				}
 			}
 		%>
 	});

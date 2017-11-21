@@ -1,14 +1,12 @@
 package com.web.Admin;
-import com.dao.LevelsDao;
 import com.dao.MapsDao;
-import com.data.MapData;
+import com.data.Map.MapData;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 

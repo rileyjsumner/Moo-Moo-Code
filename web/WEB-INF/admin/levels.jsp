@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page import="com.data.LevelId" %>
-<%@ page import="com.data.LevelIds" %>
+<%@ page import="com.data.Level.LevelId" %>
+<%@ page import="com.data.Level.LevelIds" %>
 
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 <title>Moo Moo Code - Admin</title>

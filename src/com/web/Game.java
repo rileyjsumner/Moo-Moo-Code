@@ -1,9 +1,10 @@
 package com.web;
 
+import com.code.CodeGame;
 import com.dao.*;
-import com.data.LessonId;
+import com.data.Game.GameOutput;
+import com.data.Map.MapData;
 import com.util.LoginUtil;
-import com.web.Admin.Levels;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -80,7 +81,13 @@ public class Game extends HttpServlet {
 					if(UserLevelsDao.UserCanAccessLevel((int)session.getAttribute("user_id"),levelIntRequested))
 					{
 						// Everything is valid, now we run the code:
-						request.setAttribute("level_data", MapsDao.GetMap(levelIntRequested));
+						MapData map = MapsDao.GetMap(levelIntRequested);
+						
+						GameOutput output = CodeGame.RunGame(code,map);
+						
+						request.setAttribute("game_data", output);
+						request.setAttribute("level_data", map);
+						request.setAttribute("code", code);
 						request.setAttribute("exec", true);
 						request.getRequestDispatcher("/WEB-INF/game.jsp").forward(request, response);return;
 					}

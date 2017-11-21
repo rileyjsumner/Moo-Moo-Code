@@ -1,8 +1,8 @@
 package com.dao;
 
-import com.data.Lesson;
-import com.data.LessonCategory;
-import com.data.LessonId;
+import com.data.Lesson.Lesson;
+import com.data.Lesson.LessonCategory;
+import com.data.Lesson.LessonId;
 import com.util.DbUtil;
 
 import java.sql.Connection;

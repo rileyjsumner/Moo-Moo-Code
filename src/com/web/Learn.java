@@ -2,7 +2,7 @@ package com.web;
 
 import com.dao.LessonDao;
 import com.dao.UserDao;
-import com.data.LessonId;
+import com.data.Lesson.LessonId;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;

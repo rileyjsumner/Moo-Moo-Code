@@ -1,4 +1,4 @@
-<%@ page import="com.data.Lesson" %>
+<%@ page import="com.data.Lesson.Lesson" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>

@@ -1,4 +1,4 @@
-package com.data;
+package com.data.Map;
 
 public class Entity
 {
@@ -10,12 +10,15 @@ public class Entity
 	public float X;
 	public float Y;
 	
+	public float VelX;
+	public float VelY;
+	
 	public Entity(float x,float y,int type,int id,String name)
 	{
-		X=x;Y=y;Type=type;Id=id;Name=name;
+		X=x;Y=y;Type=type;Id=id;Name=name;VelX=0;VelY=0;
 	}
 	public Entity(int type,int id,String name,String icon)
 	{
-		Type=type;Id=id;Name=name;Icon=icon;
+		Type=type;Id=id;Name=name;Icon=icon;VelX=0;VelY=0;
 	}
 }

@@ -1,11 +1,7 @@
 package com.web.Admin;
 
 import com.dao.LessonDao;
-import com.dao.MapsDao;
-import com.dao.UserDao;
-import com.data.Lesson;
-import com.data.MapData;
-import com.data.User;
+import com.data.Lesson.Lesson;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -15,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.dao.UserDao.isAdmin;
 

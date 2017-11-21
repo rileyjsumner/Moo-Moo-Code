@@ -1,4 +1,4 @@
-package com.data;
+package com.data.Lesson;
 
 public class Lesson {
 	public String Name;

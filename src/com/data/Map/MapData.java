@@ -1,10 +1,10 @@
-package com.data;
+package com.data.Map;
 
 import java.util.ArrayList;
 
 public class MapData {
 	public TileMap Map;
-	public com.data.Tiles Tiles;
+	public com.data.Map.Tiles Tiles;
 	public ArrayList<Entity> MapEntities;
 	public ArrayList<Entity> Entities;
 	public boolean Valid;
@@ -13,7 +13,7 @@ public class MapData {
 	{
 		Valid=false;
 	}
-	public MapData(TileMap map, com.data.Tiles tiles, ArrayList<Entity> mapEntities,ArrayList<Entity> entities)
+	public MapData(TileMap map, com.data.Map.Tiles tiles, ArrayList<Entity> mapEntities, ArrayList<Entity> entities)
 	{
 		Map = map;Tiles=tiles;Entities = entities;Valid=true;MapEntities=mapEntities;
 	}

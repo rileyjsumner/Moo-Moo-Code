@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.data.LessonCategory" %>
+<%@ page import="com.data.Lesson.LessonCategory" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.data.Lesson" %>
+<%@ page import="com.data.Lesson.Lesson" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <c:import url="/WEB-INF/page_defaults/header.jsp" />

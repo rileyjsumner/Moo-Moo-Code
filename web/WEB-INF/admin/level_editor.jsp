@@ -1,7 +1,7 @@
-<%@ page import="com.data.MapData" %>
-<%@ page import="com.data.Tile" %>
+<%@ page import="com.data.Map.MapData" %>
+<%@ page import="com.data.Map.Tile" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.data.Entity" %>
+<%@ page import="com.data.Map.Entity" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 

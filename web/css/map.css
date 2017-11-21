@@ -145,7 +145,8 @@
 	height:50px;
 	text-align:center;
 	vertical-align: middle;
-	transition: background-color .1s;
+	transition: background-color .2s,right .2s,top .2s;
+	transition-timing-function: linear;
 	user-select: none;
 	position: absolute;
 	pointer-events:none;

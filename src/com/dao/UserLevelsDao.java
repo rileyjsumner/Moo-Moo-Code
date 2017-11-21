@@ -1,7 +1,7 @@
 package com.dao;
 
-import com.data.LevelId;
-import com.data.LevelIds;
+import com.data.Level.LevelId;
+import com.data.Level.LevelIds;
 import com.util.DbUtil;
 
 import java.sql.Connection;

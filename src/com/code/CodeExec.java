@@ -1,4 +1,5 @@
-package com.util;
+package com.code;
+
 import java.util.HashMap;
 
 public class CodeExec {
