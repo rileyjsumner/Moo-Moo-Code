@@ -7,7 +7,15 @@ import com.data.Game.GameOutput;
 import com.data.Map.MapData;
 
 import java.util.HashMap;
-
+/*= 1000 ms
+  = 1 Second
+  = 10 Ticks
+  
+  = 1 x
+  = 2 x/s
+  = .2 x/Tick
+*
+* */
 public class CodeGame
 {
 	public static GameOutput RunGame(String code, int mapId)
@@ -26,13 +34,13 @@ public class CodeGame
 		GameFrame frame;
 		CodeEngine engine;
 		
-		for(int timeLeft = 10;timeLeft > 0;timeLeft --)
+		for(int timeLeft = 79;timeLeft >= 0;timeLeft --)
 		{
 			engine = new CodeEngine();
 			frame = new GameFrame(timeLeft);
 			frame.Data = lastData;
 			// Load data into the engine:
-			
+			engine.SetBinding("time",timeLeft*.1);
 			// Set default values:
 			engine.SetBinding("x",0);
 			engine.SetBinding("y",0);
@@ -68,11 +76,11 @@ public class CodeGame
 			if(moveY>1){moveY=1;}else if(moveY<-1){moveY=-1;}
 			
 			// Move position
-			frame.Data.PlayerX +=moveX;
-			frame.Data.PlayerY +=moveY;
+			frame.Data.PlayerX +=moveX*.2;
+			frame.Data.PlayerY +=moveY*.2;
 			
 			// Make sure the player doesn't go off the edge
-			if(frame.Data.PlayerX>frame.Data.Map.DimX){frame.Data.PlayerX=frame.Data.Map.DimX;}
+			if(frame.Data.PlayerX>frame.Data.Map.DimX-1){frame.Data.PlayerX=frame.Data.Map.DimX-1;}
 			else if(frame.Data.PlayerX<0){frame.Data.PlayerX=0;}
 			if(frame.Data.PlayerY>frame.Data.Map.DimY-1){frame.Data.PlayerY=frame.Data.Map.DimY-1;}
 			else if(frame.Data.PlayerY<0){frame.Data.PlayerY=0;}

@@ -38,9 +38,14 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 		<p id = 'code-output' style="display: block;text-align: left;padding: 5px;margin: 5px;border-left: 1px solid #49483E;"></p>
 	</div>
 </div>
-<div style="display:inline-block;width:calc(100% - 552px);height:100%;text-align:center;float:right">
+<div style="display:inline-block;width:calc(100% - 552px);height:100%;text-align:center;float:right;position: relative">
 	<div style = 'position:absolute;display: inline-block;left:0;top:0'>
 		<i id = 'desc-open' class = 'fa fa-sliders'></i>
+	</div>
+	<div style = 'position: absolute;top: 0;width: 100%;'>
+		<div style = 'display: inline-block;width: 100px;height: 50px;background-color: #75715E; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;'>
+			<p id = 'clock-s' style = 'display: inline-block;font-size: 40px;'>8</p><p id = 'clock-ms' style = 'display: inline-block;margin-left: 10px;'>0</p>
+		</div>
 	</div>
 	<table class = 'map-table'>
 		<%
@@ -118,6 +123,11 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 			"right:" + (( max_x - x - 1) * 50) + "px;" +
 			"top:" + (( max_y - y - 1) * 50) + "px\">");
 	}
+	function setTime(time)
+	{
+		$("#clock-s").html(Math.floor(time*.1));
+		$("#clock-ms").html(time % 10);
+	}
 	$(document).ready(function()
 	{
 		addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>,0);
@@ -137,12 +147,13 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 				// Add the animations
 				for(GameFrame frame: animations.GameChanges)
 				{
-					int time =((200*10) - (frame.TimeLeft*200));
-					out.print("\nsetTimeout(function(){moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");},"+time+");");
+					int time =((100*80) - (frame.TimeLeft*100));
+					out.print("\nsetTimeout(function(){setTime("+frame.TimeLeft+");moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");");
 					for(Entity entity : frame.Data.Entities)
 					{
-						out.print("\nsetTimeout(function(){moveEntity("+entity.Id+","+entity.X+","+entity.Y+");},"+time+");");
+						out.print("\nmoveEntity("+entity.Id+","+entity.X+","+entity.Y+");");
 					}
+					out.print("},"+time+");");
 				}
 			}
 		%>
