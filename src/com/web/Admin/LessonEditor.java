@@ -1,7 +1,12 @@
 package com.web.Admin;
 
 import com.dao.LessonDao;
+import com.dao.MapsDao;
+import com.dao.UserDao;
+import com.data.*;
 import com.data.Lesson.Lesson;
+import com.data.Lesson.LessonCategory;
+import com.data.Lesson.LessonId;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -24,9 +29,14 @@ public class LessonEditor extends HttpServlet
 			int user_id = (int)session.getAttribute(("user_id"));
 			boolean admin = isAdmin(user_id);
 			ArrayList<Lesson> lessonList = LessonDao.GetLessonContent();
+			ArrayList<LessonCategory> categoryList = LessonDao.GetAllLessonCategories();
+			
+			LessonId progress = UserDao.GetUserLessonProgress((int)session.getAttribute("user_id"));
+			request.setAttribute("progress_category",progress.Category);
+			request.setAttribute("progress_lesson",progress.Lesson);
 			
 			request.setAttribute("lessons", lessonList);
-			System.out.println(lessonList.size());
+			request.setAttribute("categories", categoryList);
 			request.setAttribute("admin", admin);
 			int lessonId = -1;
 			if(request.getParameterMap().containsKey("lesson")) {
