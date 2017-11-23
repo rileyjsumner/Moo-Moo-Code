@@ -3,6 +3,8 @@
 <%@ page import="com.data.Map.Entity" %>
 <%@ page import="com.data.Game.GameOutput" %>
 <%@ page import="com.data.Game.GameFrame" %>
+<%@ page import="java.util.Objects" %>
+<%@ page import="com.util.Html" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -25,17 +27,17 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 </div>
 
 <div class = 'play-code-panel'>
-	<form action = '<c:url value="/Game?level="/><%=mapData.Map.Id%>'  method = 'post'>
-	<div style = 'width:100%;height:400px;position: relative;overflow: hidden'>
-		<textarea name = 'player-code' style = "text-align:left;display: none;" id = 'code'><%if(exec){out.print((String)request.getAttribute("code"));}else{out.print(mapData.Map.Code);}%></textarea>
-	</div>
-	<div style = 'width:100%;height:50px;'>
-		<div class = 'bracket-hover'><p style = 'font-size: 22px;text-align: center;color: greenyellow;cursor: pointer;padding: 10px;background-color: #181916;' onclick="$(this).closest('form').submit();">Run</p></div>
-	</div>
+	<form id = 'code-input-form' style="height:calc(100% - 400px);margin: 0px;" action = '<c:url value="/Game?level="/><%=mapData.Map.Id%>'  method = 'post'>
+		<div style = 'width:100%;height:100%;position: relative;overflow: hidden'>
+			<textarea name = 'player-code' style = "text-align:left;display: none;" id = 'code'><%if(exec){out.print((String)request.getAttribute("code"));}else{out.print(mapData.Map.Code);}%></textarea>
+		</div>
 	</form>
-	<div style = 'height:calc(100% - 450px);width:100%'>
-		<p style="display: block;text-align: center;font-size: 18px;font-weight: bold;">Output:</p>
-		<p id = 'code-output' style="display: block;text-align: left;padding: 5px;margin: 5px;border-left: 1px solid #49483E;"></p>
+	<div style = 'width:100%;height:50px;' class = 'bracket-hover'>
+		<p style = 'font-size: 22px;text-align: center;color: greenyellow;cursor: pointer;padding: 10px;background-color: #181916;' onclick="$('#code-input-form').submit();">Run</p>
+	</div>
+	<div style="height: 350px;background-color:inherit;position: relative">
+		<p style="height:30px;display: block;text-align: center;font-size: 18px;font-weight: bold;">Output:</p>
+		<pre id = 'code-output' style="height: 320px;max-height: 330px; overflow-y: scroll; display: block;text-align: left;margin: 0px 0px 0px 5px;"></pre>
 	</div>
 </div>
 <div style="display:inline-block;width:calc(100% - 552px);height:100%;text-align:center;float:right;position: relative">
@@ -128,6 +130,35 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 		$("#clock-s").html(Math.floor(time*.1));
 		$("#clock-ms").html(time % 10);
 	}
+	function addConsole(text,error)
+	{
+		var code_out = $("#code-output");
+		if(error){code_out.append("<pre class = 'error'>"+text+"</pre>");}
+		else{code_out.append(text);}
+		code_out.scrollTop(code_out[0].scrollHeight);
+	}
+	function win()
+	{
+		// Make the clock Green
+		$("#clock-s").css("color","#A6E22E");
+		$("#clock-ms").css("color","#A6E22E");
+		
+		// Add COMPLETE to console
+		var code_out = $("#code-output");
+		code_out.append("<pre class = 'win'>LEVEL COMPLETE!</pre>");
+		code_out.scrollTop(code_out[0].scrollHeight);
+	}
+	function lose()
+	{
+		// Make the clock Green
+		$("#clock-s").css("color","#ff4841");
+		$("#clock-ms").css("color","#ff4841");
+		
+		// Add COMPLETE to console
+		var code_out = $("#code-output");
+		code_out.append("<pre class = 'error'>LEVEL FAILED</pre>");
+		code_out.scrollTop(code_out[0].scrollHeight);
+	}
 	$(document).ready(function()
 	{
 		addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>,0);
@@ -149,10 +180,13 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 				{
 					int time =((100*80) - (frame.TimeLeft*100));
 					out.print("\nsetTimeout(function(){setTime("+frame.TimeLeft+");moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");");
+					if(!Objects.equals(frame.ConsoleOut, "")){out.print("addConsole(\""+ Html.encode(frame.ConsoleOut)+"\","+frame.ConsoleError+")");}
 					for(Entity entity : frame.Data.Entities)
 					{
 						out.print("\nmoveEntity("+entity.Id+","+entity.X+","+entity.Y+");");
 					}
+					if(frame.GameState==1){out.print("win();");}
+					else if(frame.GameState == -1){out.print("lose();");}
 					out.print("},"+time+");");
 				}
 			}
