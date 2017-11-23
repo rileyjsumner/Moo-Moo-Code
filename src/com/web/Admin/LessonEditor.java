@@ -1,13 +1,12 @@
 package com.web.Admin;
 
 import com.dao.LessonDao;
-<<<<<<< HEAD
 import com.dao.MapsDao;
 import com.dao.UserDao;
 import com.data.*;
-=======
 import com.data.Lesson.Lesson;
->>>>>>> 35cfe28a5c05c90e899c334cc0b45449261b1b29
+import com.data.Lesson.LessonCategory;
+import com.data.Lesson.LessonId;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
