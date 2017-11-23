@@ -18,6 +18,18 @@
           </indentOptions>
         </codeStyleSettings>
         <codeStyleSettings language="JAVA">
+          <option name="BRACE_STYLE" value="2" />
+          <option name="CLASS_BRACE_STYLE" value="2" />
+          <option name="METHOD_BRACE_STYLE" value="2" />
+          <option name="WHILE_ON_NEW_LINE" value="true" />
+          <option name="CATCH_ON_NEW_LINE" value="true" />
+          <option name="FINALLY_ON_NEW_LINE" value="true" />
+          <option name="ALIGN_THROWS_KEYWORD" value="true" />
+          <option name="RESOURCE_LIST_LPAREN_ON_NEXT_LINE" value="true" />
+          <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
+          <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true" />
+          <option name="KEEP_SIMPLE_LAMBDAS_IN_ONE_LINE" value="true" />
+          <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true" />
           <indentOptions>
             <option name="USE_TAB_CHARACTER" value="true" />
             <option name="SMART_TABS" value="true" />

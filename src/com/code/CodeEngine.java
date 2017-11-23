@@ -1,4 +1,4 @@
-package com.util;
+package com.code;
 
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class CodeEngine {
 	private ScriptEngine Engine;
 	private StringWriter sw;
+	private Bindings DefaultBindings;
 	
 	public CodeEngine()
 	{
@@ -23,11 +24,16 @@ public class CodeEngine {
 		bindings.remove("quit");
 		bindings.remove("load");
 		bindings.remove("loadWithNewGlobal");
+		DefaultBindings = bindings;
 		//ScriptEngine engine = factory.getEngineByName("JavaScript");
 		// evaluate JavaScript code from String
 		sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		Engine.getContext().setWriter(pw);
+	}
+	public void ClearAllBindings()
+	{
+		Engine.setBindings(DefaultBindings,ScriptContext.ENGINE_SCOPE);
 	}
 	public void SetBindings(HashMap<String,Object> inputBindings)
 	{

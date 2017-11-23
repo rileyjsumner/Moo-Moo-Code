@@ -1,14 +1,12 @@
 package com.web.Admin;
-import com.dao.LevelsDao;
 import com.dao.MapsDao;
-import com.data.MapData;
+import com.data.Map.MapData;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -81,9 +79,10 @@ public class LevelEditor extends HttpServlet {
 						int dimY = Integer.parseInt(request.getParameter("y"));
 						String desc = request.getParameter("desc");
 						String help = request.getParameter("help");
+						String code = request.getParameter("code");
 						int mapId = Integer.parseInt(request.getParameter("map"));
 						
-						MapsDao.SetMapSettings(mapId,dimX,dimY,desc,help);
+						MapsDao.SetMapSettings(mapId,dimX,dimY,desc,help,code);
 						
 						response.sendRedirect("/Admin/LevelEditor?level="+mapId);
 					}

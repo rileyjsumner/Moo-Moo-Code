@@ -1,7 +1,7 @@
-<%@ page import="com.data.MapData" %>
-<%@ page import="com.data.Tile" %>
+<%@ page import="com.data.Map.MapData" %>
+<%@ page import="com.data.Map.Tile" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.data.Entity" %>
+<%@ page import="com.data.Map.Entity" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -26,6 +26,10 @@
 			<tr><td><label class = "admin-levels-label" for="settings-x">Width:</label></td><td><input id = 'settings-x' name = "x" class = "admin-levels-input" type = "number" value="<%=mapData.Map.DimX%>"/></td></tr>
 			<tr><td><label class = "admin-levels-label" for="settings-y">Height:</label></td><td><input id = 'settings-y'  name = "y" class = "admin-levels-input" type = "number" value="<%=mapData.Map.DimY%>"/></td></tr>
 		</table>
+		<label for = 'level-code' class = 'admin-levels-label'>Level Code:</label>
+		<div style = 'text-align:left'>
+		<textarea name = 'code' id = 'level-code' style = 'text-align: left;display: none' class="admin-levels-input"><%=mapData.Map.Code%></textarea>
+		</div>
 		<label for = 'level-desc' class = 'admin-levels-label'>Level Description:</label>
 		<textarea name = 'desc' id = 'level-desc' style = 'resize:vertical;' class="admin-levels-input"><%=mapData.Map.Desc%></textarea>
 		<label for = 'level-help' class = 'admin-levels-label'>Level Help:</label>
@@ -147,8 +151,15 @@
 			});
 		});
 		
-		
-		
+		var codeMirror = CodeMirror.fromTextArea(document.getElementById("level-code"), {
+			theme: "monokai",
+			lineNumbers: true,
+			mode: "javascript",
+			autoCloseBrackets: true,
+			matchBrackets: true,
+			showCursorWhenSelecting: true
+		});
+		codeMirror.setSize("90%","180px");
 		
 		var selected_tile_type=null;
 		var selected_tile_icon=null;

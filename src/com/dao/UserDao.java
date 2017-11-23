@@ -1,6 +1,6 @@
 package com.dao;
 
-import com.data.LessonId;
+import com.data.Lesson.LessonId;
 import com.util.DbUtil;
 import com.data.User;
 

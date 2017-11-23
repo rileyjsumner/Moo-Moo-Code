@@ -1,4 +1,4 @@
-package com.data;
+package com.data.Lesson;
 
 import java.util.ArrayList;
 

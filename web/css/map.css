@@ -1,3 +1,14 @@
+.map-desc
+{
+	font-size: 14px;
+	white-space: pre-line;
+}
+.map-desc b
+{
+	color: greenyellow;
+	font-style: italic;
+}
+
 .level-tile-select
 {
 	transition: background-color .2s;
@@ -102,6 +113,7 @@
 	image-rendering: pixelated;
 	background-repeat: no-repeat;
 	background-size: contain;
+	-ms-interpolation-mode: nearest-neighbor;
 }
 .map-table
 {
@@ -133,7 +145,8 @@
 	height:50px;
 	text-align:center;
 	vertical-align: middle;
-	transition: background-color .1s;
+	transition: background-color .1s,right .1s,top .1s;
+	transition-timing-function: linear;
 	user-select: none;
 	position: absolute;
 	pointer-events:none;

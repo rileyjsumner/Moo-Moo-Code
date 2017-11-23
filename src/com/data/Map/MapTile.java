@@ -1,4 +1,4 @@
-package com.data;
+package com.data.Map;
 
 public class MapTile {
 	public int Id;

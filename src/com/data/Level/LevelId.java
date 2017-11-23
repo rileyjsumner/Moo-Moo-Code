@@ -1,4 +1,4 @@
-package com.data;
+package com.data.Level;
 
 public class LevelId {
 	public int Id;

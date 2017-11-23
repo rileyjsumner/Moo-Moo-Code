@@ -1,6 +1,8 @@
-<%@ page import="com.data.MapData" %>
-<%@ page import="com.data.Tile" %>
-<%@ page import="com.data.Entity" %>
+<%@ page import="com.data.Map.MapData" %>
+<%@ page import="com.data.Map.Tile" %>
+<%@ page import="com.data.Map.Entity" %>
+<%@ page import="com.data.Game.GameOutput" %>
+<%@ page import="com.data.Game.GameFrame" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -11,10 +13,40 @@
 <link rel="stylesheet" href="<c:url value="/css/levels.css"/>">
 
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
+<% MapData mapData = (MapData) request.getAttribute("level_data");
+boolean exec = (boolean) request.getAttribute("exec");%>
 
-<% MapData mapData = (MapData) request.getAttribute("level_data");%>
+<div id="myModal" class="modal" <%if(!exec){%>style = 'display:block'<%}%>>
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<pre class = 'map-desc'><%=mapData.Map.Desc%></pre>
+	</div>
+</div>
 
-<div style="display:inline-block;width:100%;height:100%;text-align:center;float:right">
+<div class = 'play-code-panel'>
+	<form action = '<c:url value="/Game?level="/><%=mapData.Map.Id%>'  method = 'post'>
+	<div style = 'width:100%;height:400px;position: relative;overflow: hidden'>
+		<textarea name = 'player-code' style = "text-align:left;display: none;" id = 'code'><%if(exec){out.print((String)request.getAttribute("code"));}else{out.print(mapData.Map.Code);}%></textarea>
+	</div>
+	<div style = 'width:100%;height:50px;'>
+		<div class = 'bracket-hover'><p style = 'font-size: 22px;text-align: center;color: greenyellow;cursor: pointer;padding: 10px;background-color: #181916;' onclick="$(this).closest('form').submit();">Run</p></div>
+	</div>
+	</form>
+	<div style = 'height:calc(100% - 450px);width:100%'>
+		<p style="display: block;text-align: center;font-size: 18px;font-weight: bold;">Output:</p>
+		<p id = 'code-output' style="display: block;text-align: left;padding: 5px;margin: 5px;border-left: 1px solid #49483E;"></p>
+	</div>
+</div>
+<div style="display:inline-block;width:calc(100% - 552px);height:100%;text-align:center;float:right;position: relative">
+	<div style = 'position:absolute;display: inline-block;left:0;top:0'>
+		<i id = 'desc-open' class = 'fa fa-sliders'></i>
+	</div>
+	<div style = 'position: absolute;top: 0;width: 100%;'>
+		<div style = 'display: inline-block;width: 100px;height: 50px;background-color: #75715E; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;'>
+			<p id = 'clock-s' style = 'display: inline-block;font-size: 40px;'>8</p><p id = 'clock-ms' style = 'display: inline-block;margin-left: 10px;'>0</p>
+		</div>
+	</div>
 	<table class = 'map-table'>
 		<%
 			for(int y =mapData.Map.DimY-1;y>=0;y--)
@@ -49,16 +81,56 @@
 	</table>
 </div>
 <script>
-	$(document).ready(function(){
-		var max_x = <%= mapData.Map.DimX %>;
-		var max_y = <%= mapData.Map.DimY %>;
-		function addEntity(entity_class,x,y)
-		{
-			$("#entity-reference").append("<div class = 'map-entity pixel "+entity_class+"' style=\"" +
-				"right:" + (( max_x - x - 1) * 50) + "px;" +
-				"top:" + (( max_y - y - 1) * 50) + "px\">");
+	// Get the modal
+	var modal = document.getElementById('myModal');
+	
+	// When the user clicks on the button, open the modal
+	$("#desc-open").click(function() {
+		modal.style.display = "block";
+	});
+	
+	// When the user clicks on <span> (x), close the modal
+	$(".close").click(function() {
+		modal.style.display = "none";
+	});
+	
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+		if (event.target === modal) {
+			modal.style.display = "none";
 		}
-		addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>);
+	};
+	var codeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
+		theme: "monokai",
+		lineNumbers: true,
+		mode: "javascript",
+		autoCloseBrackets: true,
+		matchBrackets: true,
+		showCursorWhenSelecting: true
+	});
+	codeMirror.setSize("100%","100%");
+	var max_x = <%= mapData.Map.DimX %>;
+	var max_y = <%= mapData.Map.DimY %>;
+	function moveEntity(id,x,y)
+	{
+		var ent = $("#entity-ref-"+id);
+		ent.css("right",(( max_x - x - 1) * 50) + "px");
+		ent.css("top",(( max_y - y - 1) * 50) + "px");
+	}
+	function addEntity(entity_class,x,y,id)
+	{
+		$("#entity-reference").append("<div id = 'entity-ref-"+id+"' class = 'map-entity pixel "+entity_class+"' style=\"" +
+			"right:" + (( max_x - x - 1) * 50) + "px;" +
+			"top:" + (( max_y - y - 1) * 50) + "px\">");
+	}
+	function setTime(time)
+	{
+		$("#clock-s").html(Math.floor(time*.1));
+		$("#clock-ms").html(time % 10);
+	}
+	$(document).ready(function()
+	{
+		addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>,0);
 		<%
 			for(Entity entity : mapData.MapEntities)
 			{
@@ -67,7 +139,22 @@
 				{
 					out.print("entity-cow");
 				}
-				out.print("',"+entity.X+","+entity.Y+");");
+				out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
+			}
+			if(exec)
+			{
+				GameOutput animations = (GameOutput) request.getAttribute("game_data");
+				// Add the animations
+				for(GameFrame frame: animations.GameChanges)
+				{
+					int time =((100*80) - (frame.TimeLeft*100));
+					out.print("\nsetTimeout(function(){setTime("+frame.TimeLeft+");moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");");
+					for(Entity entity : frame.Data.Entities)
+					{
+						out.print("\nmoveEntity("+entity.Id+","+entity.X+","+entity.Y+");");
+					}
+					out.print("},"+time+");");
+				}
 			}
 		%>
 	});
