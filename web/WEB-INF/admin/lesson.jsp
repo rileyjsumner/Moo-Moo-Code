@@ -1,6 +1,6 @@
 <%@ page import="com.data.Lesson.Lesson" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.data.LessonCategory" %>
+<%@ page import="com.data.Lesson.LessonCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
