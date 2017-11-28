@@ -102,19 +102,20 @@ CREATE TABLE IF NOT EXISTS `levels` (
   `desc` varchar(1500) NOT NULL DEFAULT '',
   `help` varchar(1000) NOT NULL DEFAULT '',
   `start_code` varchar(1000) NOT NULL DEFAULT '',
+  `time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table moo_moo_code.levels: ~6 rows (approximately)
 DELETE FROM `levels`;
 /*!40000 ALTER TABLE `levels` DISABLE KEYS */;
-INSERT INTO `levels` (`id`, `name`, `unlock_from`, `unlock_from_2`, `unlock_from_3`, `pos_x`, `pos_y`, `dim_x`, `dim_y`, `start_x`, `start_y`, `desc`, `help`, `start_code`) VALUES
-	(1, 'Hello, World!', -1, -1, -1, 0, 0, 15, 7, 3, 3, 'Welcome to the game!\r\n\r\nIn this game, you will control Farmer Dan, highlighted in green on the left, on his journey to rescue his cow, outlined in gold on the right.\r\n\r\nUnlike a normal video game, you will not actually control farmer Dan directly, but will write a piece of code that will allow Farmer Dan to find his cow on his own.\r\n\r\nYou are given several ways to control farmer Dan, but for the first level, all you will need will be the <b>x</b>, and the <b>y</b> variables. They will always be defined to <b>0</b> before your code even runs, so you won\'t need to worry about assigning them or using <b>var</b>.\r\n\r\nSetting the <b>x</b> Variable allows you to control how fast farmer Dan moves left to right-- Setting it to <b>1</b> means He will move at maximum speed to the <b>right</b>, while setting it at <b>-1</b> means he will move at maximum speed to the <b>left</b>. If you set this value more than 1 or less than -1, it will be capped back to between -1 and 1.\r\n\r\nThe <b>y</b> Variable similarly allows you to control Dan\'s vertical movement, <b>1</b> sending him <b>upward</b>, and <b>-1</b> sending him <b>down</b>.\r\n\r\nFor this simple level, see if you can set the right combination of <b>x</b> and <b>y</b> variables to send Farmer Dan to the Cow.\r\n', 'Since the Cow is directly to Dan\'s <b>right</b>, you will only need to worry about the <b>x</b> variable for this level.', '// The x and y variables that control Farmer Dan:\r\nx = 0;\r\ny = 0;'),
-	(2, 'Movement', 1, -1, -1, 10, 0, 0, 0, 0, 0, '', '', ''),
-	(3, 'Obstacles', 2, -1, -1, 20, 10, 0, 0, 0, 0, '', '', ''),
-	(4, 'Attacks', 1, -1, -1, -10, 0, 0, 0, 0, 0, '', '', ''),
-	(6, 'Mazes', 3, -1, -1, 20, 20, 0, 0, 0, 0, '', '', ''),
-	(7, 'Enemies', 4, -1, -1, -20, -10, 10, 10, 4, 4, '', '', '');
+INSERT INTO `levels` (`id`, `name`, `unlock_from`, `unlock_from_2`, `unlock_from_3`, `pos_x`, `pos_y`, `dim_x`, `dim_y`, `start_x`, `start_y`, `desc`, `help`, `start_code`, `time`) VALUES
+	(1, 'Hello, World!', -1, -1, -1, 0, 0, 15, 7, 3, 3, 'Welcome to the game!\r\n\r\nIn this game, you will control Farmer Dan, highlighted in green on the left, on his journey to rescue his cow, outlined in gold on the right.\r\n\r\nUnlike a normal video game, you will not actually control farmer Dan directly, but will write a piece of code that will allow Farmer Dan to find his cow on his own.\r\n\r\nYou are given several ways to control farmer Dan, but for the first level, all you will need will be the <b>x</b>, and the <b>y</b> variables. They will always be defined to <b>0</b> before your code even runs, so you won\'t need to worry about assigning them or using <b>var</b>.\r\n\r\nSetting the <b>x</b> Variable allows you to control how fast farmer Dan moves left to right-- Setting it to <b>1</b> means He will move at maximum speed to the <b>right</b>, while setting it at <b>-1</b> means he will move at maximum speed to the <b>left</b>. If you set this value more than 1 or less than -1, it will be capped back to between -1 and 1.\r\n\r\nThe <b>y</b> Variable similarly allows you to control Dan\'s vertical movement, <b>1</b> sending him <b>upward</b>, and <b>-1</b> sending him <b>down</b>.\r\n\r\nFor this simple level, see if you can set the right combination of <b>x</b> and <b>y</b> variables to send Farmer Dan to the Cow.\r\n', 'Since the Cow is directly to Dan\'s <b>right</b>, you will only need to worry about the <b>x</b> variable for this level.', '// The x and y variables that control Farmer Dan:\r\nx = 0;\r\ny = 0;', 80),
+	(2, 'Obstacles', 1, -1, -1, 10, 0, 11, 9, 1, 4, 'In the last level, you used the <b>x</b> and <b>y</b> variables to control Farmer Dan\'s Movement. In this level, you will have access to another object you can use: <b>time</b>.\r\n\r\nThe <b>time</b> variable will allow your code to know the time left in level, and will always be equal to the timer above the level. You can use this variable in combination with <b>if</b> statements to help Farmer Dan avoid the obstacle.\r\n\r\nIt\'s important to note that unlike <b>x</b> and <b>y</b>, changing the <b>time</b> variable  won\'t actually change the time left in the level, only your local variable.', 'See if you can time the level so that Farmer Dan\'s movement changes when he moves around the obstacle.\r\nFor example:\r\n\r\n<div class = \'modal-code\'>if(<b>time</b> > <b>4</b>)\r\n{\r\n    <b>y</b> = -1;\r\n}</div>', 'x = 0;\r\ny = 0;\r\nprint(time);', 100),
+	(3, 'Obstacles', 2, -1, -1, 20, 10, 0, 0, 0, 0, '', '', '', 0),
+	(4, 'Attacks', 1, -1, -1, -10, 0, 0, 0, 0, 0, '', '', '', 0),
+	(6, 'Mazes', 3, -1, -1, 20, 20, 0, 0, 0, 0, '', '', '', 0),
+	(7, 'Enemies', 4, -1, -1, -20, -10, 10, 10, 4, 4, '', '', '', 0);
 /*!40000 ALTER TABLE `levels` ENABLE KEYS */;
 
 
@@ -130,14 +131,15 @@ CREATE TABLE IF NOT EXISTS `level_entities` (
   PRIMARY KEY (`id`),
   KEY `enemy_level_idx` (`level_id`),
   CONSTRAINT `enemy_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.level_entities: ~2 rows (approximately)
+-- Dumping data for table moo_moo_code.level_entities: ~3 rows (approximately)
 DELETE FROM `level_entities`;
 /*!40000 ALTER TABLE `level_entities` DISABLE KEYS */;
 INSERT INTO `level_entities` (`id`, `level_id`, `pos_x`, `pos_y`, `name`, `entity_type`) VALUES
 	(3, 7, 6, 9, 'Bessie', 0),
-	(4, 1, 11, 3, 'Cow', 0);
+	(4, 1, 11, 3, 'Cow', 0),
+	(5, 2, 9, 4, 'Cow', 0);
 /*!40000 ALTER TABLE `level_entities` ENABLE KEYS */;
 
 
@@ -153,9 +155,9 @@ CREATE TABLE IF NOT EXISTS `level_tiles` (
   UNIQUE KEY `unique_tile` (`level_id`,`x`,`y`),
   KEY `tile_level_idx` (`level_id`),
   CONSTRAINT `tile_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1476 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1538 DEFAULT CHARSET=utf8;
 
--- Dumping data for table moo_moo_code.level_tiles: ~168 rows (approximately)
+-- Dumping data for table moo_moo_code.level_tiles: ~210 rows (approximately)
 DELETE FROM `level_tiles`;
 /*!40000 ALTER TABLE `level_tiles` DISABLE KEYS */;
 INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
@@ -230,7 +232,7 @@ INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
 	(272, 7, 5, 4, 1),
 	(275, 7, 8, 4, 1),
 	(278, 7, 8, 5, 0),
-	(280, 7, 5, 6, 1),
+	(280, 7, 5, 6, 0),
 	(281, 7, 4, 6, 0),
 	(282, 7, 3, 6, 0),
 	(296, 7, 1, 6, 0),
@@ -332,7 +334,43 @@ INSERT INTO `level_tiles` (`id`, `level_id`, `x`, `y`, `tile_type`) VALUES
 	(1393, 1, 14, 5, 0),
 	(1394, 1, 12, 6, 0),
 	(1446, 7, 9, 8, 0),
-	(1475, 7, 7, 0, 0);
+	(1475, 7, 7, 0, 0),
+	(1477, 2, 5, 6, 1),
+	(1478, 2, 5, 5, 1),
+	(1479, 2, 5, 4, 1),
+	(1480, 2, 5, 3, 1),
+	(1481, 2, 5, 2, 1),
+	(1482, 2, 4, 2, 1),
+	(1483, 2, 4, 3, 1),
+	(1486, 2, 4, 4, 1),
+	(1487, 2, 4, 5, 1),
+	(1488, 2, 6, 3, 1),
+	(1489, 2, 6, 4, 1),
+	(1490, 2, 6, 5, 1),
+	(1494, 2, 3, 4, 0),
+	(1501, 2, 2, 4, 0),
+	(1505, 2, 6, 2, 1),
+	(1506, 2, 6, 1, 1),
+	(1507, 2, 5, 1, 1),
+	(1508, 2, 4, 1, 1),
+	(1509, 2, 4, 0, 1),
+	(1510, 2, 5, 0, 1),
+	(1511, 2, 6, 0, 1),
+	(1513, 2, 3, 0, 1),
+	(1514, 2, 3, 1, 1),
+	(1515, 2, 3, 2, 1),
+	(1516, 2, 3, 3, 1),
+	(1517, 2, 7, 2, 1),
+	(1518, 2, 8, 2, 1),
+	(1519, 2, 9, 2, 1),
+	(1521, 2, 8, 1, 1),
+	(1522, 2, 7, 1, 1),
+	(1526, 2, 9, 1, 1),
+	(1527, 2, 8, 0, 1),
+	(1529, 2, 10, 1, 1),
+	(1530, 2, 9, 0, 1),
+	(1532, 2, 7, 0, 1),
+	(1536, 2, 10, 0, 1);
 /*!40000 ALTER TABLE `level_tiles` ENABLE KEYS */;
 
 
@@ -383,17 +421,20 @@ CREATE TABLE IF NOT EXISTS `user_levels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
   `level_id` int(10) unsigned NOT NULL,
-  `bindings` varchar(2000) DEFAULT NULL,
+  `code` varchar(3000) NOT NULL DEFAULT '',
+  `time` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_level_idx` (`user_id`),
   KEY `user_level_level_idx` (`level_id`),
   CONSTRAINT `user_level` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_level_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table moo_moo_code.user_levels: ~0 rows (approximately)
 DELETE FROM `user_levels`;
 /*!40000 ALTER TABLE `user_levels` DISABLE KEYS */;
+INSERT INTO `user_levels` (`id`, `user_id`, `level_id`, `code`, `time`) VALUES
+	(8, 1, 1, '', 35);
 /*!40000 ALTER TABLE `user_levels` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

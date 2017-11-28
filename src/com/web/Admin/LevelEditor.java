@@ -77,12 +77,13 @@ public class LevelEditor extends HttpServlet {
 					try{
 						int dimX = Integer.parseInt(request.getParameter("x"));
 						int dimY = Integer.parseInt(request.getParameter("y"));
+						int time = (int)(Float.parseFloat(request.getParameter("time"))*10);
 						String desc = request.getParameter("desc");
 						String help = request.getParameter("help");
 						String code = request.getParameter("code");
 						int mapId = Integer.parseInt(request.getParameter("map"));
 						
-						MapsDao.SetMapSettings(mapId,dimX,dimY,desc,help,code);
+						MapsDao.SetMapSettings(mapId,dimX,dimY,time,desc,help,code);
 						
 						response.sendRedirect("/Admin/LevelEditor?level="+mapId);
 					}

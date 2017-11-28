@@ -25,6 +25,7 @@
 		<table style="width: 100%;overflow: hidden; white-space: nowrap;">
 			<tr><td><label class = "admin-levels-label" for="settings-x">Width:</label></td><td><input id = 'settings-x' name = "x" class = "admin-levels-input" type = "number" value="<%=mapData.Map.DimX%>"/></td></tr>
 			<tr><td><label class = "admin-levels-label" for="settings-y">Height:</label></td><td><input id = 'settings-y'  name = "y" class = "admin-levels-input" type = "number" value="<%=mapData.Map.DimY%>"/></td></tr>
+			<tr><td><label class = "admin-levels-label" for="settings-time">Max Time (s):</label></td><td><input id = 'settings-time'  name = "time" class = "admin-levels-input" step=".1" type = "number" value="<%=mapData.Map.Time*.1%>"/></td></tr>
 		</table>
 		<label for = 'level-code' class = 'admin-levels-label'>Level Code:</label>
 		<div style = 'text-align:left'>

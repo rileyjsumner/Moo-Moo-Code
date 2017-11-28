@@ -1,6 +1,7 @@
 package com.web;
 
-import com.code.CodeExec;
+import com.code.CodeEngine;
+import com.code.CodeOutput;
 import com.util.Html;
 
 import javax.servlet.ServletException;
@@ -8,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 
 
 public class RawCodeExec extends HttpServlet {
@@ -37,21 +37,18 @@ public class RawCodeExec extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String code = (String)request.getParameter("code");
-		HashMap output = CodeExec.Exec(code);
-		if((boolean)output.get("error"))
+		String code = request.getParameter("code");
+		CodeEngine engine = new CodeEngine();
+		CodeOutput output = engine.Exec(code);
+		if(output.Error)
 		{
-			String errorMessage = "ERROR: " + output.get("message") + "\nOn line: "+output.get("line");
+			String errorMessage = "ERROR: " + output.Text;
 			
-			errorMessage = Html.encode(errorMessage);
-			
-			request.setAttribute("data", "{\"data\":\""+errorMessage+"\",\"error\":true}");
+			request.setAttribute("data", "{\"data\":\""+Html.encode(errorMessage)+"\",\"error\":true}");
 		}
 		else
 		{
-			String out = (String)output.get("output");
-			out = Html.encode(out);
-			request.setAttribute("data", "{\"data\":\""+out+"\",\"error\":false}");
+			request.setAttribute("data", "{\"data\":\""+Html.encode(output.Text)+"\",\"error\":false}");
 		}
 		request.getRequestDispatcher("/WEB-INF/data.jsp").forward(request, response);
 	}

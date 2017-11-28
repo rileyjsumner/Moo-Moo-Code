@@ -78,13 +78,18 @@ public class Game extends HttpServlet {
 				try
 				{
 					int levelIntRequested = Integer.parseInt(level);
-					if(UserLevelsDao.UserCanAccessLevel((int)session.getAttribute("user_id"),levelIntRequested))
+					int userId = (int)session.getAttribute("user_id");
+					if(UserLevelsDao.UserCanAccessLevel(userId,levelIntRequested))
 					{
 						// Everything is valid, now we run the code:
 						MapData map = MapsDao.GetMap(levelIntRequested);
 						
 						GameOutput output = CodeGame.RunGame(code,map);
 						
+						if(output.Success) // If they beat the level, unlock it
+						{
+							UserLevelsDao.UnlockLevel(userId,levelIntRequested,output.time,code);
+						}
 						request.setAttribute("game_data", output);
 						request.setAttribute("level_data", map);
 						request.setAttribute("code", code);
