@@ -38,7 +38,7 @@ public class CodeGame
 		GameFrame frame;
 		CodeEngine engine;
 		
-		for(int timeLeft = 79;timeLeft >= 0;timeLeft --)
+		for(int timeLeft = map.Map.Time-1;timeLeft >= 0;timeLeft --)
 		{
 			engine = new CodeEngine();
 			frame = new GameFrame(timeLeft);
@@ -46,25 +46,25 @@ public class CodeGame
 			// Load data into the engine:
 			Player player = new Player(frame.Data.PlayerX,frame.Data.PlayerY);
 			engine.SetBinding("player",player);
-			engine.SetBinding("time",timeLeft*.1);
+			engine.SetBinding("time",NumUtil.GetClean(timeLeft*.1));
 			// Set default values:
 			engine.SetBinding("x",0);
 			engine.SetBinding("y",0);
 			
 			// Execute code and deal with output
-			HashMap engineOutput = engine.Exec(code);
-			if((boolean)engineOutput.get("error"))
+			CodeOutput engineOutput = engine.Exec(code);
+			if(engineOutput.Error)
 			{
 				frame.ConsoleError=true;
 				frame.GameState = -1;
-				frame.ConsoleOut = (String)engineOutput.get("message");
+				frame.ConsoleOut = engineOutput.Text;
 				output.GameChanges.add(frame);
 				return output;
 			}
 			else
 			{
 				frame.ConsoleError=false;
-				frame.ConsoleOut = (String)engineOutput.get("output");
+				frame.ConsoleOut = engineOutput.Text;
 			}
 			
 			// Process Input
@@ -109,6 +109,8 @@ public class CodeGame
 					{
 						frame.GameState = 1;
 						output.GameChanges.add(frame);
+						output.Success = true;
+						output.time = map.Map.Time - timeLeft;
 						return output;
 					}
 				}

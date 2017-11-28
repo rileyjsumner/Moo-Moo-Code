@@ -8,7 +8,7 @@
 <div>
 	<p class = "content-header">Test your code</p>
 </div>
-<div>
+<div style = 'text-align: left'>
 	<textarea title="code" id="code">print("Moo Moo Code!");</textarea>
 </div>
 <div class = "code-submit bracket-hover" onclick="submitCode()"><p class="menu-text">Run</p></div>

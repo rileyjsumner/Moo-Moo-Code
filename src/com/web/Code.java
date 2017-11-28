@@ -1,6 +1,7 @@
 package com.web;
 
-import javax.servlet.RequestDispatcher;
+import com.util.LoginUtil;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +24,8 @@ public class Code extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/code.jsp");
-		view.forward(request, response);
+		LoginUtil.TestLogin(request.getSession());
+		request.getRequestDispatcher("/WEB-INF/code.jsp").forward(request, response);
 	}
 	
 	/**

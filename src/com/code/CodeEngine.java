@@ -8,32 +8,23 @@ import javax.script.ScriptEngine;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.concurrent.*;
 
 public class CodeEngine {
 	private ScriptEngine Engine;
 	private StringWriter sw;
-	private Bindings DefaultBindings;
 	
 	public CodeEngine()
 	{
-		//ScriptEngineManager factory = new ScriptEngineManager();
-		// create a JavaScript engine
 		Engine = new NashornScriptEngineFactory().getScriptEngine(new String[]{"--no-java", "-strict", "--no-syntax-extensions", "--language=es6"}, null, s -> false);
 		Bindings bindings = Engine.getBindings(ScriptContext.ENGINE_SCOPE);
 		bindings.remove("exit");
 		bindings.remove("quit");
 		bindings.remove("load");
 		bindings.remove("loadWithNewGlobal");
-		DefaultBindings = bindings;
-		//ScriptEngine engine = factory.getEngineByName("JavaScript");
-		// evaluate JavaScript code from String
 		sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		Engine.getContext().setWriter(pw);
-	}
-	public void ClearAllBindings()
-	{
-		Engine.setBindings(DefaultBindings,ScriptContext.ENGINE_SCOPE);
 	}
 	public void SetBindings(HashMap<String,Object> inputBindings)
 	{
@@ -66,22 +57,62 @@ public class CodeEngine {
 		}
 		return bindings;
 	}
-	public HashMap Exec(String code) {
-		HashMap<String, Object> output = new HashMap<>();
-		try{
-			Engine.eval(code);
-			output.put("output", sw.getBuffer().toString());
-			output.put("error", false);
-		} catch (javax.script.ScriptException ex) {
-			output.put("error", true);
-			output.put("line", ex.getLineNumber());
-			output.put("message", ex.getMessage());
+	public CodeOutput Exec(String code) {
+		CodeOutput output= new CodeOutput();
+		ExecutorService executor = Executors.newFixedThreadPool(4);
+		
+		Future<?> future = executor.submit(() -> {
+			try
+			{
+				Engine.eval(code);
+				output.Text = sw.getBuffer().toString();
+				output.Error = false;
+			}
+			catch (javax.script.ScriptException ex)
+			{
+				output.Error = true;
+				output.Text =  ex.getMessage().replaceFirst(" in <eval>","");
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+				output.Error = true;
+				output.Text =  "Unknown error";
+			}
+		});
+		
+		executor.shutdown();                          // reject all further submissions
+		
+		try {
+			future.get(1, TimeUnit.SECONDS);  // wait 1 second to finish
+		} catch (InterruptedException e) {            // possible error cases
+			System.out.println("job was interrupted");
+			output.Error = true;
+			output.Text =  "Script was interrupted";
+		} catch (ExecutionException e) {
+			output.Error = true;
+			output.Text =  "Unknown error";
+			System.out.println("caught exception: " + e.getCause());
+		} catch (TimeoutException e) {
+			output.Error = true;
+			output.Text =  "Script took too long; Check your code for infinite loops";
+			future.cancel(true);   // interrupt the job
 		}
-		catch(Exception e){
+		try
+		{
+			if(!executor.awaitTermination(1, TimeUnit.SECONDS)){
+				// force it to quit
+				executor.shutdownNow();
+				
+				output.Error = true;
+				output.Text =  "Script took too long; Check your code for infinite loops";
+			}
+		}
+		catch (InterruptedException e)
+		{
 			e.printStackTrace();
-			output.put("error", true);
-			output.put("line", "unknown");
-			output.put("message", "unknown error");
+			output.Error = true;
+			output.Text =  "unknown error";
 		}
 		return output;
 	}

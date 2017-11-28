@@ -3,6 +3,7 @@ package com.data.Map;
 public class TileMap {
 	public int DimX;
 	public int DimY;
+	public int Time;
 	public int Id;
 	public float SpawnX;
 	public float SpawnY;
@@ -15,10 +16,10 @@ public class TileMap {
 		DimX=dimX;DimY=dimY;Id = id;
 		Data=new MapTile[DimX][DimY];
 	}
-	public TileMap(int id,int dimX,int dimY,float spawnX,float spawnY,String desc,String help,String code)
+	public TileMap(int id,int dimX,int dimY,float spawnX,float spawnY,String desc,String help,String code,int time)
 	{
 		DimX=dimX;DimY=dimY;SpawnX = spawnX;SpawnY = spawnY;Code=code;
-		Data=new MapTile[DimX][DimY];Id = id;Desc = desc;Help = help;
+		Data=new MapTile[DimX][DimY];Id = id;Desc = desc;Help = help;Time = time;
 	}
 	public void AddTile(int x,int y,MapTile tile)
 	{

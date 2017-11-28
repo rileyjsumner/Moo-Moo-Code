@@ -116,4 +116,39 @@ public class UserLevelsDao {
 		}
 		return false;
 	}
+	public static void UnlockLevel(int userId,int levelId,int time,String code)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		try
+		{
+			preparedStatement = con.prepareStatement("SELECT time FROM user_levels WHERE user_id = ? AND level_id = ?");
+			preparedStatement.setInt(1,userId);
+			preparedStatement.setInt(2,levelId);
+			ResultSet set = preparedStatement.executeQuery();
+			if(!set.first())
+			{
+				preparedStatement = con.prepareStatement("INSERT INTO user_levels (user_id, level_id, time,code) VALUES (?,?,?,?)");
+				preparedStatement.setInt(1,userId);
+				preparedStatement.setInt(2,levelId);
+				preparedStatement.setInt(3,time);
+				preparedStatement.setString(4,code);
+				preparedStatement.execute();
+			}
+			else if(set.getInt("time") > time)
+			{
+				preparedStatement = con.prepareStatement("UPDATE user_levels SET time = ?,code = ? WHERE user_id = ? AND level_id = ?");
+				preparedStatement.setInt(1,time);
+				preparedStatement.setString(2,code);
+				preparedStatement.setInt(3,userId);
+				preparedStatement.setInt(4,levelId);
+				preparedStatement.execute();
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
 }

@@ -8,6 +8,25 @@
 	color: greenyellow;
 	font-style: italic;
 }
+.modal-code
+{
+	text-align: left;
+	white-space: pre;
+	display: inline-block;
+	background-color: #49483E;
+	padding: 15px;
+}
+.modal-open-btn
+{
+	padding: 5px;
+	margin: 5px;
+	background-color: #49483E;
+	cursor: pointer;
+	text-align: center;
+	width: 20px;
+	font-size: 20px;
+	position: relative;
+}
 
 .level-tile-select
 {

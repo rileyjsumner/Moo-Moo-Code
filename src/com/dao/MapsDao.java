@@ -26,7 +26,7 @@ public class MapsDao {
 			if(set.first()) // The level exists
 			{
 				// Make the blank map
-				TileMap tileMap = new TileMap(id,set.getInt("dim_x"),set.getInt("dim_y"),set.getFloat("start_x"),set.getFloat("start_y"),set.getString("desc"),set.getString("help"),set.getString("start_code"));
+				TileMap tileMap = new TileMap(id,set.getInt("dim_x"),set.getInt("dim_y"),set.getFloat("start_x"),set.getFloat("start_y"),set.getString("desc"),set.getString("help"),set.getString("start_code"),set.getInt("time"));
 				
 				preparedStatement = con.prepareStatement("SELECT x,y,id,tile_type FROM level_tiles WHERE level_id = ?");
 				preparedStatement.setInt(1,id);
@@ -96,19 +96,20 @@ public class MapsDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	public static void SetMapSettings(int mapId, int x, int y,String desc,String help,String code)
+	public static void SetMapSettings(int mapId, int x, int y,int time, String desc,String help,String code)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try
 		{
-			preparedStatement = con.prepareStatement("UPDATE levels SET dim_x = ?, dim_y = ?, `desc` = ?, help = ?,start_code = ? WHERE id = ?");
+			preparedStatement = con.prepareStatement("UPDATE levels SET dim_x = ?, dim_y = ?, `desc` = ?, help = ?,start_code = ?,time = ? WHERE id = ?");
 			preparedStatement.setInt(1,x);
 			preparedStatement.setInt(2,y);
 			preparedStatement.setString(3,desc);
 			preparedStatement.setString(4,help);
 			preparedStatement.setString(5,code);
-			preparedStatement.setInt(6,mapId);
+			preparedStatement.setInt(6,time);
+			preparedStatement.setInt(7,mapId);
 			preparedStatement.execute();
 		}
 		catch(SQLException ex) {

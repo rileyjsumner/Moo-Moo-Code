@@ -18,13 +18,22 @@
 <% MapData mapData = (MapData) request.getAttribute("level_data");
 boolean exec = (boolean) request.getAttribute("exec");%>
 
-<div id="myModal" class="modal" <%if(!exec){%>style = 'display:block'<%}%>>
+<div id="desc-modal" class="modal" <%if(!exec){%>style = 'display:block'<%}%>>
 	<!-- Modal content -->
 	<div class="modal-content">
 		<span class="close">&times;</span>
 		<pre class = 'map-desc'><%=mapData.Map.Desc%></pre>
 	</div>
 </div>
+
+<div id="help-modal" class="modal">
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<pre class = 'map-desc'><%=mapData.Map.Help%></pre>
+	</div>
+</div>
+
 
 <div class = 'play-code-panel'>
 	<form id = 'code-input-form' style="height:calc(100% - 400px);margin: 0px;" action = '<c:url value="/Game?level="/><%=mapData.Map.Id%>'  method = 'post'>
@@ -41,10 +50,11 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 	</div>
 </div>
 <div style="display:inline-block;width:calc(100% - 552px);height:100%;text-align:center;float:right;position: relative">
-	<div style = 'position:absolute;display: inline-block;left:0;top:0'>
-		<i id = 'desc-open' class = 'fa fa-sliders'></i>
+	<div style = 'position:absolute;display: inline-block;right:0;top:0;z-index: 1;'>
+		<i id = 'desc-open' style = 'left:10px' class = 'modal-open-btn fa fa-sliders'></i>
+		<i id = 'help-open' class = 'modal-open-btn fa fa-question'></i>
 	</div>
-	<div style = 'position: absolute;top: 0;width: 100%;'>
+	<div style = 'position: absolute;top: 0;width: 100%;font-weight: bold;'>
 		<div style = 'display: inline-block;width: 100px;height: 50px;background-color: #75715E; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;'>
 			<p id = 'clock-s' style = 'display: inline-block;font-size: 40px;'>8</p><p id = 'clock-ms' style = 'display: inline-block;margin-left: 10px;'>0</p>
 		</div>
@@ -84,22 +94,30 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 </div>
 <script>
 	// Get the modal
-	var modal = document.getElementById('myModal');
+	var desc_modal = document.getElementById('desc-modal');
+	var help_modal = document.getElementById('help-modal');
 	
 	// When the user clicks on the button, open the modal
 	$("#desc-open").click(function() {
-		modal.style.display = "block";
+		desc_modal.style.display = "block";
+	});
+	$("#help-open").click(function() {
+		help_modal.style.display = "block";
 	});
 	
 	// When the user clicks on <span> (x), close the modal
 	$(".close").click(function() {
-		modal.style.display = "none";
+		help_modal.style.display = "none";
+		desc_modal.style.display = "none";
 	});
 	
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
-		if (event.target === modal) {
-			modal.style.display = "none";
+		if (event.target === help_modal) {
+			help_modal.style.display = "none";
+		}
+		else if (event.target === desc_modal) {
+			desc_modal.style.display = "none";
 		}
 	};
 	var codeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
