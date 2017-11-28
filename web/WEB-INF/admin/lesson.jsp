@@ -8,98 +8,51 @@
 <title>Moo Moo Code - Admin</title>
 <link rel="stylesheet" href="<c:url value="/css/lesson.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
-<div>
-	<div class="lesson_content">
-		<%
-			int lesson_id = (int)request.getAttribute("lesson_id");
-			ArrayList<LessonCategory> lessonCategories = (ArrayList<LessonCategory>)request.getAttribute("categories");
-				if((boolean)request.getAttribute("admin")) {
-					if(lesson_id == -1)
-					{
-						ArrayList<Lesson> lessons = (ArrayList<Lesson>)request.getAttribute("lessons");
-						
-						int categoryProgress = (int)request.getAttribute("progress_category");
-						int lessonProgress = (int)request.getAttribute("progress_lesson");
-						
-						out.print("<p class=\"content-header\">Select a lesson</p>");
-						for (LessonCategory lessonCategory : lessonCategories) {
-							boolean locked =false;
-							boolean open = false;
-							out.print("<div class = \"category-container\"><div class=\"lesson-category");
-							if(categoryProgress == lessonCategory.Num){
-								out.print(" bracket-hover lesson-category-active");
-								open=true;
-							}
-							else if(categoryProgress < lessonCategory.Num){
-								out.print(" lesson-category-locked");
-								locked = true;
-							}
-							else{
-								out.print(" bracket-hover lesson-category-complete");
-							}
-							out.print("\">");
-							if(categoryProgress < lessonCategory.Num){out.print("<i style=\"margin-right:10px;\" class=\"fa fa-lock\"></i>");}
-							out.print("<p class=\"lesson-text\">" + lessonCategory.Name + "</p></div>");
-							if(!locked)
-							{
-								out.print("<div class = \"lessons-container\"");
-								if(!open){out.print(" style=\"display:none\"");}
-								out.print(">");
-								for (Lesson lesson : lessons) {
-									out.print("<div data-lesson=\""+lesson.Id+"\" class=\"lesson");
-									if(categoryProgress == lessonCategory.Num && lessonProgress == lesson.Num){
-										out.print(" bracket-hover-mini lesson-active\">");
-									}
-									else if(categoryProgress < lessonCategory.Num || (categoryProgress == lessonCategory.Num && lessonProgress < lesson.Num)){
-										out.print(" lesson-locked\">");
-									}
-									else{
-										out.print(" bracket-hover-mini lesson-complete\">");
-									}
-									out.print("<p class=\"lesson-text\">" + lesson.Name + "</p></div>");
-								}
-								out.print("</div>");
-							}
-							out.print("</div>");
-						}
-					}
-					else
-					{
-						out.print("<p style=\"text-align:center;display:block;margin-top:10px\">Sign in to view lessons</p>");
-					}
-		
+<%
+		out.print("<p class=\"content-header\">Select a lesson</p>");
+		ArrayList<LessonCategory> lessonCategories = (ArrayList<LessonCategory>) request.getAttribute("lessons");
+		boolean first = true;
+		for (LessonCategory lessonCategory : lessonCategories) {
+			out.print("<div class = \"category-container\">" +
+						"<div class=\"lesson-category bracket-hover lesson-category-complete\" "+(first?" style='background-color:#49483E'":"")+">");
+							out.print("<p class=\"lesson-text\">" + lessonCategory.Name + "</p>" +
+						"</div>");
+			out.print("<div class = \"lessons-container\"");
+				if(!first){out.print(" style=\"display:none\"");}
+				out.print(">");
+			ArrayList<Lesson> lessons = lessonCategory.getLessons();
+			for (Lesson lesson : lessons) {
+				out.print("<div data-lesson=\""+lesson.Id+"\" class=\"lesson bracket-hover-mini lesson-complete\">");
+					out.print("<p class=\"lesson-text\">" + lesson.Name + "</p>" +
+						"</div>");
+			}
+			first = false;
+			out.print("</div></div>");
+		}
+%>
+	<script>
+		// Switch categories
+		$(".lesson-category-complete").click(function()
+		{
+			var clicked = $(this).next();
+			$(".lessons-container").each(function()
+			{
+				if(clicked[0] === $(this)[0])
+				{
+					$(this).slideDown({duration:100,easing:"linear"});
+					$(this).prev().animate({backgroundColor: "#49483E"},100);
 				}
 				else
 				{
-					ArrayList<Lesson> lessons = (ArrayList<Lesson>)request.getAttribute("lessons");
-					String lesson_text = "";
-					String lesson_title = "";
-					int lesson_category = -1;
-					int lesson_num = -1;
-					for(Lesson lesson : lessons) {
-						if(lesson.Id == lesson_id) {
-							lesson_text = lesson.text;
-							lesson_title = lesson.Name;
-							lesson_category = lesson.CategoryNum;
-							lesson_num = lesson.Num;
-						}
-					}
-					
-			%>
-					<div class="lesson_text">
-						<h2><% out.print(lesson_title); %></h2>
-						<p><% out.print(lesson_text); %></p>
-					</div>
-					<div class="code">
-					
-					</div>
-					
-			<%
+					$(this).prev().animate({backgroundColor: "#272822"},100);
+					$(this).slideUp({duration:100,easing:"linear"});
 				}
-			
-		%>
-	</div>
-	
-</div>
-
+			});
+		});
+		// Go to a lesson
+		$(".lesson-complete, .lesson-active").click(function()
+		{
+			location.href = "?id="+$(this).data("lesson");
+		});
+	</script>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

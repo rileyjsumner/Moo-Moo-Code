@@ -1,13 +1,8 @@
 package com.web.Admin;
 
 import com.dao.LessonDao;
-import com.dao.MapsDao;
-import com.dao.UserDao;
-import com.data.*;
-import com.data.Lesson.Lesson;
-import com.data.Lesson.LessonCategory;
-import com.data.Lesson.LessonId;
 import com.util.LoginUtil;
+import com.web.Login;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,9 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-
-import static com.dao.UserDao.isAdmin;
 
 public class LessonEditor extends HttpServlet
 {
@@ -26,31 +18,19 @@ public class LessonEditor extends HttpServlet
 		
 		if(LoginUtil.TestAdmin(request,response))
 		{
-			int user_id = (int)session.getAttribute(("user_id"));
-			boolean admin = isAdmin(user_id);
-			ArrayList<Lesson> lessonList = LessonDao.GetLessonContent();
-			ArrayList<LessonCategory> categoryList = LessonDao.GetAllLessonCategories();
-			
-			LessonId progress = UserDao.GetUserLessonProgress((int)session.getAttribute("user_id"));
-			request.setAttribute("progress_category",progress.Category);
-			request.setAttribute("progress_lesson",progress.Lesson);
-			
-			request.setAttribute("lessons", lessonList);
-			request.setAttribute("categories", categoryList);
-			request.setAttribute("admin", admin);
-			int lessonId = -1;
-			if(request.getParameterMap().containsKey("lesson")) {
-				try {
-					lessonId = Integer.parseInt(request.getParameter("lesson"));
-					request.setAttribute("lesson_id", lessonId);
-				}
-				catch(NumberFormatException e)
-				{
-					// error.isbad()
-				}
+			if(request.getParameterMap().containsKey("id"))
+			{
+				int id = Integer.parseInt(request.getParameter("id"));
+				request.setAttribute("lesson_content", LessonDao.GetLessonText(id));
+				request.setAttribute("lesson_start_code", LessonDao.GetLessonCode(id));
+				request.setAttribute("categories", LessonDao.GetAllLessonCategories());
+				request.setAttribute("lesson_title", LessonDao.GetLessonTitle(id));
+				
+				request.getRequestDispatcher("/WEB-INF/admin/lesson_editor.jsp").forward(request, response);
+				return;
 			}
 			
-			request.setAttribute("lesson_id", lessonId);
+			request.setAttribute("lessons", LessonDao.GetAllLessonCategories());
 			request.getRequestDispatcher("/WEB-INF/admin/lesson.jsp").forward(request, response);
 		}
 	}
@@ -63,6 +43,19 @@ public class LessonEditor extends HttpServlet
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		if(LoginUtil.TestAdmin(request, response))
+		{
+			String action = request.getParameter("submit");
+			int id = Integer.parseInt(request.getParameter("id"));
+			if(action.equals("Save")) {
+				String title = request.getParameter("lesson_title_text");
+				String start_code = request.getParameter("lesson_start_code");
+				int category = Integer.parseInt(request.getParameter("category"));
+				String content = request.getParameter("lesson_content");
+				LessonDao.SetLessonContent(id, title, content, category, start_code);
+			} else if(action.equals("Delete")) {
+			
+			}
+		}
 	}
 }

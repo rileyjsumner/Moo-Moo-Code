@@ -141,29 +141,63 @@ public class LessonDao {
 		}
 		return "No lesson here";
 	}
-	public static ArrayList<Lesson> GetLessonContent()
+	public static String GetLessonCode(int id)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
-		ArrayList<Lesson> lessons = new ArrayList<>();
 		try {
-			preparedStatement = con.prepareStatement("SELECT * FROM lessons");
-			
+			preparedStatement = con.prepareStatement("SELECT start_code FROM lessons WHERE id = ?");
+			preparedStatement.setInt(1, id);
 			ResultSet set = preparedStatement.executeQuery();
-			
-			while(set.next()) {
-				int id = set.getInt("id");
-				String lesson_name = set.getString("lesson_name");
-				int lesson_num = set.getInt("lesson_num");
-				int category_id = set.getInt("category_id");
-				String lesson_text = set.getString("lesson_text");
-				String start_code = set.getString("start_code");
-				lessons.add(new Lesson(id, lesson_name, category_id, lesson_num, lesson_text, start_code));
+			if(set.first()){
+				return set.getString("start_code");
 			}
+			con.close();
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return lessons;
+		return "No start code here";
+	}
+	public static String GetLessonTitle(int id) {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT lesson_name FROM lessons WHERE id = ?");
+			preparedStatement.setInt(1, id);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()){
+				return set.getString("lesson_name");
+			}
+			con.close();
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return "No start code here";
+	}
+	public static void SetLessonContent(int id, String title, String lesson_content, int category, String start_code)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("UPDATE lessons SET " +
+					"lesson_name = ?, " +
+					"lesson_text = ?, " +
+					"category_id = ?, " +
+					"start_code = ? " +
+					"WHERE id = ?;");
+			preparedStatement.setString(1, title);
+			preparedStatement.setString(2, lesson_content);
+			preparedStatement.setInt(3, category);
+			preparedStatement.setString(4, start_code);
+			preparedStatement.setInt(5, id);
+			
+			preparedStatement.execute();
+			con.close();
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 }

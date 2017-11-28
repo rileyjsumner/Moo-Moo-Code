@@ -174,5 +174,4 @@
 		<servlet-name>LessonEditor</servlet-name>
 		<url-pattern>/Admin/Lessons</url-pattern>
 	</servlet-mapping>
-
 </web-app>
