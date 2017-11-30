@@ -27,11 +27,11 @@
 		for (User user : (ArrayList<User>)request.getAttribute("users")) {
 			out.print(
 					"<div class='row'>" +
-							"<div class='cell'><input data-user='" + user.id + "' data-type='id' type='text' value='" + user.id + "'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' data-type='id' type='number' value='" + user.id + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='username' type='text' value='" + user.username + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='password' type='text' value='" + user.password + "'/></div>" +
-							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_category' type='text' value='" + user.categoryProgress + "'/></div>" +
-							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_lesson' type='text' value='" + user.lessonProgress + "'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_category' type='number' value='" + user.categoryProgress + "'/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_lesson' type='number' value='" + user.lessonProgress + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='admin' type='text' value='" + user.admin + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='delete' type='button' value=' Delete '/></div>" +
 					"</div>"
@@ -51,7 +51,7 @@
 					<div class="cell"><input type='text' name='password' placeholder='password' /></div>
 					<div class="cell"><input type='number' name='categoryProgress' placeholder='category progress'/></div>
 					<div class="cell"><input type='number' name='lessonProgress' placeholder='lesson progress'/></div>
-					<div class="cell"><input type='number' name='admin' placeholder='admin'/></div>
+					<div class="cell"><input type='text' name='admin' placeholder='admin'/></div>
 					<input type="hidden" name="type" value="add"/>
 					<div class="cell"><input type='submit' name='add' value='Add User'/></div>
 				</div>

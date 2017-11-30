@@ -200,4 +200,41 @@ public class LessonDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+	public static void DeleteLesson(int id)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("DELETE FROM lessons WHERE id = ?");
+			preparedStatement.setInt(1, id);
+			
+			preparedStatement.execute();
+			con.close();
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	public static void AddLesson(String title, String lesson_content, int category, String start_code)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("INSERT INTO lessons (lesson_name, lesson_text, category_id, start_code) VALUES (" +
+					"lesson_name = ?, " +
+					"lesson_text = ?, " +
+					"category_id = ?, " +
+					"start_code = ? )");
+			preparedStatement.setString(1, title);
+			preparedStatement.setString(2, lesson_content);
+			preparedStatement.setInt(3, category);
+			preparedStatement.setString(4, start_code);
+			
+			preparedStatement.execute();
+			con.close();
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 }

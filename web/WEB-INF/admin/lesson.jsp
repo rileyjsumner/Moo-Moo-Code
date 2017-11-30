@@ -8,28 +8,35 @@
 <title>Moo Moo Code - Admin</title>
 <link rel="stylesheet" href="<c:url value="/css/lesson.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
-<%
-		out.print("<p class=\"content-header\">Select a lesson</p>");
+		<p class="content-header">Select a lesson</p>
+		<%
 		ArrayList<LessonCategory> lessonCategories = (ArrayList<LessonCategory>) request.getAttribute("lessons");
 		boolean first = true;
-		for (LessonCategory lessonCategory : lessonCategories) {
-			out.print("<div class = \"category-container\">" +
-						"<div class=\"lesson-category bracket-hover lesson-category-complete\" "+(first?" style='background-color:#49483E'":"")+">");
-							out.print("<p class=\"lesson-text\">" + lessonCategory.Name + "</p>" +
-						"</div>");
-			out.print("<div class = \"lessons-container\"");
-				if(!first){out.print(" style=\"display:none\"");}
-				out.print(">");
-			ArrayList<Lesson> lessons = lessonCategory.getLessons();
-			for (Lesson lesson : lessons) {
-				out.print("<div data-lesson=\""+lesson.Id+"\" class=\"lesson bracket-hover-mini lesson-complete\">");
-					out.print("<p class=\"lesson-text\">" + lesson.Name + "</p>" +
-						"</div>");
-			}
-			first = false;
-			out.print("</div></div>");
-		}
-%>
+		for (LessonCategory lessonCategory : lessonCategories) {%>
+			<div class = "category-container">
+				<div class="lesson-category bracket-hover lesson-category-complete <%=(first?" style='background-color:#49483E'":"")%>">
+					<p class="lesson-text"><%=lessonCategory.Name%></p>
+				</div>
+				<div class = "lessons-container" <% if(!first) {out.print(" style=\"display:none\"");}%>>
+				<%
+					ArrayList<Lesson> lessons = lessonCategory.getLessons();
+					for (Lesson lesson : lessons) { %>
+						<div data-lesson="<%=lesson.Id%>" class="lesson bracket-hover-mini lesson-complete">
+							<p class="lesson-text"><%=lesson.Name%></p>
+						</div>
+					<% }
+					first = false; %>
+					<div data-lesson="-1" class="lesson bracket-hover-mini lesson-complete">
+						<p class="lesson-text">New Lesson</p>
+					</div>
+				</div>
+			</div>
+		<% } %>
+			<div class = "category-container">
+				<div class="lesson-category bracket-hover lesson-category-complete">
+					<p class="lesson-text">New Lesson Category</p>
+				</div>
+			</div>
 	<script>
 		// Switch categories
 		$(".lesson-category-complete").click(function()

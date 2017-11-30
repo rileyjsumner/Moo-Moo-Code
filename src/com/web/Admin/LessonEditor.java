@@ -21,11 +21,13 @@ public class LessonEditor extends HttpServlet
 			if(request.getParameterMap().containsKey("id"))
 			{
 				int id = Integer.parseInt(request.getParameter("id"));
-				request.setAttribute("lesson_content", LessonDao.GetLessonText(id));
-				request.setAttribute("lesson_start_code", LessonDao.GetLessonCode(id));
 				request.setAttribute("categories", LessonDao.GetAllLessonCategories());
-				request.setAttribute("lesson_title", LessonDao.GetLessonTitle(id));
-				
+				if(id != -1)
+				{
+					request.setAttribute("lesson_content", LessonDao.GetLessonText(id));
+					request.setAttribute("lesson_start_code", LessonDao.GetLessonCode(id));
+					request.setAttribute("lesson_title", LessonDao.GetLessonTitle(id));
+				}
 				request.getRequestDispatcher("/WEB-INF/admin/lesson_editor.jsp").forward(request, response);
 				return;
 			}
@@ -54,7 +56,13 @@ public class LessonEditor extends HttpServlet
 				String content = request.getParameter("lesson_content");
 				LessonDao.SetLessonContent(id, title, content, category, start_code);
 			} else if(action.equals("Delete")) {
-			
+				LessonDao.DeleteLesson(id);
+			} else if(action.equals("Add")) {
+				String title = request.getParameter("lesson_title_text");
+				String start_code = request.getParameter("lesson_start_code");
+				int category = Integer.parseInt(request.getParameter("category"));
+				String content = request.getParameter("lesson_content");
+				LessonDao.AddLesson(title, start_code, category, content);
 			}
 		}
 	}
