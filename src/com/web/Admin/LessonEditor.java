@@ -61,8 +61,8 @@ public class LessonEditor extends HttpServlet
 				String title = request.getParameter("lesson_title_text");
 				String start_code = request.getParameter("lesson_start_code");
 				int category = Integer.parseInt(request.getParameter("category"));
-				String content = request.getParameter("lesson_content");
-				LessonDao.AddLesson(title, start_code, category, content);
+				String content = request.getParameter("lesson_content_editor");
+				LessonDao.AddLesson(title, content, category, start_code);
 			}
 		}
 	}

@@ -26,7 +26,7 @@
 						</div>
 					<% }
 					first = false; %>
-					<div data-lesson="-1" class="lesson bracket-hover-mini lesson-complete">
+					<div data-category="<%=lessonCategory.Id%>" data-lesson="-1" class="lesson bracket-hover-mini lesson-complete">
 						<p class="lesson-text">New Lesson</p>
 					</div>
 				</div>
@@ -60,6 +60,9 @@
 		$(".lesson-complete, .lesson-active").click(function()
 		{
 			location.href = "?id="+$(this).data("lesson");
+			if($(this).data("category") !== null) {
+				location.href += "&categoryId=" + $(this).data("category");
+			}
 		});
 	</script>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

@@ -42,15 +42,16 @@
 <%
 	} else { %>
 		<form action="/Admin/Lessons" method="POST">
-		<input type="hidden" value="<%=id%>" name="id"/>
+			<input type="hidden" value="<%=id%>" name="id"/>
 			<div class="lesson_edit_header">
 				<input type="text" placeholder="Lesson Title" name="lesson_title_text"/>
 				<select name="category">
 					<%
+						int category = Integer.parseInt(request.getParameter("categoryId"));
 						for(LessonCategory category_new : categories)
 						{
 					%>
-					<option value="<%=category_new.Id%>"><%=category_new.Name%></option>
+					<option <% if(category == category_new.Id){ out.print("selected"); %> value="<%=category_new.Id%>"><%=category_new.Name%></option>
 					<%
 						}
 					%>
@@ -75,16 +76,7 @@
 		matchBrackets: true,
 		showCursorWhenSelecting: true
 	});
-	var codeMirror2 = CodeMirror.fromTextArea(document.getElementById("code2"), {
-		theme: "monokai",
-		lineNumbers: true,
-		mode: "javascript",
-		autoCloseBrackets: true,
-		matchBrackets: true,
-		showCursorWhenSelecting: true
-	});
 	codeMirror.setSize("50%", "400px");
-	codeMirror2.setSize("50%", "400px");
 	function submitCode() {
 		$.post("RawCodeExec", {code: codeMirror.getValue()}, function (data) {
 			console.log(data);
