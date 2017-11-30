@@ -5,6 +5,7 @@ import com.data.Lesson.LessonCategory;
 import com.data.Lesson.LessonId;
 import com.util.DbUtil;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -230,6 +231,41 @@ public class LessonDao {
 			{
 				return set.getInt("max_id");
 			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return -1;
+	}
+	public static void AddCategory(String categoryName)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("INSERT INTO lesson_categories (name) VALUES (?)");
+			
+			preparedStatement.setString(1, categoryName);
+			
+			preparedStatement.execute();
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	public static int GetCategoryId(int lesson_id)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT category_id FROM lessons WHERE id = ?");
+			
+			preparedStatement.setInt(1, lesson_id);
+			
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()) {
+				return set.getInt("category_id");
+			}
+			
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);

@@ -57,6 +57,23 @@
 	text-align: center;
 	font-size: 16px;
 }
+.button {
+	cursor: pointer;
+	background-color: #49483E;
+	border: 1px solid #75715E;
+	color: #F8F8F2;
+	border-radius: 5px;
+	font-weight: bold;
+	padding: 2px 10px;
+	font-size:18px;
+	margin:2px 10px;
+}
+.button:hover {
+	border-color:#A6E22E;
+}
+.button.button-red:hover {
+	border-color: #e24334;
+}
 .add, .delete {
 	border: 1px solid dimgray;
 	border-radius: 3px;

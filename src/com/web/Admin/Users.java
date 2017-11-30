@@ -27,23 +27,17 @@ public class Users extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		int user_id = (int)session.getAttribute(("user_id"));
-		boolean admin = isAdmin(user_id);
-		List<User> userList = UserDao.GetUsers();
-		
-		request.setAttribute("users", userList);
-		request.setAttribute("admin", admin);
-
-		if(LoginUtil.TestLogin(session))
+		if(LoginUtil.TestAdmin(request, response))
 		{
+			HttpSession session = request.getSession();
+			int user_id = (int)session.getAttribute(("user_id"));
+			boolean admin = isAdmin(user_id);
+			List<User> userList = UserDao.GetUsers();
+			
+			request.setAttribute("users", userList);
+			request.setAttribute("admin", admin);
+			
 			request.getRequestDispatcher("/WEB-INF/admin/users.jsp").forward(request, response);
-		}
-		else
-		{
-			request.setAttribute("action_text","access account options");
-			request.setAttribute("action","Users");
-			request.getRequestDispatcher("/WEB-INF/login_required.jsp").forward(request, response);
 		}
 		
 
