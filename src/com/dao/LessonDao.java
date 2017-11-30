@@ -77,7 +77,6 @@ public class LessonDao {
 			if(set.first()){
 				return new LessonId(set.getInt("category_num"),set.getInt("lesson_num"));
 			}
-			con.close();
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,7 +98,6 @@ public class LessonDao {
 			if(set.first()){
 				return set.getInt("id");
 			}
-			con.close();
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,7 +132,6 @@ public class LessonDao {
 			if(set.first()){
 				return set.getString("lesson_text");
 			}
-			con.close();
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,7 +149,6 @@ public class LessonDao {
 			if(set.first()){
 				return set.getString("start_code");
 			}
-			con.close();
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -169,7 +165,6 @@ public class LessonDao {
 			if(set.first()){
 				return set.getString("lesson_name");
 			}
-			con.close();
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -194,7 +189,6 @@ public class LessonDao {
 			preparedStatement.setInt(5, id);
 			
 			preparedStatement.execute();
-			con.close();
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -209,32 +203,37 @@ public class LessonDao {
 			preparedStatement.setInt(1, id);
 			
 			preparedStatement.execute();
-			con.close();
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	public static void AddLesson(String title, String lesson_content, int category, String start_code)
+	public static int AddLesson(String title, String lesson_content, int category, String start_code)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = con.prepareStatement("INSERT INTO lessons (lesson_name, lesson_text, category_id, start_code) VALUES (" +
-					"lesson_name = ?, " +
-					"lesson_text = ?, " +
-					"category_id = ?, " +
-					"start_code = ? )");
+			preparedStatement = con.prepareStatement(
+					"INSERT INTO lessons (lesson_name, lesson_text, category_id, start_code) " +
+						 "VALUES (?, ?, ?, ?)");
+			
 			preparedStatement.setString(1, title);
 			preparedStatement.setString(2, lesson_content);
 			preparedStatement.setInt(3, category);
 			preparedStatement.setString(4, start_code);
 			
 			preparedStatement.execute();
-			con.close();
+			
+			preparedStatement = con.prepareStatement("SELECT MAX(id) AS max_id FROM lessons");
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first())
+			{
+				return set.getInt("max_id");
+			}
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		return -1;
 	}
 }
