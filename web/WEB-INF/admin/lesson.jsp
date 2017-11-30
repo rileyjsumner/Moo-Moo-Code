@@ -59,10 +59,8 @@
 		// Go to a lesson
 		$(".lesson-complete, .lesson-active").click(function()
 		{
-			location.href = "?id="+$(this).data("lesson");
-			if($(this).data("category") !== null) {
-				location.href += "&categoryId=" + $(this).data("category");
-			}
+			var destination = "?id="+$(this).data("lesson");
+			location.href = destination;
 		});
 	</script>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

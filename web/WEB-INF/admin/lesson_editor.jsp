@@ -47,20 +47,20 @@
 				<input type="text" placeholder="Lesson Title" name="lesson_title_text"/>
 				<select name="category">
 					<%
-						int category = Integer.parseInt(request.getParameter("categoryId"));
+						
 						for(LessonCategory category_new : categories)
 						{
 					%>
-					<option <% if(category == category_new.Id){ out.print("selected"); %> value="<%=category_new.Id%>"><%=category_new.Name%></option>
+					<option value="<%=category_new.Id%>"><%=category_new.Name%></option>
 					<%
 						}
 					%>
 				</select>
 			</div>
 			<div class="lesson_edit_content">
-				<textarea class="lesson_content_editor" placeholder="Lesson Content"></textarea>
+				<textarea name="lesson_content_editor" class="lesson_content_editor" placeholder="Lesson Content"></textarea>
 				<div style="text-align:left;">
-					<textarea name="lesson_start_code" id="code_new">print("Lesson Start Code");</textarea>
+					<textarea name="lesson_start_code" id="code">print("Lesson Start Code");</textarea>
 				</div>
 			</div>
 			<input type="submit" value="Add" name="submit"/>
