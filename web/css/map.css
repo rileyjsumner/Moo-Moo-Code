@@ -100,6 +100,8 @@
 {
 	height: 40px;
 	line-height: 50px;
+	position: relative;
+	bottom: 25px;
 	color: #cac6b4;
 	user-select: none;
 	width: 15px;
@@ -109,6 +111,8 @@
 	text-align: center;
 	line-height: 30px;
 	color: #cac6b4;
+	position: relative;
+	left: 25px;
 	user-select: none;
 }
 .entity-player

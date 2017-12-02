@@ -10,14 +10,12 @@ public class NumUtil
 		// Check if the circle center is inside the tile
 		return new Collision();
 	}
-	public static Collision Collision_Circle_AABB(double circleX,double circleY, double circleRadius, double boxX1, double boxX2,double boxY1,double boxY2)
+	public static boolean Collision_resolve_Maptile(double circleX,double circleY,double circleRadius,int tileX,int tileY)
 	{
-		// Test if they can collide
-		if(circleX-circleRadius > boxX1 && circleX+circleRadius < boxX2 && circleY-circleRadius > boxY1 && circleY+circleRadius < boxY2)
-		{
-		
-		}
-		return new Collision();
+		float DeltaX = (float)circleX - Math.max(tileX, (float)Math.min(circleX, (tileX + 1)));
+		float DeltaY = (float)circleY - Math.max(tileY, (float)Math.min(circleY, (tileY + 1)));
+		System.out.println("Dx:"+DeltaX+", Dy:"+DeltaY);
+		return (DeltaX * DeltaX + DeltaY * DeltaY) < (circleRadius * circleRadius);
 	}
 	public static float Distance(float p1,float p2)
 	{

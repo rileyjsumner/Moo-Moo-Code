@@ -134,14 +134,14 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 	function moveEntity(id,x,y)
 	{
 		var ent = $("#entity-ref-"+id);
-		ent.css("right",(( max_x - x - 1) * 50) + "px");
-		ent.css("top",(( max_y - y - 1) * 50) + "px");
+		ent.css("right",(( max_x - x - .5) * 50) + "px");
+		ent.css("top",(( max_y - y - .5) * 50) + "px");
 	}
 	function addEntity(entity_class,x,y,id)
 	{
 		$("#entity-reference").append("<div id = 'entity-ref-"+id+"' class = 'map-entity pixel "+entity_class+"' style=\"" +
-			"right:" + (( max_x - x - 1) * 50) + "px;" +
-			"top:" + (( max_y - y - 1) * 50) + "px\">");
+			"right:" + (( max_x - x - .5) * 50) + "px;" +
+			"top:" + (( max_y - y - .5) * 50) + "px\">");
 	}
 	function setTime(time)
 	{

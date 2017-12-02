@@ -106,7 +106,7 @@
 	<%
 		for(int y =mapData.Map.DimY-1;y>=0;y--)
 		{
-			out.print("<tr><td class = 'map-label-cell'><div class = 'map_label_y'>"+y+"</div></td>");
+			out.print("<tr><td class = 'map-label-cell'><div class = 'map_label_y'>"+(y+1)+"</div></td>");
 			for(int x = 0 ;x<mapData.Map.DimX;x++)
 			{
 				if(x == mapData.Map.DimX-1 && y ==mapData.Map.DimY-1){out.print("<td id = 'entity-reference' class = 'map-tile-cell'>");}
@@ -124,7 +124,7 @@
 				}
 				if(y == 0)
 				{
-					out.print(".png);\"></div><div class = 'map_label_x'>"+x+"</div></td>");
+					out.print(".png);\"></div><div class = 'map_label_x'>"+(x+1)+"</div></td>");
 				}
 				else{
 					out.print(".png);\"></div></td>");
@@ -301,8 +301,8 @@
 	function addEntity(entity_class,x,y)
 	{
 		$("#entity-reference").append("<div class = 'map-entity pixel "+entity_class+"' style=\"" +
-			"right:" + (( max_x - x - 1) * 50) + "px;" +
-			"top:" + (( max_y - y - 1) * 50) + "px\">");
+			"right:" + (( max_x - x - .5) * 50) + "px;" +
+			"top:" + (( max_y - y - .5) * 50) + "px\">");
 	}
 	addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>);
 	<%
