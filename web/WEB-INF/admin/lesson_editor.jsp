@@ -13,7 +13,7 @@
 	int id = Integer.parseInt(request.getParameter("id"));
 	ArrayList<LessonCategory> categories = (ArrayList<LessonCategory>)request.getAttribute("categories");
 	
-	if(id != -1) {
+	if(id >= 0) {
 %>
 	<form action="/Admin/Lessons" method="POST">
 		<input type="hidden" value="<%=id%>" name="id"/>
@@ -21,10 +21,11 @@
 			<input type="text" value="<%=request.getAttribute("lesson_title")%>" name="lesson_title_text"/>
 			<select name="category">
 				<%
+					int category_id = (int)request.getAttribute("category_id");
 					for(LessonCategory category : categories)
 					{
 						%>
-						<option value="<%=category.Id%>"><%=category.Name%></option>
+						<option <%=category.Id==category_id?"selected":""%> value="<%=category.Id%>"><%=category.Name%></option>
 						<%
 					}
 				%>
@@ -40,7 +41,7 @@
 		<input type="submit" value="Save" name="submit"/>
 	</form>
 <%
-	} else { %>
+	} else if(id == -1){ %>
 		<form action="/Admin/Lessons" method="POST">
 			<input type="hidden" value="<%=id%>" name="id"/>
 			<div class="lesson_edit_header">

@@ -32,8 +32,8 @@
 				</div>
 			</div>
 		<% } %>
-			<div class = "category-container">
-				<div class="lesson-category bracket-hover lesson-category-complete">
+			<div class = "category-container" id="new_category_wrapper">
+				<div class="lesson-category bracket-hover lesson-category-complete" id="lesson_new_category">
 					<p class="lesson-text">New Lesson Category</p>
 				</div>
 			</div>
@@ -61,6 +61,16 @@
 		{
 			var destination = "?id="+$(this).data("lesson");
 			location.href = destination;
+		});
+		$("#lesson_new_category").click(function()
+		{
+			$(this).remove();
+			$("#new_category_wrapper").append("" +
+				"<form action=\"/Admin/Lessons\" method=\"POST\">" +
+					"<input type=\"text\" name=\"category_name\"/>" +
+					"<input type=\"submit\" name=\"submit\" value=\"Add Category\"/>" +
+				"</form>");
+			
 		});
 	</script>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

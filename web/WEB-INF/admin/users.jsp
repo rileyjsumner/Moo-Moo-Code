@@ -33,7 +33,7 @@
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_category' type='number' value='" + user.categoryProgress + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_lesson' type='number' value='" + user.lessonProgress + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='admin' type='text' value='" + user.admin + "'/></div>" +
-							"<div class='cell'><input data-user='" + user.id + "' class='delete' type='button' value=' Delete '/></div>" +
+							"<div class='cell'><input data-user='" + user.id + "' class='delete button button-red' id='delete' type='button' value='Delete'/></div>" +
 					"</div>"
 			);
 			nextId = user.id+1;
@@ -53,7 +53,7 @@
 					<div class="cell"><input type='number' name='lessonProgress' placeholder='lesson progress'/></div>
 					<div class="cell"><input type='text' name='admin' placeholder='admin'/></div>
 					<input type="hidden" name="type" value="add"/>
-					<div class="cell"><input type='submit' name='add' value='Add User'/></div>
+					<div class="cell"><input type='submit' class="button" name='add' value='Add User'/></div>
 				</div>
 			</div>
 		</form>
