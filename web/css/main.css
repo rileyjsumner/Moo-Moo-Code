@@ -6,6 +6,9 @@ body, html {
 	overflow: hidden;
 	margin: 0;
 }
+pre{
+	font-family: "Inconsolata";
+}
 #code-output pre.error
 {
 	color: #ff4841;
@@ -46,6 +49,13 @@ body, html {
 /* Modal Content/Box */
 .modal-content {
 	background-color: #5f5c4e;
+	margin: 15% auto;
+	padding: 20px;
+	z-index: 10;
+	border: 1px solid #908c77;
+	width: 80%;
+}
+.modal-content-invis {
 	margin: 15% auto;
 	padding: 20px;
 	z-index: 10;

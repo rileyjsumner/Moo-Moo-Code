@@ -18,6 +18,15 @@
 <% MapData mapData = (MapData) request.getAttribute("level_data");
 boolean exec = (boolean) request.getAttribute("exec");%>
 
+
+<div id="win-modal" class="modal" <%if(!exec){%>style = 'display:block'<%}%>>
+	<!-- Modal content -->
+	<div class="modal-content-invis">
+		<span class="close">&times;</span>
+		<pre class = 'map-desc'><%=mapData.Map.Desc%></pre>
+	</div>
+</div>
+
 <div id="desc-modal" class="modal" <%if(!exec){%>style = 'display:block'<%}%>>
 	<!-- Modal content -->
 	<div class="modal-content">
