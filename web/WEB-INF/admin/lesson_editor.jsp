@@ -37,6 +37,9 @@
 				<textarea name="lesson_start_code" id="code"><%=(String)request.getAttribute("lesson_start_code") %></textarea>
 			</div>
 		</div>
+		<div class="lesson_output">
+			<textarea name="lesson_content_output" class="lesson_content_output" placeholder="Output"><%=(String)request.getAttribute("output")%></textarea>
+		</div>
 		<input type="submit" value="Delete" name="submit"/>
 		<input type="submit" value="Save" name="submit"/>
 	</form>
@@ -63,6 +66,9 @@
 				<div style="text-align:left;">
 					<textarea name="lesson_start_code" id="code">print("Lesson Start Code");</textarea>
 				</div>
+			</div>
+			<div class="lesson_output">
+				<textarea name="lesson_content_output" class="lesson_content_output" placeholder="Output"><%=(String)request.getAttribute("output")%></textarea>
 			</div>
 			<input type="submit" value="Add" name="submit"/>
 		</form>

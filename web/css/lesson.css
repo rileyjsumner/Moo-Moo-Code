@@ -23,7 +23,6 @@
 	width:50%;
 	bottom:0;
 	top:0;
-	padding: 10px;
 }
 .lesson-codebed-container
 {
@@ -93,11 +92,11 @@
 }
 /* Editor */
 .lesson_edit_header {
-	height: 150px;
+	height: 75px;
 }
 .lesson_edit_header input, .lesson_edit_header select{
 	font-size: 24px;
-	font-family: "Consolas", serif;
+	font-family: "Inconsolata", serif;
 	text-align: center;
 	background: #4f4f4f;
 	border: none;
@@ -105,24 +104,37 @@
 	color: white;
 }
 .lesson_edit_content {
-
+	margin: 5px;
 }
 .lesson_edit_content textarea {
-	width: 45%;
-	max-width: 45%;
-	min-width: 35%;
-	height: 400px;
-	min-height: 300px;
-	max-height: 400px;
+	 width: 45%;
+	 max-width: 45%;
+	 min-width: 35%;
+	 height: 400px;
+	 min-height: 300px;
+	 max-height: 400px;
+	 float: left;
+	 border: none;
+	 padding-left: 8px;
+ }
+.lesson_output textarea {
+	width: 80%;
+	max-width: 90%;
+	min-width: 70%;
+	height: 100px;
+	min-height: 100px;
+	max-height: 100px;
 	float: left;
 	border: none;
 	padding-left: 8px;
-	
 }
-.lesson_content_editor {
+.lesson_content_editor, .lesson_content_output {
 	background: #4f4f4f;
 	font-size: 18px;
-	font-family: "Consolas", serif;
+	font-family: "Inconsolata", serif;
 	color: white;
 	margin-left: 15px;
+}
+.lesson_output {
+	min-height: 50px;
 }
