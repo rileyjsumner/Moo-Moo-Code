@@ -5,8 +5,6 @@ public class TileMap {
 	public int DimY;
 	public int Time;
 	public int Id;
-	public float SpawnX;
-	public float SpawnY;
 	public MapTile[][] Data;
 	public String Desc;
 	public String Help;
@@ -16,9 +14,9 @@ public class TileMap {
 		DimX=dimX;DimY=dimY;Id = id;
 		Data=new MapTile[DimX][DimY];
 	}
-	public TileMap(int id,int dimX,int dimY,float spawnX,float spawnY,String desc,String help,String code,int time)
+	public TileMap(int id,int dimX,int dimY,String desc,String help,String code,int time)
 	{
-		DimX=dimX;DimY=dimY;SpawnX = spawnX;SpawnY = spawnY;Code=code;
+		DimX=dimX;DimY=dimY;Code=code;
 		Data=new MapTile[DimX][DimY];Id = id;Desc = desc;Help = help;Time = time;
 	}
 	public void AddTile(int x,int y,MapTile tile)

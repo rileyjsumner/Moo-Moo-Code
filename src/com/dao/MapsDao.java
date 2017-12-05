@@ -26,7 +26,7 @@ public class MapsDao {
 			if(set.first()) // The level exists
 			{
 				// Make the blank map
-				TileMap tileMap = new TileMap(id,set.getInt("dim_x"),set.getInt("dim_y"),set.getFloat("start_x"),set.getFloat("start_y"),set.getString("desc"),set.getString("help"),set.getString("start_code"),set.getInt("time"));
+				TileMap tileMap = new TileMap(id,set.getInt("dim_x"),set.getInt("dim_y"),set.getString("desc"),set.getString("help"),set.getString("start_code"),set.getInt("time"));
 				
 				preparedStatement = con.prepareStatement("SELECT x,y,id,tile_type FROM level_tiles WHERE level_id = ?");
 				preparedStatement.setInt(1,id);
@@ -48,7 +48,7 @@ public class MapsDao {
 				{
 					tiles.add(set.getInt("id"),set.getString("name"),set.getString("icon"),set.getInt("type"));
 				}
-				preparedStatement = con.prepareStatement("SELECT * FROM level_entities WHERE level_id = ?");
+				preparedStatement = con.prepareStatement("SELECT * FROM level_entities WHERE level_id = ? ORDER BY name");
 				preparedStatement.setInt(1,id);
 				set = preparedStatement.executeQuery();
 				
@@ -59,7 +59,7 @@ public class MapsDao {
 					mapEntities.add(new Entity(set.getFloat("pos_x"),set.getFloat("pos_y"),set.getInt("entity_type"),set.getInt("id"),set.getString("name")));
 				}
 				
-				preparedStatement = con.prepareStatement("SELECT * FROM entities");
+				preparedStatement = con.prepareStatement("SELECT * FROM entities ORDER BY type");
 				set = preparedStatement.executeQuery();
 				
 				ArrayList<Entity> entities = new ArrayList<>();
@@ -125,22 +125,6 @@ public class MapsDao {
 			preparedStatement = con.prepareStatement("UPDATE levels SET dim_x = ?, dim_y = ? WHERE id = ?");
 			preparedStatement.setInt(1,x);
 			preparedStatement.setInt(2,y);
-			preparedStatement.setInt(3,mapId);
-			preparedStatement.execute();
-		}
-		catch(SQLException ex) {
-			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
-	public static void SetMapSpawn(int mapId, float x, float y)
-	{
-		Connection con = DbUtil.getConnection();
-		PreparedStatement preparedStatement;
-		try
-		{
-			preparedStatement = con.prepareStatement("UPDATE levels SET start_x = ?, start_y = ? WHERE id = ?");
-			preparedStatement.setFloat(1,x);
-			preparedStatement.setFloat(2,y);
 			preparedStatement.setInt(3,mapId);
 			preparedStatement.execute();
 		}

@@ -63,7 +63,7 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 		<%
 			for(int y =mapData.Map.DimY-1;y>=0;y--)
 			{
-				out.print("<tr><td class = 'map-label-cell'><div class = 'map_label_y'>"+y+"</div></td>");
+				out.print("<tr><td class = 'map-label-cell'><div class = 'map_label_y'>"+(y+1)+"</div></td>");
 				for(int x = 0 ;x<mapData.Map.DimX;x++)
 				{
 					if(x == mapData.Map.DimX-1 && y ==mapData.Map.DimY-1){out.print("<td id = 'entity-reference' class = 'map-tile-cell'>");}
@@ -81,7 +81,7 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 					}
 					if(y == 0)
 					{
-						out.print(".png);\"></div><div class = 'map_label_x'>"+x+"</div></td>");
+						out.print(".png);\"></div><div class = 'map_label_x'>"+(x+1)+"</div></td>");
 					}
 					else{
 						out.print(".png);\"></div></td>");
@@ -143,11 +143,20 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 			"right:" + (( max_x - x - .5) * 50) + "px;" +
 			"top:" + (( max_y - y - .5) * 50) + "px\">");
 	}
+	function removeEntity(id)
+	{
+		$("#entity-reference").remove("#entity-ref-"+id);
+	}
+	function removePlayerSpawns()
+	{
+		$("#entity-reference").remove(".entity-player-spawn");
+	}
 	function setTime(time)
 	{
 		$("#clock-s").html(Math.floor(time*.1));
 		$("#clock-ms").html(time % 10);
 	}
+	setTime(<%=mapData.Map.Time%>);
 	function addConsole(text,error)
 	{
 		var code_out = $("#code-output");
@@ -177,26 +186,37 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 		code_out.append("<pre class = 'error'>LEVEL FAILED</pre>");
 		code_out.scrollTop(code_out[0].scrollHeight);
 	}
-	$(document).ready(function()
-	{
-		addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>,0);
+	$( window ).on( "load" ,function() {
 		<%
 			for(Entity entity : mapData.MapEntities)
 			{
 				out.print("addEntity('");
 				if(entity.Type==0)
 				{
+					out.print("entity-player-spawn");
+				}
+				if(entity.Type==1)
+				{
 					out.print("entity-cow");
 				}
 				out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
 			}
+			%>
+		loadContent();
+	});
+	function loadContent()
+	{
+		removePlayerSpawns();
+		<%
 			if(exec)
 			{
 				GameOutput animations = (GameOutput) request.getAttribute("game_data");
+				// add the player
+				out.print("addEntity('entity-player',"+animations.spawnX+","+animations.spawnY+",0);");
 				// Add the animations
 				for(GameFrame frame: animations.GameChanges)
 				{
-					int time =((100*80) - (frame.TimeLeft*100));
+					int time =((100*frame.Data.Map.Time) - (frame.TimeLeft*100));
 					out.print("\nsetTimeout(function(){setTime("+frame.TimeLeft+");moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");");
 					if(!Objects.equals(frame.ConsoleOut, "")){out.print("addConsole(\""+ Html.encode(frame.ConsoleOut)+"\","+frame.ConsoleError+")");}
 					for(Entity entity : frame.Data.Entities)
@@ -209,6 +229,6 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 				}
 			}
 		%>
-	});
+	}
 </script>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

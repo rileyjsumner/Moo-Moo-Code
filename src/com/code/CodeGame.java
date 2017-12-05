@@ -6,8 +6,9 @@ import com.data.Game.GameFrame;
 import com.data.Game.GameOutput;
 import com.data.Map.Entity;
 import com.data.Map.MapData;
-import js.Player;
+import com.util.Collision;
 import com.util.NumUtil;
+import js.Player;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -33,7 +34,8 @@ public class CodeGame
 	public static GameOutput RunGame(String code, GameData map)
 	{
 		GameOutput output = new GameOutput();
-		
+		output.spawnX=map.PlayerX.floatValue();
+		output.spawnY=map.PlayerY.floatValue();
 		GameData lastData = map;
 		GameFrame frame;
 		CodeEngine engine;
@@ -91,8 +93,17 @@ public class CodeGame
 			frame.Data.PlayerY = frame.Data.PlayerY.add(moveY.multiply(BigDecimal.valueOf(.2)));
 			
 			// Make sure the player doesn't go off the edge
-			frame.Data.PlayerX = NumUtil.Cap(frame.Data.PlayerX,BigDecimal.ZERO,frame.Data.Map.DimX-1);
-			frame.Data.PlayerY = NumUtil.Cap(frame.Data.PlayerY,BigDecimal.ZERO,frame.Data.Map.DimY-1);
+			frame.Data.PlayerX = NumUtil.Clamp(frame.Data.PlayerX,.5,(frame.Data.Map.DimX-.5));
+			frame.Data.PlayerY = NumUtil.Clamp(frame.Data.PlayerY,.5,(frame.Data.Map.DimY-.5));
+			
+			//Make sure the player doesn't collide with the map
+			
+			Collision mapCollision = NumUtil.Collision_entity_MapTiles(frame.Data.PlayerX.floatValue(),frame.Data.PlayerY.floatValue(),.5,frame.Data.Map);
+			if(mapCollision.IsCollision)
+			{
+				frame.Data.PlayerX = NumUtil.GetClean(mapCollision.Pos.X);
+				frame.Data.PlayerY = NumUtil.GetClean(mapCollision.Pos.Y);
+			}
 			
 			// Cap position to 5 decimals
 			frame.Data.PlayerX = NumUtil.TrimTrailing(frame.Data.PlayerX);
@@ -103,7 +114,7 @@ public class CodeGame
 			
 			for(Entity entity : frame.Data.Entities)
 			{
-				if(entity.Type==0) // It's a cow
+				if(entity.Type==1) // It's a cow
 				{
 					if (Math.hypot(entity.X - frame.Data.PlayerX.floatValue(), entity.Y - frame.Data.PlayerY.floatValue()) <= 1) // It's touching the player
 					{
