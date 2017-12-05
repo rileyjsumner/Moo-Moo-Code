@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" build-on-make="true" name="2017-web-java:war">
     <output-path>$PROJECT_DIR$/out/artifacts/2017_web_java_war</output-path>
-    <root id="archive" name="2017-web-java_war.war">
+    <root id="archive" name="moo_moo_code.war">
       <element id="artifact" artifact-name="2017-web-java:war exploded" />
     </root>
   </artifact>

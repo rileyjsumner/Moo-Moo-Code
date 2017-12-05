@@ -6,6 +6,8 @@ import com.util.NumUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 public class GameData
 {
@@ -55,8 +57,29 @@ public class GameData
 		Map = new GameTiles(mapData.Map);
 		Entities = mapData.MapEntities;
 		
-		PlayerX = NumUtil.TrimTrailing(BigDecimal.valueOf(mapData.Map.SpawnX));
-		PlayerY = NumUtil.TrimTrailing(BigDecimal.valueOf(mapData.Map.SpawnY));
+		Iterator<Entity> enitites = Entities.iterator();
+		ArrayList<Entity> PlayerSpawns = new ArrayList<>();
+		// Get the player-spawn entities, pick a random one to turn into the player, then remove the rest
+		while(enitites.hasNext())
+		{
+			Entity entity = enitites.next();
+			if(entity.Type==0)//It's a player spawn
+			{
+				PlayerSpawns.add(entity);
+				enitites.remove();
+			}
+		}
+		if(PlayerSpawns.size()>0)
+		{
+			Entity newPlayer = PlayerSpawns.get((new Random()).nextInt(PlayerSpawns.size()));
+			PlayerX = NumUtil.GetClean(newPlayer.X);
+			PlayerY = NumUtil.GetClean(newPlayer.Y);
+		}
+		else
+		{
+			PlayerX = NumUtil.GetClean(0);
+			PlayerY = NumUtil.GetClean(0);
+		}
 		
 		PlayerVelX = BigDecimal.ZERO;
 		PlayerVelY = BigDecimal.ZERO;

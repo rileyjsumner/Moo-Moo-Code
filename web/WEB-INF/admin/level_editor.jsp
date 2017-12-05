@@ -55,15 +55,6 @@
 <div id = "menu-entities" class = "action-menu" <%if(entityMode){out.print("style=\"left:100px\"");}else{out.print("style=\"left:-400px\"");}%>>
 	<div class = 'vertical-fill-container'>
 		<div class = 'vertical-compact'>
-			<p style="font-size:18px;padding:20px;">Player Spawn Point:</p>
-			<form action = "<c:url value="/Admin/LevelEditor"/>?action=spawn" method = "post">
-				<table style="width: 100%;overflow: hidden; white-space: nowrap;">
-					<tr><td><label class = "admin-levels-label" for="spawn-x">Spawn X:</label></td><td><input step="0.001" min = "0" max="<%=mapData.Map.DimX-1%>" id = 'spawn-x' name = "x" class = "admin-levels-input" type = "number" value="<%=mapData.Map.SpawnX%>"/></td></tr>
-					<tr><td><label class = "admin-levels-label" for="spawn-y">Spawn Y:</label></td><td><input step="0.001" min = "0" max="<%=mapData.Map.DimY-1%>" id = 'spawn-y'  name = "y" class = "admin-levels-input" type = "number" value="<%=mapData.Map.SpawnY%>"/></td></tr>
-				</table>
-				<input name = "map" type = "hidden" value="<%=mapData.Map.Id%>"/>
-				<button class = "edit-btn">Save</button>
-			</form>
 			<p style="font-size:18px;padding:20px;">Add a new entity:</p>
 			<form method = 'post' action = '<c:url value="/Admin/LevelEditor?action=entity_new"/>'>
 				<div class = 'entity-container-new'>
@@ -92,8 +83,8 @@
 								"<form method = 'post' action = '/Admin/LevelEditor' class = 'entity-content' "+((selected == entity.Id) ? "style='display:block;'" : "")+"><table style=\"width: 100%;overflow: hidden; white-space: nowrap;\">" +
 								"<tr><td><label class = \"admin-levels-label\" for='entity-type-"+entity.Id+"'>Entity Type:</label></td><td>"+mapData.GetTypeDD(entity.Type,false,false)+"</td></tr>" +
 								"<tr><td><label class = \"admin-levels-label\" for='entity-name-"+entity.Id+"'>Custom Name:</label></td><td><input name = 'name' class = 'admin-levels-input' type='text' id = 'entity-name-"+entity.Id+"' value='"+entity.Name+"' /></td></tr>" +
-								"<tr><td><label class = \"admin-levels-label\" for='entity-x-"+entity.Id+"'>Spawn X:</label></td><td><input name = 'spawn_x' class = 'admin-levels-input' type='number' id = 'entity-x-"+entity.Id+"' value='"+entity.X+"' /></td></tr>" +
-								"<tr><td><label class = \"admin-levels-label\" for='entity-y-"+entity.Id+"'>Spawn Y:</label></td><td><input name = 'spawn_y' class = 'admin-levels-input' type='number' id = 'entity-y-"+entity.Id+"' value='"+entity.Y+"' /></td></tr>" +
+								"<tr><td><label class = \"admin-levels-label\" for='entity-x-"+entity.Id+"'>Spawn X:</label></td><td><input name = 'spawn_x' step = '.1' class = 'admin-levels-input' type='number' id = 'entity-x-"+entity.Id+"' value='"+entity.X+"' /></td></tr>" +
+								"<tr><td><label class = \"admin-levels-label\" for='entity-y-"+entity.Id+"'>Spawn Y:</label></td><td><input name = 'spawn_y' step = '.1' class = 'admin-levels-input' type='number' id = 'entity-y-"+entity.Id+"' value='"+entity.Y+"' /></td></tr>" +
 								"</table><input type='hidden' value='"+entity.Id+"' name = 'id' /><input type='hidden' value='"+mapData.Map.Id+"' name = 'map' /><button name = 'action' value='entity' class = \"edit-btn\">Save</button><button name = 'action' value='entity_delete' class = \"edit-btn edit-btn-red\">Delete</button></form></div>");
 					}
 				%>
@@ -304,12 +295,15 @@
 			"right:" + (( max_x - x - .5) * 50) + "px;" +
 			"top:" + (( max_y - y - .5) * 50) + "px\">");
 	}
-	addEntity("entity-player",<%= mapData.Map.SpawnX %>,<%= mapData.Map.SpawnY %>);
 	<%
 		for(Entity entity : mapData.MapEntities)
 		{
 			out.print("addEntity('");
 			if(entity.Type==0)
+			{
+				out.print("entity-player-spawn");
+			}
+			else if(entity.Type==1)
 			{
 				out.print("entity-cow");
 			}
