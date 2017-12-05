@@ -1,7 +1,7 @@
 .mt-output .mt-token {
   border: 1px solid #ddd;
   white-space: pre;
-  font-family: "Consolas", monospace;
+  font-family: "Inconsolata", monospace;
   text-align: center;
 }
 

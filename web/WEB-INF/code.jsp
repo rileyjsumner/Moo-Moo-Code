@@ -13,7 +13,7 @@
 </div>
 <div class = "code-submit bracket-hover" onclick="submitCode()"><p class="menu-text">Run</p></div>
 <div style="display: block;width:500px;margin-left:auto;margin-right:auto;margin-top:10px;border:solid 5px #49483E;padding:10px;">
-	<p style="font-size:20px;font-family:Consolas,serif">Output:</p>
+	<p style="font-size:20px;font-family:Inconsolata,serif">Output:</p>
 	<pre id="output"></pre>
 </div>
 <script>

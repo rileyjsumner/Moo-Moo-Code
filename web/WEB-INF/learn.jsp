@@ -52,7 +52,7 @@ if((Boolean) request.getAttribute("show_lessons"))
 				else{
 					out.print(" bracket-hover-mini lesson-complete\">");
 				}
-				out.print("<p class=\"lesson-text\">" + lesson.Name + "</p></div>");
+				out.print("<pre class=\"lesson-text\">" + lesson.Name + "</pre></div>");
 			}
 			out.print("</div>");
 		}

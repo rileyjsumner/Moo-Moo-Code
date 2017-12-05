@@ -170,9 +170,25 @@ public class LessonDao {
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return "No start code here";
+		return "No title code here";
 	}
-	public static void SetLessonContent(int id, String title, String lesson_content, int category, String start_code)
+	public static String GetLessonOutput(int id) {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT lesson_output FROM lessons WHERE id = ?");
+			preparedStatement.setInt(1, id);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()){
+				return set.getString("lesson_output");
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return "No output code here";
+	}
+	public static void SetLessonContent(int id, String title, String lesson_content, int category, String start_code, String output)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
@@ -181,13 +197,15 @@ public class LessonDao {
 					"lesson_name = ?, " +
 					"lesson_text = ?, " +
 					"category_id = ?, " +
-					"start_code = ? " +
+					"start_code = ?," +
+					"lesson_output = ? " +
 					"WHERE id = ?;");
 			preparedStatement.setString(1, title);
 			preparedStatement.setString(2, lesson_content);
 			preparedStatement.setInt(3, category);
 			preparedStatement.setString(4, start_code);
-			preparedStatement.setInt(5, id);
+			preparedStatement.setString(5, output);
+			preparedStatement.setInt(6, id);
 			
 			preparedStatement.execute();
 		}
@@ -209,19 +227,20 @@ public class LessonDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	public static int AddLesson(String title, String lesson_content, int category, String start_code)
+	public static int AddLesson(String title, String lesson_content, int category, String start_code, String output)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = con.prepareStatement(
-					"INSERT INTO lessons (lesson_name, lesson_text, category_id, start_code) " +
-						 "VALUES (?, ?, ?, ?)");
+					"INSERT INTO lessons (lesson_name, lesson_text, category_id, start_code, lesson_output) " +
+						 "VALUES (?, ?, ?, ?, ?)");
 			
 			preparedStatement.setString(1, title);
 			preparedStatement.setString(2, lesson_content);
 			preparedStatement.setInt(3, category);
 			preparedStatement.setString(4, start_code);
+			preparedStatement.setString(5, output);
 			
 			preparedStatement.execute();
 			

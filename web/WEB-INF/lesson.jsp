@@ -7,7 +7,7 @@
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
 
 <div class = "lesson-content-container">
-	<p><%=request.getAttribute("lesson_text")%></p>
+	<pre style="white-space: pre-wrap; word-wrap: break-word; text-align: left"><%=request.getAttribute("lesson_text")%></pre>
 </div>
 <div class = "lesson-codebed-container">
 	<div class = "lesson-codebed">
