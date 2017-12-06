@@ -229,6 +229,7 @@ CREATE TABLE `user_levels` (
   `level_id` int(10) unsigned NOT NULL,
   `code` varchar(3000) NOT NULL DEFAULT '',
   `time` int(11) NOT NULL,
+  `success` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_level_idx` (`user_id`),
   KEY `user_level_level_idx` (`level_id`),
@@ -243,7 +244,7 @@ CREATE TABLE `user_levels` (
 
 LOCK TABLES `user_levels` WRITE;
 /*!40000 ALTER TABLE `user_levels` DISABLE KEYS */;
-INSERT INTO `user_levels` VALUES (8,1,1,'',35),(9,1,2,'x = 1;\r\ny = 1;\r\nif(time <6){y=-1;x=0;}\r\nprint(time);',58),(10,1,3,'x = 6 - player.x;\r\ny = 6 - player.y;\r\n\r\nprint(player.x+\",\"+player.y);',10);
+INSERT INTO `user_levels` VALUES (8,1,1,'// The x and y variables that control Farmer Dan:\r\nx = 1;\r\ny = 0;',35,1),(9,1,2,'x = 1;\r\ny = 1;\r\nif(time<8){y=-1}\r\nprint(time);',39,1),(10,1,3,'x = 6 - player.x;\r\ny = 6 - player.y;\r\n\r\nprint(player.x+\",\"+player.y);',12,1);
 /*!40000 ALTER TABLE `user_levels` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,4 +285,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-04 18:14:18
+-- Dump completed on 2017-12-05 20:22:32

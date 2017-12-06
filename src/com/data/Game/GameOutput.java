@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class GameOutput
 {
 	public ArrayList<GameFrame> GameChanges;
+	public String EndText;
 	public float spawnX;
 	public float spawnY;
 	public boolean Success;

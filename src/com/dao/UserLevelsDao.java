@@ -22,7 +22,7 @@ public class UserLevelsDao {
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = con.prepareStatement("SELECT level_id FROM user_levels WHERE user_id = ?");
+			preparedStatement = con.prepareStatement("SELECT level_id FROM user_levels WHERE user_id = ? AND success = 1");
 			preparedStatement.setInt(1,userId);
 			ResultSet set = preparedStatement.executeQuery();
 			
@@ -119,14 +119,14 @@ public class UserLevelsDao {
 	public static void UnlockLevel(int userId,int levelId,int time,String code)
 	{
 		Connection con = DbUtil.getConnection();
-		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement;
 		try
 		{
-			preparedStatement = con.prepareStatement("SELECT time FROM user_levels WHERE user_id = ? AND level_id = ?");
+			preparedStatement = con.prepareStatement("SELECT time,success FROM user_levels WHERE user_id = ? AND level_id = ?");
 			preparedStatement.setInt(1,userId);
 			preparedStatement.setInt(2,levelId);
 			ResultSet set = preparedStatement.executeQuery();
-			if(!set.first())
+			if(!set.first())// There is no user_level for it yet
 			{
 				preparedStatement = con.prepareStatement("INSERT INTO user_levels (user_id, level_id, time,code) VALUES (?,?,?,?)");
 				preparedStatement.setInt(1,userId);
@@ -135,7 +135,16 @@ public class UserLevelsDao {
 				preparedStatement.setString(4,code);
 				preparedStatement.execute();
 			}
-			else if(set.getInt("time") > time)
+			else if(set.getInt("success")==0)// There is a user_level, but it was previously failed
+			{
+				preparedStatement = con.prepareStatement("UPDATE user_levels SET time = ?,code = ?,success=1 WHERE user_id = ? AND level_id = ?");
+				preparedStatement.setInt(1,time);
+				preparedStatement.setString(2,code);
+				preparedStatement.setInt(3,userId);
+				preparedStatement.setInt(4,levelId);
+				preparedStatement.execute();
+			}
+			else if(set.getInt("time") > time)// There is succeeded user_level, but it the player beat the time
 			{
 				preparedStatement = con.prepareStatement("UPDATE user_levels SET time = ?,code = ? WHERE user_id = ? AND level_id = ?");
 				preparedStatement.setInt(1,time);
@@ -149,6 +158,55 @@ public class UserLevelsDao {
 		{
 			e.printStackTrace();
 		}
-		
+	}
+	public static void FailedLevel(int userId,int levelId,String code)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try
+		{
+			preparedStatement = con.prepareStatement("SELECT success FROM user_levels WHERE user_id = ? AND level_id = ?");
+			preparedStatement.setInt(1,userId);
+			preparedStatement.setInt(2,levelId);
+			ResultSet set = preparedStatement.executeQuery();
+			if(!set.first())// There is no user_level for it yet
+			{
+				preparedStatement = con.prepareStatement("INSERT INTO user_levels (user_id, level_id, time,code) VALUES (?,?,0,?)");
+				preparedStatement.setInt(1,userId);
+				preparedStatement.setInt(2,levelId);
+				preparedStatement.setString(3,code);
+				preparedStatement.execute();
+			}
+			else if(set.getInt("success")==0)// There is a user_level, and it was also previously failed
+			{
+				preparedStatement = con.prepareStatement("UPDATE user_levels SET code = ? WHERE user_id = ? AND level_id = ?");
+				preparedStatement.setString(1,code);
+				preparedStatement.setInt(2,userId);
+				preparedStatement.setInt(3,levelId);
+				preparedStatement.execute();
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public static String GetUserCode(int userId,int levelId)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT code FROM user_levels WHERE level_id = ? AND user_id = ?");
+			preparedStatement.setInt(1, levelId);
+			preparedStatement.setInt(2, userId);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()){
+				return set.getString("code");
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return "";
 	}
 }

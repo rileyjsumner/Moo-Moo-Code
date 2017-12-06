@@ -122,8 +122,6 @@
 	var svgWidth = svgEl.width();
 	var svgHeight = svgEl.height();
 	svgEl.children("line").each(function(){
-		console.log($(this));
-		console.log($(this).attr("x1"));
 		$(this).attr("x1",$(this).attr("x1") * 10 + svgWidth * .5);
 		$(this).attr("x2",$(this).attr("x2") * 10 + svgWidth * .5);
 		$(this).attr("y1",$(this).attr("y1") * -10 + svgHeight * .5);
