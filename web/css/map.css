@@ -1,3 +1,25 @@
+.game-end-btn
+{
+	padding: 10px;
+	display: inline-block;
+	cursor: pointer;
+	font-size: 30px;
+}
+.game-end-btn:hover>i
+{
+	color: greenyellow;
+}
+.game-end-btn>.game-end-btn-text{
+	font-size: 20px;
+	top:0;
+	opacity: 0;
+	transition: top .25s,opacity .25s;
+}
+.game-end-btn:hover>.game-end-btn-text
+{
+	opacity: 1;
+	top:20px;
+}
 .map-desc
 {
 	font-size: 14px;
@@ -19,7 +41,7 @@
 .modal-open-btn
 {
 	padding: 5px;
-	margin: 5px;
+	margin: 5px 5px 5px 0;
 	background-color: #49483E;
 	cursor: pointer;
 	text-align: center;
@@ -101,10 +123,12 @@
 	height: 40px;
 	line-height: 50px;
 	position: relative;
+	text-align: right;
 	bottom: 25px;
 	color: #cac6b4;
 	user-select: none;
-	width: 15px;
+	margin-right: 5px;
+	width: 20px;
 }
 .map_label_x
 {

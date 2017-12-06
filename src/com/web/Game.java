@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class Game extends HttpServlet {
@@ -40,10 +41,22 @@ public class Game extends HttpServlet {
 				try
 				{
 					int levelIntRequested = Integer.parseInt(levelRequested);
-					if(UserLevelsDao.UserCanAccessLevel((int)session.getAttribute("user_id"),levelIntRequested))
+					int userId = (int)session.getAttribute("user_id");
+					if(UserLevelsDao.UserCanAccessLevel(userId,levelIntRequested))
 					{
-						request.setAttribute("level_data", MapsDao.GetMap(levelIntRequested));
+						String userCode = UserLevelsDao.GetUserCode(userId,levelIntRequested);
+						MapData mapData = MapsDao.GetMap(levelIntRequested);
+						
+						request.setAttribute("level_data",mapData);
+						if(Objects.equals(userCode, "")){
+							request.setAttribute("code",mapData.Map.Code);
+						}
+						else{
+							request.setAttribute("code",userCode);
+						}
+						request.setAttribute("desc",!request.getParameterMap().containsKey("retry"));
 						request.setAttribute("exec", false);
+						
 						request.getRequestDispatcher("/WEB-INF/game.jsp").forward(request, response);return;
 					}
 				}
@@ -89,6 +102,10 @@ public class Game extends HttpServlet {
 						if(output.Success) // If they beat the level, unlock it
 						{
 							UserLevelsDao.UnlockLevel(userId,levelIntRequested,output.time,code);
+						}
+						else
+						{
+							UserLevelsDao.FailedLevel(userId,levelIntRequested,code);
 						}
 						request.setAttribute("game_data", output);
 						request.setAttribute("level_data", map);

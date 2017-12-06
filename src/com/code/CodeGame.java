@@ -11,6 +11,7 @@ import com.util.NumUtil;
 import js.Player;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 /*= 1000 ms
   = 1 Second
@@ -122,6 +123,9 @@ public class CodeGame
 						output.GameChanges.add(frame);
 						output.Success = true;
 						output.time = map.Map.Time - timeLeft;
+						DecimalFormat df = new DecimalFormat();
+						df.setMaximumFractionDigits(1);
+						output.EndText = "You found the cow in " + df.format(output.time * .1) + " seconds";
 						return output;
 					}
 				}
@@ -133,6 +137,7 @@ public class CodeGame
 			{
 				frame.GameState = -1;
 				output.GameChanges.add(frame);
+				output.EndText = "You ran out of time";
 				return output;
 			}
 			

@@ -16,9 +16,23 @@
 
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
 <% MapData mapData = (MapData) request.getAttribute("level_data");
-boolean exec = (boolean) request.getAttribute("exec");%>
-
-<div id="desc-modal" class="modal" <%if(!exec){%>style = 'display:block'<%}%>>
+boolean exec = (boolean) request.getAttribute("exec");GameOutput output = new GameOutput();
+if(exec){output = (GameOutput) request.getAttribute("game_data");}
+%>
+<%if(exec){%>
+<div id="game-end-modal" class="modal-invis">
+	<!-- Modal content -->
+	<div class="modal-content-invis" style = 'margin:25% auto;'>
+		<%if(!output.Success){%><p style = 'font-size:60px;font-weight:bolder'>You Lose!</p>
+		<%}else{%><p style = 'font-size:60px;font-weight:bolder'>You win!</p><%}%>
+		<p style = 'font-size:30px;font-weight:bolder;margin-top:10px;margin-bottom:20px'><%=output.EndText%></p>
+		<div class = 'game-end-btn' onclick="location.href='/Game?retry=true&level=<%=mapData.Map.Id%>'"><i class = 'fa fa-undo'></i><div class = 'game-end-btn-text'>Retry Level</div></div>
+		<div class = 'game-end-btn' onclick="location.href='/LevelSelect'"><i class = 'fa fa-home'></i><div class = 'game-end-btn-text'>Level Selection</div></div>
+		<pre class = 'map-desc'></pre>
+	</div>
+</div>
+<%}%>
+<div id="desc-modal" class="modal" <%if(!exec && (boolean)request.getAttribute("desc")){%>style = 'display:block'<%}%>>
 	<!-- Modal content -->
 	<div class="modal-content">
 		<span class="close">&times;</span>
@@ -38,7 +52,7 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 <div class = 'play-code-panel'>
 	<form id = 'code-input-form' style="height:calc(100% - 400px);margin: 0px;" action = '<c:url value="/Game?level="/><%=mapData.Map.Id%>'  method = 'post'>
 		<div style = 'width:100%;height:100%;position: relative;overflow: hidden'>
-			<textarea name = 'player-code' style = "text-align:left;display: none;" id = 'code'><%if(exec){out.print((String)request.getAttribute("code"));}else{out.print(mapData.Map.Code);}%></textarea>
+			<textarea name = 'player-code' style = "text-align:left;display: none;" id = 'code'><%=(String)request.getAttribute("code")%></textarea>
 		</div>
 	</form>
 	<div style = 'width:100%;height:50px;' class = 'bracket-hover'>
@@ -51,12 +65,13 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 </div>
 <div style="display:inline-block;width:calc(100% - 552px);height:100%;text-align:center;float:right;position: relative">
 	<div style = 'position:absolute;display: inline-block;right:0;top:0;z-index: 1;'>
-		<i id = 'desc-open' style = 'left:10px' class = 'modal-open-btn fa fa-sliders'></i>
-		<i id = 'help-open' class = 'modal-open-btn fa fa-question'></i>
+		<div class = 'map-tooltip'><i id = 'desc-open' class = 'modal-open-btn fa fa-sliders'></i><div class = 'map-tooltip-text'></div></div>
+		<div class = 'map-tooltip'><i id = 'help-open' class = 'modal-open-btn fa fa-question'></i><div class = 'map-tooltip-text'></div></div>
+		<div class = 'map-tooltip'><i onclick="location.href='/LevelSelect'" class = 'modal-open-btn fa fa-home'></i><div class = 'map-tooltip-text'></div></div>
 	</div>
 	<div style = 'position: absolute;top: 0;width: 100%;font-weight: bold;'>
 		<div style = 'display: inline-block;width: 100px;height: 50px;background-color: #75715E; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;'>
-			<p id = 'clock-s' style = 'display: inline-block;font-size: 40px;'>8</p><p id = 'clock-ms' style = 'display: inline-block;margin-left: 10px;'>0</p>
+			<p id = 'clock-s' style = 'display: inline-block;font-size: 40px;'></p><p id = 'clock-ms' style = 'display: inline-block;margin-left: 10px;'></p>
 		</div>
 	</div>
 	<table class = 'map-table'>
@@ -96,6 +111,7 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 	// Get the modal
 	var desc_modal = document.getElementById('desc-modal');
 	var help_modal = document.getElementById('help-modal');
+	var game_end_modal = $("#game-end-modal");
 	
 	// When the user clicks on the button, open the modal
 	$("#desc-open").click(function() {
@@ -166,6 +182,8 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 	}
 	function win()
 	{
+		game_end_modal.addClass("modal-invis-shown");
+		game_end_modal.animate({"opacity":1},100);
 		// Make the clock Green
 		$("#clock-s").css("color","#A6E22E");
 		$("#clock-ms").css("color","#A6E22E");
@@ -177,6 +195,8 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 	}
 	function lose()
 	{
+		game_end_modal.addClass("modal-invis-shown");
+		game_end_modal.animate({"opacity":1},100);
 		// Make the clock Green
 		$("#clock-s").css("color","#ff4841");
 		$("#clock-ms").css("color","#ff4841");
@@ -210,11 +230,10 @@ boolean exec = (boolean) request.getAttribute("exec");%>
 		<%
 			if(exec)
 			{
-				GameOutput animations = (GameOutput) request.getAttribute("game_data");
 				// add the player
-				out.print("addEntity('entity-player',"+animations.spawnX+","+animations.spawnY+",0);");
+				out.print("addEntity('entity-player',"+output.spawnX+","+output.spawnY+",0);");
 				// Add the animations
-				for(GameFrame frame: animations.GameChanges)
+				for(GameFrame frame: output.GameChanges)
 				{
 					int time =((100*frame.Data.Map.Time) - (frame.TimeLeft*100));
 					out.print("\nsetTimeout(function(){setTime("+frame.TimeLeft+");moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");");
