@@ -138,3 +138,6 @@
 .lesson_output {
 	min-height: 50px;
 }
+#code {
+	width: 25%;
+}

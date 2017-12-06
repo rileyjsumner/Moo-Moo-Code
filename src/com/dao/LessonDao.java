@@ -256,6 +256,33 @@ public class LessonDao {
 		}
 		return -1;
 	}
+	public static int AddBinding(String title, String value, int lesson_id)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement(
+					"INSERT INTO lesson_bindings (binding_title, binding_value, lesson_id) " +
+							"VALUES (?, ?, ?)");
+			
+			preparedStatement.setString(1, title);
+			preparedStatement.setString(2, value);
+			preparedStatement.setInt(3, lesson_id);
+			
+			preparedStatement.execute();
+			
+			preparedStatement = con.prepareStatement("SELECT MAX(id) AS max_id FROM lessons");
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first())
+			{
+				return set.getInt("max_id");
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return -1;
+	}
 	public static void AddCategory(String categoryName)
 	{
 		Connection con = DbUtil.getConnection();

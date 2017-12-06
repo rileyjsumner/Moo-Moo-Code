@@ -77,6 +77,12 @@ public class LessonEditor extends HttpServlet
 				String categoryName = request.getParameter("category_name");
 				LessonDao.AddCategory(categoryName);
 				response.sendRedirect("/Admin/Lessons");
+			} else if(action.equals("Add Binding")) {
+				int id = Integer.parseInt(request.getParameter("id"));
+				String title = request.getParameter("binding");
+				String value = request.getParameter("value");
+				int maxID = LessonDao.AddBinding(title, value, id);
+				response.sendRedirect("/Admin/Lessons?id="+maxID);
 			}
 			
 		}
