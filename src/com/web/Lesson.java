@@ -3,6 +3,7 @@ package com.web;
 import com.dao.LessonDao;
 import com.dao.UserDao;
 import com.util.LoginUtil;
+import com.code.CodeEngine;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -61,9 +62,9 @@ public class Lesson extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("signed_in",true);
-		request.setAttribute("account_name","Bob");
-		LoginUtil.TestLogin(request.getSession());
-		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+		HttpSession session = request.getSession();
+		if(LoginUtil.TestLogin(session)) {
+			String code = request.getParameter("code");
+		}
 	}
 }

@@ -76,6 +76,15 @@
 					<textarea name="lesson_start_code" id="code">print("Lesson Start Code");</textarea>
 				</div>
 			</div>
+			<div class="bindings">
+				<form action="/Admin/Lessons" method="POST">
+					<div class="binding_inputs">
+						<input type="text" name="binding"/>
+						<input type="text" name="value"/>
+						<input type="submit" name="submit" value="Add Binding"/>
+					</div>
+				</form>
+			</div>
 			<div class="lesson_output">
 				<textarea name="lesson_content_output" class="lesson_content_output" placeholder="Output"><%=(String)request.getAttribute("output")%></textarea>
 			</div>

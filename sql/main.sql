@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: localhost    Database: moo_moo_code
+-- Host: 127.0.0.1    Database: moo_moo_code
 -- ------------------------------------------------------
--- Server version	5.7.10-log
+-- Server version	5.7.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,6 +39,31 @@ LOCK TABLES `entities` WRITE;
 /*!40000 ALTER TABLE `entities` DISABLE KEYS */;
 INSERT INTO `entities` VALUES (2,1,'Cow','cow'),(3,0,'Player Spawn','farmer_dan');
 /*!40000 ALTER TABLE `entities` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `lesson_bindings`
+--
+
+DROP TABLE IF EXISTS `lesson_bindings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `lesson_bindings` (
+  `id` int(11) NOT NULL,
+  `lesson_id` int(11) NOT NULL,
+  `binding_title` varchar(45) NOT NULL,
+  `binding_value` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lesson_bindings`
+--
+
+LOCK TABLES `lesson_bindings` WRITE;
+/*!40000 ALTER TABLE `lesson_bindings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lesson_bindings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -80,6 +105,7 @@ CREATE TABLE `lessons` (
   `category_id` int(11) unsigned DEFAULT NULL,
   `lesson_text` varchar(1500) NOT NULL,
   `start_code` varchar(1500) NOT NULL DEFAULT '',
+  `lesson_output` varchar(1500) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `lesson_category_idx` (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
@@ -229,7 +255,6 @@ CREATE TABLE `user_levels` (
   `level_id` int(10) unsigned NOT NULL,
   `code` varchar(3000) NOT NULL DEFAULT '',
   `time` int(11) NOT NULL,
-  `success` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_level_idx` (`user_id`),
   KEY `user_level_level_idx` (`level_id`),
@@ -244,7 +269,7 @@ CREATE TABLE `user_levels` (
 
 LOCK TABLES `user_levels` WRITE;
 /*!40000 ALTER TABLE `user_levels` DISABLE KEYS */;
-INSERT INTO `user_levels` VALUES (8,1,1,'// The x and y variables that control Farmer Dan:\r\nx = 1;\r\ny = 0;',35,1),(9,1,2,'x = 1;\r\ny = 1;\r\nif(time<8){y=-1}\r\nprint(time);',39,1),(10,1,3,'x = 6 - player.x;\r\ny = 6 - player.y;\r\n\r\nprint(player.x+\",\"+player.y);',12,1);
+INSERT INTO `user_levels` VALUES (8,1,1,'',35),(9,1,2,'x=1\r\ny=1\r\nif(time <= 8 ) {\r\n  y=-1\r\n}',39),(10,1,3,'x = 6 - player.x;\r\ny = 6 - player.y;\r\n\r\nprint(player.x+\",\"+player.y);',10);
 /*!40000 ALTER TABLE `user_levels` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,4 +310,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-05 20:22:32
+-- Dump completed on 2017-12-05 23:49:19

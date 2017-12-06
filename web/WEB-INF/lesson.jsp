@@ -29,7 +29,7 @@
 	codeMirror.setSize("100%","60%");
 	
 	function submitCode() {
-		$.post("RawCodeExec", {code: codeMirror.getValue()}, function (data) {
+		$.post("/Lesson", {code: codeMirror.getValue()}, function (data) {
 			console.log(data);
 			var json = JSON.parse(data);
 			
