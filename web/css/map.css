@@ -139,6 +139,10 @@
 	left: 25px;
 	user-select: none;
 }
+.entity-tree
+{
+	background-image: url(/icons/deco/basic_tree_1.png);
+}
 .entity-player
 {
 	background-image: url(/icons/characters/farmer_dan.png);

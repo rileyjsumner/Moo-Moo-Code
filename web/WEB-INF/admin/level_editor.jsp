@@ -1,7 +1,5 @@
-<%@ page import="com.data.Map.MapData" %>
-<%@ page import="com.data.Map.Tile" %>
+<%@ page import="com.data.Map.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.data.Map.Entity" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -18,6 +16,7 @@
 	<div class = "action" id="action-settings" <%if(!entityMode){out.print("style='background-color:#49483E'");}%>><i class = "fa fa-gear action-icon" <%if(!entityMode){out.print("style=\"color:#F8F8F2\"");}%>></i><p class = "action-text">Level Settings</p></div>
 	<div class = "action" id="action-tiles"><i class = "fa fa-th action-icon"></i><p class = "action-text">Tile Editor</p></div>
 	<div class = "action" id="action-entities" <%if(entityMode){out.print("style='background-color:#49483E'");}%>><i class = "fa fa-street-view action-icon" <%if(entityMode){out.print("style=\"color:#F8F8F2\"");}%>></i><p class = "action-text">Entity Editor</p></div>
+	<div class = "action" id="action-decorations"><i class = "fa fa-tree action-icon"></i><p class = "action-text">Deco Editor</p></div>
 </div>
 <div id = "menu-settings" class = "action-menu" <%if(entityMode){out.print("style=\"left:-400px\"");}else{out.print("style=\"left:100px\"");}%>>
 	<p style="font-size:18px;padding:20px;">Level Settings:</p>
@@ -92,6 +91,49 @@
 		</div>
 	</div>
 </div>
+<div id = "menu-decorations" class = "action-menu" <%if(entityMode){out.print("style=\"left:100px\"");}else{out.print("style=\"left:-400px\"");}%>>
+	<div class = 'vertical-fill-container'>
+		<div class = 'vertical-compact'>
+			<p style="font-size:18px;padding:20px;">Edit Decorations:</p>
+			<form method = "post" action = "<c:url value="/Admin/LevelEditor?action=deco_repopulate"/>">
+				<input name = "map" type = "hidden" value="<%=mapData.Map.Id%>"/>
+				<button class = "edit-btn">Re-Populate All Decorations</button>
+			</form>
+			<p style="font-size:18px;padding:20px;">Add a new entity:</p>
+			<form method = 'post' action = '<c:url value="/Admin/LevelEditor?action=deco_new"/>'>
+				<div class = 'entity-container-new'>
+					<div class='entity-header-new'>
+						<input name = "map" type = "hidden" value="<%=mapData.Map.Id%>"/>
+						<%=mapData.GetDecoTypeDD(-1,true,true)%>
+					</div>
+				</div>
+			</form>
+			<%
+				if(mapData.MapDecorations.size()>0)
+				{
+					out.print("<p style=\"font-size:18px;padding:20px;\">Edit an existing decoration:</p>");
+				}
+			%>
+		</div>
+		<div class = 'vertical-fill'>
+			<div style = 'overflow-y:scroll;width:100%;height:100%;'>
+				<%
+					selected = -1;
+					
+					for(MapDeco deco : mapData.MapDecorations)
+					{
+						out.print("<div class='entity-container' data-id='"+deco.Id+"'><div class='entity-header' data-id='"+deco.Id+"'>"+mapData.GetDecoName(deco.Type)+"</div>" +
+								"<form method = 'post' action = '/Admin/LevelEditor' class = 'entity-content' "+((selected == deco.Id) ? "style='display:block;'" : "")+"><table style=\"width: 100%;overflow: hidden; white-space: nowrap;\">" +
+								"<tr><td><label class = \"admin-levels-label\" for='deco-type-"+deco.Id+"'>Entity Type:</label></td><td>"+mapData.GetDecoTypeDD(deco.Type,false,false)+"</td></tr>" +
+								"<tr><td><label class = \"admin-levels-label\" for='deco-x-"+deco.Id+"'>Spawn X:</label></td><td><input name = 'spawn_x' step = '.1' class = 'admin-levels-input' type='number' id = 'deco-x-"+deco.Id+"' value='"+deco.X+"' /></td></tr>" +
+								"<tr><td><label class = \"admin-levels-label\" for='deco-y-"+deco.Id+"'>Spawn Y:</label></td><td><input name = 'spawn_y' step = '.1' class = 'admin-levels-input' type='number' id = 'deco-y-"+deco.Id+"' value='"+deco.Y+"' /></td></tr>" +
+								"</table><input type='hidden' value='"+deco.Id+"' name = 'id' /><input type='hidden' value='"+mapData.Map.Id+"' name = 'map' /><button name = 'action' value='deco' class = \"edit-btn\">Save</button><button name = 'action' value='deco_delete' class = \"edit-btn edit-btn-red\">Delete</button></form></div>");
+					}
+				%>
+			</div>
+		</div>
+	</div>
+</div>
 <div style="display:inline-block;width:calc(100% - 500px);height:100%;text-align:center;float:right">
 	<table class = 'map-table'>
 	<%
@@ -128,12 +170,17 @@
 </div>
 <script>
 	var DanWalks=true;
+	var max_x = <%= mapData.Map.DimX %>;
+	var max_y = <%= mapData.Map.DimY %>;
+	var ent_reposition = false;
+	var ent_id = -1;
 	$(document).ready(function()
 	{
-		
 		$(".entity-header").click(function()
 		{
+			ent_reposition = true;
 			var clicked = $(this).data("id");
+			ent_id = clicked;
 			$(".entity-header").each(function(){
 				if($(this).data("id") !== clicked)
 				{
@@ -152,6 +199,25 @@
 			showCursorWhenSelecting: true
 		});
 		codeMirror.setSize("90%","180px");
+		
+		// The click on the the table for adding entities
+		
+		$(".map-table").click(function(evt){
+			if(ent_reposition)
+			{
+				var r = $("#entity-reference");
+				var posX = (max_x + ((evt.pageX - r.offset().left - r.width()) * .02)).toFixed(1);
+				var posY = (max_y - ((evt.pageY - r.offset().top) * .02)).toFixed(1);
+				$.post("/Admin/LevelEditor",{
+					action:"entity_move",
+					id: ent_id,
+					x: posX,
+					y: posY});
+				$("#entity-x-"+ent_id).val(posX);
+				$("#entity-y-"+ent_id).val(posY);
+				moveEntity(ent_id,posX,posY);
+			}
+		});
 		
 		var selected_tile_type=null;
 		var selected_tile_icon=null;
@@ -207,8 +273,9 @@
 						map: "<%= mapData.Map.Id%>"});
 			}
 		}
-		$("#action-settings").click(function()
+		$("#action-settings").click(function() // open the level settings
 		{
+			ent_reposition = false;
 			deselectType();
 			
 			$("#menu-settings").animate({"left":"100px","opacity":"1"},400);
@@ -217,44 +284,74 @@
 			
 			$("#menu-entities").animate({"left":"-400px","opacity":"0"},400);
 			$("#menu-tiles").animate({"left":"-400px","opacity":"0"},400);
+			$("#menu-decorations").animate({"left":"-400px","opacity":"0"},400);
 			
 			$("#action-entities>.action-icon").css("color","");
 			$("#action-tiles>.action-icon").css("color","");
+			$("#menu-decorations").animate({"left":"-400px","opacity":"0"},400);
 			
 			$("#action-entities").css("background-color","");
 			$("#action-tiles").css("background-color","");
+			$("#action-decorations").css("background-color","");
 		});
-		$("#action-entities").click(function()
+		$("#action-entities").click(function()  // open the level entities
 		{
 			deselectType();
-			
+			ent_reposition = false;
 			$("#menu-entities").animate({"left":"100px","opacity":"1"},400);
 			$("#action-entities>.action-icon").css("color","#F8F8F2");
 			$("#action-entities").css("background-color","#49483E");
 			
 			$("#action-settings>.action-icon").css("color","");
 			$("#action-tiles>.action-icon").css("color","");
+			$("#action-decorations>.action-icon").css("color","");
 			
 			$("#menu-settings").animate({"left":"-400px","opacity":"0"},400);
 			$("#menu-tiles").animate({"left":"-400px","opacity":"0"},400);
+			$("#menu-decorations").animate({"left":"-400px","opacity":"0"},400);
 			
 			$("#action-settings").css("background-color","");
 			$("#action-tiles").css("background-color","");
+			$("#action-decorations").css("background-color","");
 		});
 		$("#action-tiles").click(function()
 		{
+			ent_reposition = false;
 			$("#menu-tiles").animate({"left":"100px","opacity":"1"},400);
 			$("#action-tiles>.action-icon").css("color","#F8F8F2");
 			$("#action-tiles").css("background-color","#49483E");
 			
 			$("#action-settings>.action-icon").css("color","");
 			$("#action-entities>.action-icon").css("color","");
+			$("#action-decorations>.action-icon").css("color","");
 			
 			$("#menu-settings").animate({"left":"-400px","opacity":"0"},400);
 			$("#menu-entities").animate({"left":"-400px","opacity":"0"},400);
+			$("#menu-decorations").animate({"left":"-400px","opacity":"0"},400);
 			
 			$("#action-entities").css("background-color","");
 			$("#action-settings").css("background-color","");
+			$("#action-decorations").css("background-color","");
+		});
+		$("#action-decorations").click(function()
+		{
+			ent_reposition = false;
+			deselectType();
+			$("#menu-decorations").animate({"left":"100px","opacity":"1"},400);
+			$("#action-decorations>.action-icon").css("color","#F8F8F2");
+			$("#action-decorations").css("background-color","#49483E");
+			
+			$("#action-settings>.action-icon").css("color","");
+			$("#action-entities>.action-icon").css("color","");
+			$("#action-tiles>.action-icon").css("color","");
+			
+			$("#menu-settings").animate({"left":"-400px","opacity":"0"},400);
+			$("#menu-entities").animate({"left":"-400px","opacity":"0"},400);
+			$("#menu-tiles").animate({"left":"-400px","opacity":"0"},400);
+			
+			$("#action-entities").css("background-color","");
+			$("#action-settings").css("background-color","");
+			$("#action-tiles").css("background-color","");
 		});
 		// Farmer animation
 		function StartDanWalk()
@@ -287,13 +384,29 @@
 		}
 		DanWalk();
 	});
-	var max_x = <%= mapData.Map.DimX %>;
-	var max_y = <%= mapData.Map.DimY %>;
-	function addEntity(entity_class,x,y)
+	function addEntity(entity_class,x,y,id)
 	{
-		$("#entity-reference").append("<div class = 'map-entity pixel "+entity_class+"' style=\"" +
+		$("#entity-reference").append("<div id = 'entity-ref-"+id+"' class = 'map-entity pixel "+entity_class+"' style=\"" +
 			"right:" + (( max_x - x - .5) * 50) + "px;" +
 			"top:" + (( max_y - y - .5) * 50) + "px\">");
+	}
+	function moveEntity(id,x,y)
+	{
+		var ent = $("#entity-ref-"+id);
+		ent.css("right",(( max_x - x - .5) * 50) + "px");
+		ent.css("top",(( max_y - y - .5) * 50) + "px");
+	}
+	function addDeco(icon,x,y,id)
+	{
+		$("#entity-reference").append("<div id = 'deco-ref-"+id+"' class = 'map-entity pixel' style=\"background-image: url(/icons/deco/"+icon+".png);" +
+			"right:" + (( max_x - x - .5) * 50) + "px;" +
+			"top:" + (( max_y - y - .5) * 50) + "px\">");
+	}
+	function moveDeco(id,x,y)
+	{
+		var ent = $("#deco-ref-"+id);
+		ent.css("right",(( max_x - x - .5) * 50) + "px");
+		ent.css("top",(( max_y - y - .5) * 50) + "px");
 	}
 	<%
 		for(Entity entity : mapData.MapEntities)
@@ -307,7 +420,11 @@
 			{
 				out.print("entity-cow");
 			}
-			out.print("',"+entity.X+","+entity.Y+");");
+			out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
+		}
+		for(MapDeco deco : mapData.MapDecorations)
+		{
+			out.print("addDeco('"+mapData.GetDecoIcon(deco.Type)+"',"+deco.X+","+deco.Y+","+deco.Id+");");
 		}
 	%>
 </script>

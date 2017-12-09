@@ -16,7 +16,7 @@ public class CodeEngine {
 	
 	public CodeEngine()
 	{
-		Engine = new NashornScriptEngineFactory().getScriptEngine(new String[]{"--no-java", "-strict", "--no-syntax-extensions", "--language=es6"}, null, s -> false);
+		Engine = new NashornScriptEngineFactory().getScriptEngine(new String[]{"--no-java", "-strict", "--no-syntax-extensions"}, null, s -> false);
 		Bindings bindings = Engine.getBindings(ScriptContext.ENGINE_SCOPE);
 		bindings.remove("exit");
 		bindings.remove("quit");

@@ -1,10 +1,11 @@
-<%@ page import="com.data.Map.MapData" %>
-<%@ page import="com.data.Map.Tile" %>
-<%@ page import="com.data.Map.Entity" %>
-<%@ page import="com.data.Game.GameOutput" %>
 <%@ page import="com.data.Game.GameFrame" %>
-<%@ page import="java.util.Objects" %>
+<%@ page import="com.data.Game.GameOutput" %>
+<%@ page import="com.data.Map.Entity" %>
+<%@ page import="com.data.Map.MapData" %>
+<%@ page import="com.data.Map.MapDeco" %>
+<%@ page import="com.data.Map.Tile" %>
 <%@ page import="com.util.Html" %>
+<%@ page import="java.util.Objects" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -163,6 +164,18 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 	{
 		$("#entity-reference").remove("#entity-ref-"+id);
 	}
+	function addDeco(icon,x,y,id)
+	{
+		$("#entity-reference").append("<div id = 'deco-ref-"+id+"' class = 'map-entity pixel' style=\"background-image: url(/icons/deco/"+icon+".png);" +
+			"right:" + (( max_x - x - .5) * 50) + "px;" +
+			"top:" + (( max_y - y - .5) * 50) + "px\">");
+	}
+	function moveDeco(id,x,y)
+	{
+		var ent = $("#deco-ref-"+id);
+		ent.css("right",(( max_x - x - .5) * 50) + "px");
+		ent.css("top",(( max_y - y - .5) * 50) + "px");
+	}
 	function removePlayerSpawns()
 	{
 		$("#entity-reference").remove(".entity-player-spawn");
@@ -215,11 +228,15 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 				{
 					out.print("entity-player-spawn");
 				}
-				if(entity.Type==1)
+				else if(entity.Type==1)
 				{
 					out.print("entity-cow");
 				}
 				out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
+			}
+			for(MapDeco deco : mapData.MapDecorations)
+			{
+				out.print("addDeco('"+mapData.GetDecoIcon(deco.Type)+"',"+deco.X+","+deco.Y+","+deco.Id+");");
 			}
 			%>
 		loadContent();
