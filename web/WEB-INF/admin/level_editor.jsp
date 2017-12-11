@@ -353,36 +353,6 @@
 			$("#action-settings").css("background-color","");
 			$("#action-tiles").css("background-color","");
 		});
-		// Farmer animation
-		function StartDanWalk()
-		{
-			DanWalks=true;DanWalk();
-		}
-		function DanWalk()
-		{
-			if(!DanWalks){return;}
-			$(".entity-player").css("background-image","url(/icons/characters/farmer_dan_walk.png)");
-			setTimeout(DanWalk2,300);
-		}
-		function DanWalk2()
-		{
-			if(!DanWalks){return;}
-			$(".entity-player").css("background-image","url(/icons/characters/farmer_dan_walk_mid.png)");
-			setTimeout(DanWalk3,300);
-		}
-		function DanWalk3()
-		{
-			if(!DanWalks){return;}
-			$(".entity-player").css("background-image","url(/icons/characters/farmer_dan_walk_2.png)");
-			setTimeout(DanWalk4,300);
-		}
-		function DanWalk4()
-		{
-			if(!DanWalks){return;}
-			$(".entity-player").css("background-image","url(/icons/characters/farmer_dan_walk_mid_2.png)");
-			setTimeout(DanWalk,300);
-		}
-		DanWalk();
 	});
 	function addEntity(entity_class,x,y,id)
 	{

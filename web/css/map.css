@@ -141,23 +141,23 @@
 }
 .entity-tree
 {
-	background-image: url(/icons/deco/basic_tree_1.png);
+	background-image: url(../icons/deco/basic_tree_1.png);
 }
 .entity-player
 {
-	background-image: url(/icons/characters/farmer_dan.png);
+	background-image: url(../icons/characters/dan/idle.gif);
 	border-radius: 25px;
 	box-shadow: inset 0 0 20px 4px greenyellow;
 }
 .entity-player-spawn
 {
-	background-image: url(/icons/characters/farmer_dan.png);
+	background-image: url(../icons/characters/dan/idle.gif);
 	border-radius: 25px;
 	box-shadow: inset 0 0 20px 4px greenyellow;
 }
 .entity-cow
 {
-	background-image: url(/icons/entities/cow.png);
+	background-image: url(../icons/entities/cow.png);
 	border-radius: 25px;
 	box-shadow: inset 0 0 20px 4px gold;
 }

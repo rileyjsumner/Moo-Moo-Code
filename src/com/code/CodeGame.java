@@ -89,9 +89,13 @@ public class CodeGame
 			if(moveX.compareTo(BigDecimal.ONE) > 0){moveX= BigDecimal.ONE;}else if(moveX.compareTo(BigDecimal.valueOf(-1)) <0){moveX= BigDecimal.valueOf(-1);}
 			if(moveY.compareTo(BigDecimal.ONE) > 0){moveY= BigDecimal.ONE;}else if(moveY.compareTo(BigDecimal.valueOf(-1)) <0){moveY= BigDecimal.valueOf(-1);}
 			
+			// Set move speed for animation
+			frame.Data.PlayerVelX = NumUtil.TrimTrailing(moveX.multiply(BigDecimal.valueOf(.2)));
+			frame.Data.PlayerVelY = NumUtil.TrimTrailing(moveY.multiply(BigDecimal.valueOf(.2)));
+			
 			// Move position
-			frame.Data.PlayerX = frame.Data.PlayerX.add(moveX.multiply(BigDecimal.valueOf(.2)));
-			frame.Data.PlayerY = frame.Data.PlayerY.add(moveY.multiply(BigDecimal.valueOf(.2)));
+			frame.Data.PlayerX = frame.Data.PlayerX.add(frame.Data.PlayerVelX);
+			frame.Data.PlayerY = frame.Data.PlayerY.add(frame.Data.PlayerVelY);
 			
 			// Make sure the player doesn't go off the edge
 			frame.Data.PlayerX = NumUtil.Clamp(frame.Data.PlayerX,.5,(frame.Data.Map.DimX-.5));
