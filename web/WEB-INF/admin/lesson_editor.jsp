@@ -15,7 +15,7 @@
 	
 	if(id >= 0) {
 %>
-	<form action="/Admin/Lessons" method="POST">
+	<form action="<c:url value="/Admin/Lessons"/>" method="POST">
 		<input type="hidden" value="<%=id%>" name="id"/>
 		<div class="lesson_edit_header">
 			<input type="text" value="<%=request.getAttribute("lesson_title")%>" name="lesson_title_text"/>
@@ -37,7 +37,7 @@
 				<textarea name="lesson_start_code" id="code"><%=(String)request.getAttribute("lesson_start_code") %></textarea>
 			</div>
 			<div class="bindings">
-				<form action="/Admin/Lessons" method="POST">
+				<form action="<c:url value="/Admin/Lessons"/>" method="POST">
 					<div class="binding_inputs">
 						<input type="text" name="binding"/>
 						<input type="text" name="value"/>
@@ -54,7 +54,7 @@
 	</form>
 <%
 	} else if(id == -1){ %>
-		<form action="/Admin/Lessons" method="POST">
+		<form action="<c:url value="/Admin/Lessons"/>" method="POST">
 			<input type="hidden" value="<%=id%>" name="id"/>
 			<div class="lesson_edit_header">
 				<input type="text" placeholder="Lesson Title" name="lesson_title_text"/>
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 			<div class="bindings">
-				<form action="/Admin/Lessons" method="POST">
+				<form action="<c:url value="/Admin/Lessons"/>" method="POST">
 					<div class="binding_inputs">
 						<input type="text" name="binding"/>
 						<input type="text" name="value"/>

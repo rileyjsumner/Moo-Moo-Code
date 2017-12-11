@@ -66,7 +66,7 @@
 		{
 			$(this).remove();
 			$("#new_category_wrapper").append("" +
-				"<form action=\"/Admin/Lessons\" method=\"POST\">" +
+				"<form action=\"<c:url value='/Admin/Lessons'/>\" method=\"POST\">" +
 					"<input type=\"text\" name=\"category_name\"/>" +
 					"<input type=\"submit\" name=\"submit\" value=\"Add Category\"/>" +
 				"</form>");

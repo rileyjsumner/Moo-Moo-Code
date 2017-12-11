@@ -130,12 +130,9 @@ public class MapData {
 					if(newDeco!=null)
 					{
 						newMapDeco = new MapDeco((float)x+random.nextFloat(),(float)y+random.nextFloat(),newDeco.Id,fakeId);
-						if(newMapDeco.Type==6)// Offset based on the type of tree
-						{
-							newMapDeco.Y+=.5;
-							newMapDeco.Y = NumUtil.Clamp(newMapDeco.Y,(float).5,Map.DimY-(float).5);
-							newMapDeco.X = NumUtil.Clamp(newMapDeco.X,(float).25,Map.DimX-(float).25);
-						}
+						newMapDeco.Y+=.5;
+						newMapDeco.Y = NumUtil.Clamp(newMapDeco.Y,(float).5,Map.DimY-(float).5);
+						newMapDeco.X = NumUtil.Clamp(newMapDeco.X,(float).25,Map.DimX-(float).25);
 						MapDecorations.add(newMapDeco);
 						fakeId++;
 					}
@@ -144,12 +141,20 @@ public class MapData {
 					if(newDeco!=null)
 					{
 						newMapDeco = new MapDeco((float)x+random.nextFloat(),(float)y+random.nextFloat(),newDeco.Id,fakeId);
-						if(newMapDeco.Type==6)// Offset based on the type of tree
-						{
-							newMapDeco.Y+=.5;
-							newMapDeco.Y = NumUtil.Clamp(newMapDeco.Y,(float).5,Map.DimY-(float).25);
-							newMapDeco.X = NumUtil.Clamp(newMapDeco.X,(float).25,Map.DimX-(float).25);
-						}
+						newMapDeco.Y+=.5;
+						newMapDeco.Y = NumUtil.Clamp(newMapDeco.Y,(float).5,(float)Map.DimY-(float).25);
+						newMapDeco.X = NumUtil.Clamp(newMapDeco.X,(float).25,(float)Map.DimX-(float).25);
+						MapDecorations.add(newMapDeco);
+						fakeId++;
+					}
+					// Bush
+					newDeco = PickRandomDecoOfType(1);// Background tree type
+					if(newDeco!=null)
+					{
+						newMapDeco = new MapDeco((float)x+random.nextFloat(),(float)y+random.nextFloat(),newDeco.Id,fakeId);
+						newMapDeco.Y+=.5;
+						newMapDeco.Y = NumUtil.Clamp(newMapDeco.Y,(float).5,(float)Map.DimY-(float).1);
+						newMapDeco.X = NumUtil.Clamp(newMapDeco.X,(float).25,(float)Map.DimX-(float).25);
 						MapDecorations.add(newMapDeco);
 						fakeId++;
 					}

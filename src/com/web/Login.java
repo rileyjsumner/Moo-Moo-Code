@@ -2,15 +2,12 @@ package com.web;
 
 import com.dao.UserDao;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import java.io.BufferedReader;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.Objects;
 
 
 public class Login extends HttpServlet {
@@ -68,10 +65,10 @@ public class Login extends HttpServlet {
 				String action = request.getParameter("action");
 				if(action != null && !action.equals("null"))
 				{
-					response.sendRedirect("/"+action);return;
+					response.sendRedirect(response.encodeURL("/"+action));return;
 				}
 			}
-			response.sendRedirect("/Home");
+			response.sendRedirect(response.encodeURL("/Home"));
 		}
 	}
 }

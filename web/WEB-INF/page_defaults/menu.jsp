@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 </head>
 <body>
 <div class = "vertical-fill-container">
@@ -5,16 +7,16 @@
 <p class="banner-text">Moo Moo Code</p>
 </div>
 <div id="menu" class = "vertical-compact">
-<div class="menu-item bracket-hover" onclick="location.href='/Home';">
+<div class="menu-item bracket-hover" onclick="location.href='<c:url value='/Home'/>'">
 <p class="menu-text">Home</p>
 </div>
-<div class="menu-item bracket-hover" onclick="location.href='/Learn';">
+<div class="menu-item bracket-hover" onclick="location.href='<c:url value='/Learn'/>'">
 <p class="menu-text">Learn</p>
 </div>
-<div class="menu-item bracket-hover" onclick="location.href='/Code';">
+<div class="menu-item bracket-hover" onclick="location.href='<c:url value='/Code'/>'">
 <p class="menu-text">Code</p>
 </div>
-<div class="menu-item bracket-hover" onclick="location.href='/LevelSelect';">
+<div class="menu-item bracket-hover" onclick="location.href='<c:url value='/LevelSelect'/>'">
 <p class="menu-text">Play</p>
 </div>
 <div class="menu-item bracket-hover">

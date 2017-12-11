@@ -1,7 +1,5 @@
 package com.web;
 
-import com.dao.UserDao;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +28,6 @@ public class Logout extends HttpServlet {
 		session.setAttribute("username","");
 		session.setAttribute("password","");
 		session.setAttribute("signed_in",false);
-		response.sendRedirect("Home");
+		response.sendRedirect(response.encodeURL("Home"));
 	}
 }

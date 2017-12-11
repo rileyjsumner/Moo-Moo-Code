@@ -43,7 +43,7 @@
 		out.print("You ain't no admin boi check how you sound");
 	}
 %>
-		<form method="post" action="/Admin/Users">
+		<form method="post" action="<c:url value="/Admin/Users"/>">
 			<div class="table">
 				<div class="row">
 					<div class="cell"><input type="number" name="id" value="<% out.print(nextId);%>"/></div>
@@ -65,7 +65,7 @@
 			value: $(this).val(),
 			user: $(this).data("user")
 		};
-		$.post("/Admin/Users", test);
+		$.post("<c:url value="/Admin/Users"/>", test);
 		location.reload();
 	});
 	$(".delete").click(function() {
@@ -73,7 +73,7 @@
 			type: "delete",
 			user: $(this).data("user")
 		};
-		$.post("/Admin/Users", test);
+		$.post("<c:url value='/Admin/Users'/>", test);
 		location.reload();
 	});
 </script>

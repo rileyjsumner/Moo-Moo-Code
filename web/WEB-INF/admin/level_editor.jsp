@@ -398,7 +398,7 @@
 	}
 	function addDeco(icon,x,y,id)
 	{
-		$("#entity-reference").append("<div id = 'deco-ref-"+id+"' class = 'map-entity pixel' style=\"background-image: url(/icons/deco/"+icon+".png);" +
+		$("#entity-reference").append("<div id = 'deco-ref-"+id+"' class = 'map-entity pixel' style=\"background-image: url(<c:url value='/icons/deco'/>/"+icon+".png);" +
 			"right:" + (( max_x - x - .5) * 50) + "px;" +
 			"top:" + (( max_y - y - .5) * 50) + "px\">");
 	}

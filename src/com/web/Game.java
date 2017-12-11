@@ -62,7 +62,7 @@ public class Game extends HttpServlet {
 				}
 				catch (NumberFormatException ex){/* level isn't an integer */}
 			}
-			response.sendRedirect("/LevelSelect");
+			response.sendRedirect(response.encodeURL("/LevelSelect"));
 		}
 		else
 		{
@@ -116,7 +116,7 @@ public class Game extends HttpServlet {
 				}
 				catch (NumberFormatException ex){/* level isn't an integer */}
 			}
-			response.sendRedirect("/Game");
+			response.sendRedirect(response.encodeURL("/Game"));
 		}
 		else
 		{

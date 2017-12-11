@@ -30,7 +30,7 @@ public class CreateAccount extends HttpServlet {
 		request.setAttribute("failed",false);
 		if(LoginUtil.TestLogin(request.getSession()))
 		{
-			response.sendRedirect("Home");
+			response.sendRedirect(response.encodeURL("/Home"));
 		}
 		else
 		{
@@ -58,7 +58,7 @@ public class CreateAccount extends HttpServlet {
 			session.setAttribute("username",username);
 			session.setAttribute("password",password);
 			session.setAttribute("signed_in",true);
-			response.sendRedirect("Home");
+			response.sendRedirect(response.encodeURL("/Home"));
 		}
 		else // Username taken
 		{
