@@ -41,6 +41,7 @@ public class Lesson extends HttpServlet {
 			int lesson = Integer.parseInt(lesson_s);
 			if(LessonDao.CheckLessonAccessible(lesson,(int)session.getAttribute("user_id")))
 			{
+				request.setAttribute("lesson", lesson);
 				request.setAttribute("lesson_text",LessonDao.GetLessonText(lesson));
 				request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 			}
@@ -112,7 +113,8 @@ public class Lesson extends HttpServlet {
 					}
 					if(valid)
 					{
-						System.out.println("kek");
+						request.setAttribute("success", true);
+						System.out.println(request.getAttribute("success"));
 					}
 				} else {
 					System.out.println("wow dummy");

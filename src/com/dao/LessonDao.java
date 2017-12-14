@@ -271,13 +271,6 @@ public class LessonDao {
 			preparedStatement.setInt(3, lesson_id);
 			
 			preparedStatement.execute();
-			
-			preparedStatement = con.prepareStatement("SELECT MAX(id) AS max_id FROM lessons");
-			ResultSet set = preparedStatement.executeQuery();
-			if(set.first())
-			{
-				return set.getInt("max_id");
-			}
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
