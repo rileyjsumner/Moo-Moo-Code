@@ -2,7 +2,6 @@ package com.web.Admin;
 
 import com.dao.LessonDao;
 import com.util.LoginUtil;
-import com.web.Login;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -58,12 +57,12 @@ public class LessonEditor extends HttpServlet
 				String content = request.getParameter("lesson_content");
 				String output = request.getParameter("lesson_content_output");
 				LessonDao.SetLessonContent(id, title, content, category, start_code, output);
-				response.sendRedirect("/Admin/Lessons?id="+id);
+				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+id));
 				return;
 			} else if(action.equals("Delete")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				LessonDao.DeleteLesson(id);
-				response.sendRedirect("/Admin/Lessons");
+				response.sendRedirect(response.encodeURL("/Admin/Lessons"));
 				return;
 			} else if(action.equals("Add")) {
 				String title = request.getParameter("lesson_title_text");
@@ -72,17 +71,17 @@ public class LessonEditor extends HttpServlet
 				String content = request.getParameter("lesson_content_editor");
 				String output = request.getParameter("lesson_content_output");
 				int maxID = LessonDao.AddLesson(title, content, category, start_code, output);
-				response.sendRedirect("/Admin/Lessons?id="+maxID);
+				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+maxID));
 			} else if(action.equals("Add Category")) {
 				String categoryName = request.getParameter("category_name");
 				LessonDao.AddCategory(categoryName);
-				response.sendRedirect("/Admin/Lessons");
+				response.sendRedirect(response.encodeURL("/Admin/Lessons"));
 			} else if(action.equals("Add Binding")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				String title = request.getParameter("binding");
 				String value = request.getParameter("value");
 				int maxID = LessonDao.AddBinding(title, value, id);
-				response.sendRedirect("/Admin/Lessons?id="+maxID);
+				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+maxID));
 			}
 			
 		}

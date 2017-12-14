@@ -8,6 +8,9 @@ import java.math.RoundingMode;
 
 public class NumUtil
 {
+	// ---------
+	// Collision
+	// ---------
 	
 	public static  Collision Collision_entity_MapTiles(double entityX, double entityY, double entityRadius, GameTiles tiles)
 	{
@@ -63,6 +66,11 @@ public class NumUtil
 		}
 		else{return new Collision();} // No collision occurs
 	}
+	
+	// ------
+	// Vector
+	// ------
+	
 	public static float Distance(float p1,float p2)
 	{
 		return Math.abs(p1 - p2);
@@ -75,6 +83,11 @@ public class NumUtil
 	{
 		return Math.hypot(x1-x2,y1-y2);
 	}
+	
+	// --------
+	// Cleaning
+	// --------
+	
 	public static BigDecimal GetClean(double i)
 	{
 		BigDecimal r = BigDecimal.valueOf(i).setScale(5, RoundingMode.HALF_UP).stripTrailingZeros();
@@ -93,6 +106,11 @@ public class NumUtil
 		if(i.scale()<0){i = i.setScale(0, RoundingMode.HALF_UP);}
 		return i;
 	}
+	
+	// -----
+	// Clamp
+	// -----
+	
 	public static BigDecimal Clamp(BigDecimal initial,BigDecimal low,BigDecimal high)
 	{
 		if(initial.compareTo(high) > 0){return high;}
@@ -114,5 +132,55 @@ public class NumUtil
 	public static double Clamp(double val,double min,double max)
 	{
 		if(val > max){return max;}else if(val<min){return min;}return val;
+	}
+	
+	// ------------------------------
+	// BigDecimal - Float Comparators
+	// ------------------------------
+	
+	public static boolean greaterThan(BigDecimal val,float comparator)
+	{
+		return val.compareTo(BigDecimal.valueOf(comparator))>0;
+	}
+	public static boolean lessThan(BigDecimal val,float comparator)
+	{
+		return val.compareTo(BigDecimal.valueOf(comparator))<0;
+	}
+	public static boolean greaterThanOrEqualTo(BigDecimal val,float comparator)
+	{
+		return val.compareTo(BigDecimal.valueOf(comparator))>=0;
+	}
+	public static boolean lessThanOrEqualTo(BigDecimal val,float comparator)
+	{
+		return val.compareTo(BigDecimal.valueOf(comparator))<=0;
+	}
+	public static boolean equalTo(BigDecimal val,float comparator)
+	{
+		return val.compareTo(BigDecimal.valueOf(comparator))==0;
+	}
+	
+	// -----------------------------------
+	// BigDecimal - BigDecimal Comparators
+	// -----------------------------------
+	
+	public static boolean greaterThan(BigDecimal val,BigDecimal comparator)
+	{
+		return val.compareTo(comparator)>0;
+	}
+	public static boolean lessThan(BigDecimal val,BigDecimal comparator)
+	{
+		return val.compareTo(comparator)<0;
+	}
+	public static boolean greaterThanOrEqualTo(BigDecimal val,BigDecimal comparator)
+	{
+		return val.compareTo(comparator)>=0;
+	}
+	public static boolean lessThanOrEqualTo(BigDecimal val,BigDecimal comparator)
+	{
+		return val.compareTo(comparator)<=0;
+	}
+	public static boolean equalTo(BigDecimal val,BigDecimal comparator)
+	{
+		return val.compareTo(comparator)==0;
 	}
 }

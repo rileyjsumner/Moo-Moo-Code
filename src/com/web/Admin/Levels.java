@@ -66,25 +66,25 @@ public class Levels extends HttpServlet {
 				if ("update".equals(action) || "editor".equals(action)) {
 					LevelsDao.UpdateLevel(id, name, pos_x, pos_y, unlock_1, unlock_2, unlock_3);
 					if ("editor".equals(action)) {
-						response.sendRedirect("/Admin/LevelEditor?level=" + id);
+						response.sendRedirect(response.encodeURL("/Admin/LevelEditor?level=" + id));
 						return;
 					}
 				} else if ("new".equals(action)) {
 					LevelsDao.AddLevel(name, pos_x, pos_y, unlock_1, unlock_2, unlock_3);
 				} else if ("delete".equals(action)) {
 					if (id == 1) {
-						response.sendRedirect("/Admin/Levels?failed=cant_delete_first_level");
+						response.sendRedirect(response.encodeURL("/Admin/Levels?failed=cant_delete_first_level"));
 						return;
 					} else {
 						LevelsDao.DeleteLevel(id);
 					}
 				} else {
-					response.sendRedirect("/Admin/Levels?failed=no_action");
+					response.sendRedirect(response.encodeURL("/Admin/Levels?failed=no_action"));
 					return;
 				}
-				response.sendRedirect("/Admin/Levels");
+				response.sendRedirect(response.encodeURL("/Admin/Levels"));
 			} catch (NumberFormatException ex) {
-				response.sendRedirect("/Admin/Levels?failed=number_format");
+				response.sendRedirect(response.encodeURL("/Admin/Levels?failed=number_format"));
 			}
 		}
 	}

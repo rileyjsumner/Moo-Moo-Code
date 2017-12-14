@@ -18,8 +18,8 @@
 			LevelIds levelObj = (LevelIds)request.getAttribute("levels");
 			for(LevelId level : levelObj.levels)
 			{
-				if(level.State == 3){out.print("<div onclick = \"location.href='/Game?level="+level.Id+"'\" style=\"left: "+(level.PosX*10 - 37.5)+"px; bottom: "+(level.PosY*10 - 37.5)+"px\" class=\"levels_container_level levels_container_level_complete\"><p class=\"levels_container_level_name\">"+level.Name+"</p></div>");}
-				else if(level.State == 2){out.print("<div onclick = \"location.href='/Game?level="+level.Id+"'\" style=\"left: "+(level.PosX*10 - 37.5)+"px; bottom: "+(level.PosY*10 - 37.5)+"px\" class=\"levels_container_level levels_container_level_active\"><p class=\"levels_container_level_name\">"+level.Name+"</p></div>");}
+				if(level.State == 3){out.print("<div onclick = \"location.href='"+response.encodeURL("/Game")+"?level="+level.Id+"'\" style=\"left: "+(level.PosX*10 - 37.5)+"px; bottom: "+(level.PosY*10 - 37.5)+"px\" class=\"levels_container_level levels_container_level_complete\"><p class=\"levels_container_level_name\">"+level.Name+"</p></div>");}
+				else if(level.State == 2){out.print("<div onclick = \"location.href='"+response.encodeURL("/Game")+"?level="+level.Id+"'\" style=\"left: "+(level.PosX*10 - 37.5)+"px; bottom: "+(level.PosY*10 - 37.5)+"px\" class=\"levels_container_level levels_container_level_active\"><p class=\"levels_container_level_name\">"+level.Name+"</p></div>");}
 				else if(level.State == 1){out.print("<div style=\"left: "+(level.PosX*10 - 37.5)+"px; bottom: "+(level.PosY*10 - 37.5)+"px\" class=\"levels_container_level levels_container_level_locked\"><p class=\"levels_container_level_name\"><i class = 'fa fa-lock' style='font-size:40px;'></i></p></div>");}
 				//else if(level.State == 0){out.print("></div>");}
 			}

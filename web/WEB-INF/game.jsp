@@ -1,18 +1,20 @@
-<%@ page import="com.data.Map.MapData" %>
-<%@ page import="com.data.Map.Tile" %>
-<%@ page import="com.data.Map.Entity" %>
-<%@ page import="com.data.Game.GameOutput" %>
 <%@ page import="com.data.Game.GameFrame" %>
-<%@ page import="java.util.Objects" %>
+<%@ page import="com.data.Game.GameOutput" %>
+<%@ page import="com.data.Map.Entity" %>
+<%@ page import="com.data.Map.MapData" %>
+<%@ page import="com.data.Map.MapDeco" %>
+<%@ page import="com.data.Map.Tile" %>
 <%@ page import="com.util.Html" %>
+<%@ page import="java.util.Objects" %>
+<%@ page import="com.util.NumUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 
 <title>Moo Moo Code - Game</title>
-<link rel="stylesheet" href="<c:url value="/css/map.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/levels.css"/>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/map.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/levels.css"/>
 
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
 <% MapData mapData = (MapData) request.getAttribute("level_data");
@@ -26,8 +28,8 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 		<%if(!output.Success){%><p style = 'font-size:60px;font-weight:bolder'>You Lose!</p>
 		<%}else{%><p style = 'font-size:60px;font-weight:bolder'>You win!</p><%}%>
 		<p style = 'font-size:30px;font-weight:bolder;margin-top:10px;margin-bottom:20px'><%=output.EndText%></p>
-		<div class = 'game-end-btn' onclick="location.href='/Game?retry=true&level=<%=mapData.Map.Id%>'"><i class = 'fa fa-undo'></i><div class = 'game-end-btn-text'>Retry Level</div></div>
-		<div class = 'game-end-btn' onclick="location.href='/LevelSelect'"><i class = 'fa fa-home'></i><div class = 'game-end-btn-text'>Level Selection</div></div>
+		<div class = 'game-end-btn' onclick="location.href='${pageContext.request.contextPath}/Game?retry=true&level=<%=mapData.Map.Id%>'"><i class = 'fa fa-undo'></i><div class = 'game-end-btn-text'>Retry Level</div></div>
+		<div class = 'game-end-btn' onclick="location.href='${pageContext.request.contextPath}/LevelSelect'"><i class = 'fa fa-home'></i><div class = 'game-end-btn-text'>Level Selection</div></div>
 		<pre class = 'map-desc'></pre>
 	</div>
 </div>
@@ -67,7 +69,7 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 	<div style = 'position:absolute;display: inline-block;right:0;top:0;z-index: 1;'>
 		<div class = 'map-tooltip'><i id = 'desc-open' class = 'modal-open-btn fa fa-sliders'></i><div class = 'map-tooltip-text'></div></div>
 		<div class = 'map-tooltip'><i id = 'help-open' class = 'modal-open-btn fa fa-question'></i><div class = 'map-tooltip-text'></div></div>
-		<div class = 'map-tooltip'><i onclick="location.href='/LevelSelect'" class = 'modal-open-btn fa fa-home'></i><div class = 'map-tooltip-text'></div></div>
+		<div class = 'map-tooltip'><i onclick="location.href='${pageContext.request.contextPath}/LevelSelect'" class = 'modal-open-btn fa fa-home'></i><div class = 'map-tooltip-text'></div></div>
 	</div>
 	<div style = 'position: absolute;top: 0;width: 100%;font-weight: bold;'>
 		<div style = 'display: inline-block;width: 100px;height: 50px;background-color: #75715E; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;'>
@@ -163,6 +165,24 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 	{
 		$("#entity-reference").remove("#entity-ref-"+id);
 	}
+	function animateEntity(id,animation)
+	{
+		$("#entity-ref-"+id).css("background-image","url(../icons/"+animation+")");
+	}
+	function addDeco(icon,x,y,behind,id)
+	{
+		
+		$("#entity-reference").append("<div id = 'deco-ref-"+id+"' class = 'map-entity pixel' style=\"background-image: url(../icons/deco/"+icon+".png);" +
+			"z-index:" + (behind?'0':'1') + ";" +
+			"right:" + (( max_x - x - .5) * 50) + "px;" +
+			"top:" + (( max_y - y - .5) * 50) + "px\">");
+	}
+	function moveDeco(id,x,y)
+	{
+		var ent = $("#deco-ref-"+id);
+		ent.css("right",(( max_x - x - .5) * 50) + "px");
+		ent.css("top",(( max_y - y - .5) * 50) + "px");
+	}
 	function removePlayerSpawns()
 	{
 		$("#entity-reference").remove(".entity-player-spawn");
@@ -215,11 +235,15 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 				{
 					out.print("entity-player-spawn");
 				}
-				if(entity.Type==1)
+				else if(entity.Type==1)
 				{
 					out.print("entity-cow");
 				}
 				out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
+			}
+			for(MapDeco deco : mapData.MapDecorations)
+			{
+				out.print("addDeco('"+mapData.GetDecoIcon(deco.Type)+"',"+deco.X+","+deco.Y+","+mapData.GetDecoBehind(deco.Type)+","+deco.Id+");");
 			}
 			%>
 		loadContent();
@@ -237,6 +261,23 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 				{
 					int time =((100*frame.Data.Map.Time) - (frame.TimeLeft*100));
 					out.print("\nsetTimeout(function(){setTime("+frame.TimeLeft+");moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");");
+					out.print("animateEntity(0,\"");
+					if(NumUtil.greaterThan(frame.Data.PlayerVelX,0))
+					{
+						out.print("characters/dan/walk_right");
+					}
+					else if(NumUtil.lessThan(frame.Data.PlayerVelX,0))
+					{
+						out.print("characters/dan/walk_left");
+					}
+					else if(!NumUtil.equalTo(frame.Data.PlayerVelY,0))
+					{
+						out.print("characters/dan/walk_right");
+					}
+					else{
+						out.print("characters/dan/idle");
+					}
+					out.print(".gif\");");
 					if(!Objects.equals(frame.ConsoleOut, "")){out.print("addConsole(\""+ Html.encode(frame.ConsoleOut)+"\","+frame.ConsoleError+")");}
 					for(Entity entity : frame.Data.Entities)
 					{

@@ -78,7 +78,7 @@ public class Users extends HttpServlet
 					int lessonProgress = Integer.parseInt(request.getParameter("lessonProgress"));
 					int admin = Integer.parseInt(request.getParameter("admin"));
 					AddUser(username, password, categoryProgress, lessonProgress, admin);
-					response.sendRedirect("/Admin/Users");
+					response.sendRedirect(response.encodeURL("/Admin/Users"));
 				}
 			}
 		}
