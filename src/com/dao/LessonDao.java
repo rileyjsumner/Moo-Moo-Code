@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -317,5 +318,25 @@ public class LessonDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
+	}
+	public static HashMap<String, String> getLessonBindings(int lesson_id) {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		HashMap<String, String> bindings = new HashMap<>();
+		try {
+			preparedStatement = con.prepareStatement("SELECT * FROM lesson_bindings WHERE lesson_id = ?");
+			
+			preparedStatement.setInt(1, lesson_id);
+			
+			ResultSet set = preparedStatement.executeQuery();
+			while(set.next()) {
+				bindings.put(set.getString("binding_title"), set.getString("binding_value"));
+			}
+			
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return bindings;
 	}
 }

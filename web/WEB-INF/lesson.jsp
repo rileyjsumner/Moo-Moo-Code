@@ -10,11 +10,15 @@
 	<pre style="white-space: pre-wrap; word-wrap: break-word; text-align: left"><%=request.getAttribute("lesson_text")%></pre>
 </div>
 <div class = "lesson-codebed-container">
-	<div class = "lesson-codebed">
-		<textarea style="height:1000px;" title="code" id="code">//Type your code here:&#13;&#10;&#13;&#10;print("Moo Moo Code!");&#13;&#10;&#13;&#10;</textarea>
-	</div>
-	<div class = "lesson-codebed-submit" onclick="submitCode()"><div class = "bracket-hover"><p>Run Code</p></div></div>
-	<div class = "lesson-codebed-output"><pre id = "lesson-code-output"></pre></div>
+	<form action="/Lesson" method="POST">
+		<input type="hidden" name="lesson" value="<%=request.getParameter("lesson")%>"/>
+		<div class = "lesson-codebed">
+			<textarea style="height:1000px;" name="code" id="code">//Type your code here:&#13;&#10;&#13;&#10;print("Moo Moo Code!");&#13;&#10;&#13;&#10;</textarea>
+		</div>
+		
+		<div class = "lesson-codebed-submit" onclick="$(this).closest('form').submit()"><div class = "bracket-hover"><p>Run Code</p></div></div>
+		<div class = "lesson-codebed-output"><pre id = "lesson-code-output"></pre></div>
+	</form>
 </div>
 <script>
 	var codeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
@@ -27,23 +31,6 @@
 		showCursorWhenSelecting: true
 	});
 	codeMirror.setSize("100%","60%");
-	
-	function submitCode() {
-		$.post("/Lesson", {code: codeMirror.getValue()}, function (data) {
-			console.log(data);
-			var json = JSON.parse(data);
-			
-			var output = $("#lesson-code-output");
-			output.html(json["data"]);
-			
-			if (json["error"]) {
-				output.css("color", "red");
-			}
-			else {
-				output.css("color", "inherit");
-			}
-		});
-	}
 </script>
 
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />
