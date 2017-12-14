@@ -16,19 +16,22 @@ import java.util.logging.Logger;
 public class UserDao {
 	public static int TestLogin(String username,String password)
 	{
-		Connection con = DbUtil.getConnection();
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = con.prepareStatement("SELECT id FROM users WHERE username = ? AND password = ?");
-			preparedStatement.setString(1, username);
-			preparedStatement.setString(2, password);
-			ResultSet set = preparedStatement.executeQuery();
-			if(set.first()){
-				return set.getInt("id");
+		if(username != null && password != null)
+		{
+			Connection con = DbUtil.getConnection();
+			PreparedStatement preparedStatement;
+			try {
+				preparedStatement = con.prepareStatement("SELECT id FROM users WHERE username = ? AND password = ?");
+				preparedStatement.setString(1, username);
+				preparedStatement.setString(2, password);
+				ResultSet set = preparedStatement.executeQuery();
+				if(set.first()){
+					return set.getInt("id");
+				}
 			}
-		}
-		catch (SQLException ex) {
-			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+			catch (SQLException ex) {
+				Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
 		return -1;
 	}

@@ -12,7 +12,7 @@ public class LoginUtil {
 	{
 		String username = (String)session.getAttribute("username");
 		String password = (String)session.getAttribute("password");
-		if(username != null && password != null)
+		if(!(username == null || password == null))
 		{
 			int user_id = UserDao.TestLogin(username,password);
 			if(user_id != -1)

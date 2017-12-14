@@ -7,16 +7,16 @@
 <p class="banner-text">Moo Moo Code</p>
 </div>
 <div id="menu" class = "vertical-compact">
-<div class="menu-item bracket-hover" onclick="location.href='<c:url value='/Home'/>'">
+<div class="menu-item bracket-hover" onclick="location.href='${pageContext.request.contextPath}/Home'">
 <p class="menu-text">Home</p>
 </div>
-<div class="menu-item bracket-hover" onclick="location.href='<c:url value='/Learn'/>'">
+<div class="menu-item bracket-hover" onclick="location.href='${pageContext.request.contextPath}/Learn'">
 <p class="menu-text">Learn</p>
 </div>
-<div class="menu-item bracket-hover" onclick="location.href='<c:url value='/Code'/>'">
+<div class="menu-item bracket-hover" onclick="location.href='${pageContext.request.contextPath}/Code'">
 <p class="menu-text">Code</p>
 </div>
-<div class="menu-item bracket-hover" onclick="location.href='<c:url value='/LevelSelect'/>'">
+<div class="menu-item bracket-hover" onclick="location.href='${pageContext.request.contextPath}/LevelSelect'">
 <p class="menu-text">Play</p>
 </div>
 <div class="menu-item bracket-hover">

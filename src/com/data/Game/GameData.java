@@ -17,6 +17,8 @@ public class GameData
 	public BigDecimal PlayerX;
 	public BigDecimal PlayerY;
 	
+	public boolean PlayerHasPitchFork;
+	
 	public BigDecimal PlayerVelX;
 	public BigDecimal PlayerVelY;
 	public GameData(GameData data)

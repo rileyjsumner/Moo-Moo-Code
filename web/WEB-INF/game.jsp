@@ -52,7 +52,7 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 
 
 <div class = 'play-code-panel'>
-	<form id = 'code-input-form' style="height:calc(100% - 400px);margin: 0px;" action = '<c:url value="/Game?level="/><%=mapData.Map.Id%>'  method = 'post'>
+	<form id = 'code-input-form' style="height:calc(100% - 400px);margin: 0;" action = '${pageContext.request.contextPath}/Game?level=<%=mapData.Map.Id%>' method = 'post'>
 		<div style = 'width:100%;height:100%;position: relative;overflow: hidden'>
 			<textarea name = 'player-code' style = "text-align:left;display: none;" id = 'code'><%=(String)request.getAttribute("code")%></textarea>
 		</div>
@@ -62,7 +62,7 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 	</div>
 	<div style="height: 350px;background-color:inherit;position: relative">
 		<p style="height:30px;display: block;text-align: center;font-size: 18px;font-weight: bold;">Output:</p>
-		<pre id = 'code-output' style="height: 320px;max-height: 330px; overflow-y: scroll; display: block;text-align: left;margin: 0px 0px 0px 5px;"></pre>
+		<pre id = 'code-output' style="height: 320px;max-height: 330px; overflow-y: scroll; display: block;text-align: left;margin: 0 0 0 5px;"></pre>
 	</div>
 </div>
 <div style="display:inline-block;width:calc(100% - 552px);height:100%;text-align:center;float:right;position: relative">

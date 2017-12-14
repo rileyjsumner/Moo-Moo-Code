@@ -20,7 +20,7 @@
 </div>
 <div id = "menu-settings" class = "action-menu" <%if(entityMode){out.print("style=\"left:-400px\"");}else{out.print("style=\"left:100px\"");}%>>
 	<p style="font-size:18px;padding:20px;">Level Settings:</p>
-	<form action = "<c:url value="/Admin/LevelEditor"/>?action=settings" method = "post">
+	<form action = "${pageContext.request.contextPath}/Admin/LevelEditor?action=settings" method = "post">
 		<table style="width: 100%;overflow: hidden; white-space: nowrap;">
 			<tr><td><label class = "admin-levels-label" for="settings-x">Width:</label></td><td><input id = 'settings-x' name = "x" class = "admin-levels-input" type = "number" value="<%=mapData.Map.DimX%>"/></td></tr>
 			<tr><td><label class = "admin-levels-label" for="settings-y">Height:</label></td><td><input id = 'settings-y'  name = "y" class = "admin-levels-input" type = "number" value="<%=mapData.Map.DimY%>"/></td></tr>
@@ -55,7 +55,7 @@
 	<div class = 'vertical-fill-container'>
 		<div class = 'vertical-compact'>
 			<p style="font-size:18px;padding:20px;">Add a new entity:</p>
-			<form method = 'post' action = '<c:url value="/Admin/LevelEditor?action=entity_new"/>'>
+			<form method = 'post' action = ${pageContext.request.contextPath}/Admin/LevelEditor?action=entity_new'>
 				<div class = 'entity-container-new'>
 					<div class='entity-header-new'>
 						<input name = "map" type = "hidden" value="<%=mapData.Map.Id%>"/>
@@ -95,12 +95,12 @@
 	<div class = 'vertical-fill-container'>
 		<div class = 'vertical-compact'>
 			<p style="font-size:18px;padding:20px;">Edit Decorations:</p>
-			<form method = "post" action = "<c:url value="/Admin/LevelEditor?action=deco_repopulate"/>">
+			<form method = "post" action = "${pageContext.request.contextPath}/Admin/LevelEditor?action=deco_repopulate">
 				<input name = "map" type = "hidden" value="<%=mapData.Map.Id%>"/>
 				<button class = "edit-btn">Re-Populate All Decorations</button>
 			</form>
 			<p style="font-size:18px;padding:20px;">Add a new entity:</p>
-			<form method = 'post' action = '<c:url value="/Admin/LevelEditor?action=deco_new"/>'>
+			<form method = 'post' action = '${pageContext.request.contextPath}/Admin/LevelEditor?action=deco_new'>
 				<div class = 'entity-container-new'>
 					<div class='entity-header-new'>
 						<input name = "map" type = "hidden" value="<%=mapData.Map.Id%>"/>
@@ -265,7 +265,7 @@
 			if(selected_tile_type !== null)
 			{
 				selected_el.css("background-image","url(/icons/map_tiles/"+selected_tile_icon+".png)");
-				$.post("/Admin/LevelEditor",{
+				$.post("${pageContext.request.contextPath}/Admin/LevelEditor",{
 						action:"tile",
 						x:selected_el.data("x"),
 						y:selected_el.data("y"),
