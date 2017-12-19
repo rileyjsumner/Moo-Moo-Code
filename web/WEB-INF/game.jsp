@@ -239,6 +239,14 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 				{
 					out.print("entity-cow");
 				}
+				else if(entity.Type==2)
+				{
+					out.print("entity-pitchfork");
+				}
+				else if(entity.Type==4)
+				{
+					out.print("entity-haybale");
+				}
 				out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
 			}
 			for(MapDeco deco : mapData.MapDecorations)
@@ -261,24 +269,33 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 				{
 					int time =((100*frame.Data.Map.Time) - (frame.TimeLeft*100));
 					out.print("\nsetTimeout(function(){setTime("+frame.TimeLeft+");moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");");
-					out.print("animateEntity(0,\"");
+					
+					out.print("animateEntity(0,\"characters/dan/");
+					
+					if(frame.Data.PlayerHasPitchFork)
+					{
+						out.print("pitchfork/");
+					}
+					
 					if(NumUtil.greaterThan(frame.Data.PlayerVelX,0))
 					{
-						out.print("characters/dan/walk_right");
+						out.print("walk_right");
 					}
 					else if(NumUtil.lessThan(frame.Data.PlayerVelX,0))
 					{
-						out.print("characters/dan/walk_left");
+						out.print("walk_left");
 					}
 					else if(!NumUtil.equalTo(frame.Data.PlayerVelY,0))
 					{
-						out.print("characters/dan/walk_right");
+						out.print("walk_right");
 					}
 					else{
-						out.print("characters/dan/idle");
+						out.print("idle");
 					}
 					out.print(".gif\");");
+					
 					if(!Objects.equals(frame.ConsoleOut, "")){out.print("addConsole(\""+ Html.encode(frame.ConsoleOut)+"\","+frame.ConsoleError+")");}
+					
 					for(Entity entity : frame.Data.Entities)
 					{
 						out.print("\nmoveEntity("+entity.Id+","+entity.X+","+entity.Y+");");

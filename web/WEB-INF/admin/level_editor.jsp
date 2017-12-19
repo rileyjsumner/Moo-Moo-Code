@@ -55,7 +55,7 @@
 	<div class = 'vertical-fill-container'>
 		<div class = 'vertical-compact'>
 			<p style="font-size:18px;padding:20px;">Add a new entity:</p>
-			<form method = 'post' action = ${pageContext.request.contextPath}/Admin/LevelEditor?action=entity_new'>
+			<form method = 'post' action = '${pageContext.request.contextPath}/Admin/LevelEditor?action=entity_new'>
 				<div class = 'entity-container-new'>
 					<div class='entity-header-new'>
 						<input name = "map" type = "hidden" value="<%=mapData.Map.Id%>"/>
@@ -91,7 +91,7 @@
 		</div>
 	</div>
 </div>
-<div id = "menu-decorations" class = "action-menu" <%if(entityMode){out.print("style=\"left:100px\"");}else{out.print("style=\"left:-400px\"");}%>>
+<div id = "menu-decorations" class = "action-menu" style="left:-400px;">
 	<div class = 'vertical-fill-container'>
 		<div class = 'vertical-compact'>
 			<p style="font-size:18px;padding:20px;">Edit Decorations:</p>
@@ -169,7 +169,6 @@
 	</table>
 </div>
 <script>
-	var DanWalks=true;
 	var max_x = <%= mapData.Map.DimX %>;
 	var max_y = <%= mapData.Map.DimY %>;
 	var ent_reposition = false;
@@ -389,6 +388,14 @@
 			else if(entity.Type==1)
 			{
 				out.print("entity-cow");
+			}
+			else if(entity.Type==2)
+			{
+				out.print("entity-pitchfork");
+			}
+			else if(entity.Type==4)
+			{
+				out.print("entity-haybale");
 			}
 			out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
 		}

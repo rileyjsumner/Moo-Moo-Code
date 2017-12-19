@@ -145,19 +145,31 @@
 }
 .entity-player
 {
-	background-image: url(../icons/characters/dan/idle.gif);
 	border-radius: 25px;
-	box-shadow: inset 0 0 20px 4px greenyellow;
+	box-shadow: inset 0 0 0 2px #A6E22E;
+	background: #A6E22E66 url(../icons/characters/dan/idle.gif);
 }
 .entity-player-spawn
 {
-	background-image: url(../icons/characters/dan/idle.gif);
 	border-radius: 25px;
-	box-shadow: inset 0 0 20px 4px greenyellow;
+	box-shadow: inset 0 0 0 2px #A6E22E;
+	background: #A6E22E66 url(../icons/characters/dan/idle.gif);
 }
 .entity-cow
 {
-	background-image: url(../icons/entities/cow.png);
+	border-radius: 25px;
+	box-shadow: inset 0 0 0 2px #ffd700;
+	background: #ffd70066 url(../icons/entities/cow.png);
+}
+.entity-pitchfork
+{
+	border-radius: 25px;
+	box-shadow: inset 0 0 0 2px #ffffff;
+	background: #ffffff66 url(../icons/entities/pitchfork.png);
+}
+.entity-haybale
+{
+	background-image: url(../icons/entities/pitchfork.png);
 	border-radius: 25px;
 	box-shadow: inset 0 0 20px 4px gold;
 }
