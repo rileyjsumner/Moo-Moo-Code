@@ -13,28 +13,33 @@
 	<%
 		int lesson = (int)request.getAttribute("lesson");
 		Boolean success = (Boolean)request.getAttribute("success");
+		String start = (String)request.getAttribute("start_code");
+		String output = (String)request.getAttribute("output");
 		if(success == null) {
 		
 	%>
 	<form action="${pageContext.request.contextPath}/Lesson?lesson=<%=lesson%>" method="POST">
 		<div class = "lesson-codebed">
-			<textarea style="height:1000px;" name="code" id="code">//Type your code here:&#13;&#10;&#13;&#10;print("Moo Moo Code!");&#13;&#10;&#13;&#10;</textarea>
+			<textarea style="height:1000px;" name="code" id="code"><%=start%></textarea>
 		</div>
 		
 		<div class = "lesson-codebed-submit" onclick="$(this).closest('form').submit()"><div class = "bracket-hover"><p>Run Code</p></div></div>
-		<div class = "lesson-codebed-output"><pre id = "lesson-code-output"></pre></div>
+		<div class = "lesson-codebed-output"><pre id = "lesson-code-output"><%=output%></pre></div>
 	</form>
-	<%
-		if(!success) {
-			
-			}else {
-	%>
-		<h1>Success!</h1>
-	<%
-			}
-		}
-	%>
 </div>
+<%
+	} else if(!success) {
+	
+	}else {
+%>
+	<script>
+		$(".lesson-content-container").remove();
+		$(".lesson-codebed-container").remove();
+		$("#content-relative").append("<h1>success</h1>");
+	</script>
+<%
+	}
+%>
 <script>
 	var codeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
 		height:"100%",

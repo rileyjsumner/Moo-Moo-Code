@@ -55,7 +55,7 @@ CREATE TABLE `entities` (
   `name` varchar(45) DEFAULT NULL,
   `icon` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,12 +76,12 @@ DROP TABLE IF EXISTS `lesson_bindings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `lesson_bindings` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `lesson_id` int(11) NOT NULL,
   `binding_title` varchar(45) NOT NULL,
   `binding_value` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,6 +90,7 @@ CREATE TABLE `lesson_bindings` (
 
 LOCK TABLES `lesson_bindings` WRITE;
 /*!40000 ALTER TABLE `lesson_bindings` DISABLE KEYS */;
+INSERT INTO `lesson_bindings` VALUES (1,2,'myvar','my_name');
 /*!40000 ALTER TABLE `lesson_bindings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,6 +134,7 @@ CREATE TABLE `lessons` (
   `lesson_text` varchar(1500) NOT NULL,
   `start_code` varchar(1500) NOT NULL DEFAULT '',
   `lesson_output` varchar(1500) NOT NULL DEFAULT '',
+  `code_save` varchar(1500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `lesson_category_idx` (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
@@ -144,7 +146,7 @@ CREATE TABLE `lessons` (
 
 LOCK TABLES `lessons` WRITE;
 /*!40000 ALTER TABLE `lessons` DISABLE KEYS */;
-INSERT INTO `lessons` VALUES (1,'My Lesson',0,1,'Do the code boi!','sql.inject(\"MooMoo.hack(int hacketyhack)\");',''),(2,'Output',1,1,'KEK','',''),(3,'Variables',2,1,'Richard Nixon','',''),(4,'Numbers',3,1,'Putin','',''),(5,'Introduction',0,2,'lol','',''),(6,'Arguments',1,2,'Darude sandstorm is good song','',''),(7,'Returning',2,2,'Richy & mortis','',''),(8,'Using functions',3,2,'F5 F5 F5','',''),(9,'Introduction',0,3,'wow gud lesson','',''),(10,'Defining a class',1,3,'this is a lesson too','',''),(11,'Functions in a class',2,3,'this is also a lesson','',''),(12,'Using classes',3,3,'why did i type this','',''),(13,'Common Classes',4,3,'what a waste of time','','');
+INSERT INTO `lessons` VALUES (1,'My Lesson',0,1,'Do the code boi!','sql.inject(\"MooMoo.hack(int hacketyhack)\");','',NULL),(2,'Output',1,1,'KEK','sql.inject(\"MooMoo.hack(int hacketyhack)\");','','var myvar = \"my_name\";'),(3,'Variables',2,1,'Richard Nixon','','',NULL),(4,'Numbers',3,1,'Putin','','',NULL),(5,'Introduction',0,2,'lol','','',NULL),(6,'Arguments',1,2,'Darude sandstorm is good song','','',NULL),(7,'Returning',2,2,'Richy & mortis','','',NULL),(8,'Using functions',3,2,'F5 F5 F5','','',NULL),(9,'Introduction',0,3,'wow gud lesson','','',NULL),(10,'Defining a class',1,3,'this is a lesson too','','',NULL),(11,'Functions in a class',2,3,'this is also a lesson','','',NULL),(12,'Using classes',3,3,'why did i type this','','',NULL),(13,'Common Classes',4,3,'what a waste of time','','',NULL);
 /*!40000 ALTER TABLE `lessons` ENABLE KEYS */;
 UNLOCK TABLES;
 
