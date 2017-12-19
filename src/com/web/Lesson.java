@@ -43,6 +43,7 @@ public class Lesson extends HttpServlet {
 			{
 				request.setAttribute("lesson", lesson);
 				request.setAttribute("lesson_text",LessonDao.GetLessonText(lesson));
+				request.setAttribute("start_code", LessonDao.GetLessonCode(lesson));
 				request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 			}
 			else
@@ -71,16 +72,13 @@ public class Lesson extends HttpServlet {
 		if(LoginUtil.TestLogin(session)) {
 			int user_id = (int)session.getAttribute("user_id");
 			String code = request.getParameter("code");
-			System.out.println(code);
 			int lesson_id = Integer.parseInt(request.getParameter("lesson"));
 			
 			if(LessonDao.CheckLessonAccessible(lesson_id, user_id))
 			{
 				CodeEngine engine = new CodeEngine();
 				CodeOutput output = engine.Exec(code);
-				System.out.println(output.Error);
-				System.out.println(output.Text);
-				System.out.println("surroundenered");
+				LessonDao.UpdateLessonCode(lesson_id, code);
 				if(!output.Error)
 				{
 					HashMap<String, Object> bindings = engine.GetBindings();
@@ -99,14 +97,14 @@ public class Lesson extends HttpServlet {
 							System.out.print(database_binding + "/n" + lessonBindings.get(lesson_key));
 							if(database_binding.equals(lessonBindings.get(lesson_key)))
 							{
-								System.out.println("yay");
+							
 							} else {
-								System.out.print("not equal");
+								output.Text += "\nValues not assigned correctly";
 								valid = false;
 								break;
 							}
 						} else {
-							System.out.println("not contain");
+							output.Text += "\nCheck code to include all elements";
 							valid = false;
 							break;
 						}
@@ -117,10 +115,12 @@ public class Lesson extends HttpServlet {
 						System.out.println(request.getAttribute("success"));
 					}
 				} else {
-					System.out.println("wow dummy");
+				
 				}
+				request.setAttribute("output", output.Text);
 				request.setAttribute("lesson_text",LessonDao.GetLessonText(lesson_id));
 				request.setAttribute("lesson", lesson_id);
+				request.setAttribute("start_code", LessonDao.GetLessonCode(lesson_id));
 				request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 			}
 		}

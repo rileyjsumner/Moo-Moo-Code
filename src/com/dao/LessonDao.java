@@ -144,17 +144,45 @@ public class LessonDao {
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
+		PreparedStatement preparedStatement1;
 		try {
-			preparedStatement = con.prepareStatement("SELECT start_code FROM lessons WHERE id = ?");
-			preparedStatement.setInt(1, id);
-			ResultSet set = preparedStatement.executeQuery();
+			System.out.println(" try save code");
+			preparedStatement1 = con.prepareStatement("SELECT code_save FROM lessons WHERE id = ?");
+			preparedStatement1.setInt(1, id);
+			ResultSet set = preparedStatement1.executeQuery();
 			if(set.first()){
-				return set.getString("start_code");
+				String save_code = set.getString("code_save");
+				if(save_code != null) {
+					System.out.println(save_code);
+					return save_code;
+				} else {
+					try
+					{
+						System.out.println(" try start code");
+						preparedStatement = con.prepareStatement("SELECT start_code FROM lessons WHERE id = ?");
+						preparedStatement.setInt(1, id);
+						ResultSet set1 = preparedStatement.executeQuery();
+						if (set1.first())
+						{
+							String start_code = set1.getString("start_code");
+							if (start_code != null)
+							{
+								System.out.println(start_code);
+								return start_code;
+							}
+						}
+					}
+					catch (SQLException ex)
+					{
+						Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+					}
+				}
 			}
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		
 		return "No start code here";
 	}
 	public static String GetLessonTitle(int id) {
@@ -209,6 +237,22 @@ public class LessonDao {
 			preparedStatement.setInt(6, id);
 			
 			preparedStatement.execute();
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	public static void UpdateLessonCode(int id, String code)
+	{
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("UPDATE lessons SET code_save = ? WHERE id = ?;");
+			preparedStatement.setString(1, code);
+			preparedStatement.setInt(2, id);
+			
+			preparedStatement.execute();
+			System.out.println("updated");
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
