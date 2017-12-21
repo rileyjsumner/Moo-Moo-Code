@@ -140,6 +140,42 @@
 }
 #code {
 	width: 25%;
-}.success {
+}
+.success {
 	text-decoration: none;
  }
+.lesson_editor_wrapper {
+	display: flex;
+}
+.bindings {
+	margin-top: 100px;
+	width: 200px;
+	background-color: #1d1d1b;
+	height: 105px;
+	padding: 7px;
+	border: 1px solid white;
+	border-radius: 8px;
+}
+.binding_input input{
+	height: 25px;
+	background: #4f4f4f;
+	font-family: "Inconsolata", serif;
+	border: none;
+	text-align: center;
+	font-size: 16px;
+	margin: 5px;
+	border-radius: 5px;
+	text-align: left;
+	color: white;
+	padding-left: 8px;
+}
+.lesson_update {
+	width: 1200px;
+}
+.lesson_edit_content textarea {
+	border-radius: 5px;
+}
+.binding_input input::placeholder {
+	color: #DDDDDD;
+}
+ 

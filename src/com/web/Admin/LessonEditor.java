@@ -80,7 +80,9 @@ public class LessonEditor extends HttpServlet
 				int id = Integer.parseInt(request.getParameter("id"));
 				String title = request.getParameter("binding");
 				String value = request.getParameter("value");
-				LessonDao.AddBinding(title, value, id);
+				if(title != null && value != null) {
+					LessonDao.AddBinding(title, value, id);
+				}
 				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+id));
 			}
 			
