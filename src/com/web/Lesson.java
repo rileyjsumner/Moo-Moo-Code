@@ -91,10 +91,11 @@ public class Lesson extends HttpServlet {
 					
 					for(String lesson_key : lesson_keys)
 					{
+						
 						if(keys.contains(lesson_key)){
 							Object binding = bindings.get(lesson_key);
 							String database_binding = binding.toString();
-							System.out.print(database_binding + "/n" + lessonBindings.get(lesson_key));
+							System.out.println(database_binding + "/n" + lessonBindings.get(lesson_key));
 							if(database_binding.equals(lessonBindings.get(lesson_key)))
 							{
 							

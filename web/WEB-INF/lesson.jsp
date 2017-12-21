@@ -28,14 +28,25 @@
 	</form>
 </div>
 <%
-	} else if(!success) {
-	
-	}else {
+	} else if(!success) { %>
+		<form action="${pageContext.request.contextPath}/Lesson?lesson=<%=lesson%>" method="POST">
+			<div class = "lesson-codebed">
+				<textarea style="height:1000px;" name="code" id="code"><%=start%></textarea>
+			</div>
+			
+			<div class = "lesson-codebed-submit" onclick="$(this).closest('form').submit()"><div class = "bracket-hover"><p>Run Code</p></div></div>
+			<div class = "lesson-codebed-output"><pre id = "lesson-code-output"><%=output%></pre></div>
+		</form>
+	<% } else {
 %>
 	<script>
 		$(".lesson-content-container").remove();
 		$(".lesson-codebed-container").remove();
-		$("#content-relative").append("<h1>success</h1>");
+		$("#content-relative").append("" +
+			"<h1>Great Work!</h1>" +
+			"<a id='review' class='success edit-btn' href='${pageContext.request.contextPath}/Lesson?lesson=<%=lesson%>'>Review Lesson</a>" +
+			"<a id='continue' class='success edit-btn' href='${pageContext.request.contextPath}/Lesson?lesson=<%=lesson+1%>'>Advance</a>" +
+			"");
 	</script>
 <%
 	}

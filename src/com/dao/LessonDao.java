@@ -146,19 +146,16 @@ public class LessonDao {
 		PreparedStatement preparedStatement;
 		PreparedStatement preparedStatement1;
 		try {
-			System.out.println(" try save code");
 			preparedStatement1 = con.prepareStatement("SELECT code_save FROM lessons WHERE id = ?");
 			preparedStatement1.setInt(1, id);
 			ResultSet set = preparedStatement1.executeQuery();
 			if(set.first()){
 				String save_code = set.getString("code_save");
 				if(save_code != null) {
-					System.out.println(save_code);
 					return save_code;
 				} else {
 					try
 					{
-						System.out.println(" try start code");
 						preparedStatement = con.prepareStatement("SELECT start_code FROM lessons WHERE id = ?");
 						preparedStatement.setInt(1, id);
 						ResultSet set1 = preparedStatement.executeQuery();
@@ -167,7 +164,6 @@ public class LessonDao {
 							String start_code = set1.getString("start_code");
 							if (start_code != null)
 							{
-								System.out.println(start_code);
 								return start_code;
 							}
 						}
@@ -252,7 +248,6 @@ public class LessonDao {
 			preparedStatement.setInt(2, id);
 			
 			preparedStatement.execute();
-			System.out.println("updated");
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);

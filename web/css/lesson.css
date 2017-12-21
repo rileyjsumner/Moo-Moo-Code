@@ -140,4 +140,6 @@
 }
 #code {
 	width: 25%;
-}
+}.success {
+	text-decoration: none;
+ }
