@@ -2,6 +2,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.data.Lesson.LessonCategory" %>
 <%@ page import="java.lang.reflect.Array" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="com.data.Lesson.Binding" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -55,6 +58,43 @@
 					<div class="col"><input class="edit-btn" type="submit" name="submit" value="Add Binding"/></div>
 				</div>
 			</form>
+			<form class="add_binding" action="<c:url value="/Admin/Lessons"/>" method="POST">
+				<%
+					ArrayList<Binding> bindings = (ArrayList<Binding>)request.getAttribute("bindings");
+					for(Binding bind : bindings) {
+				%>
+				<div class="binding_inputs">
+					<input type="hidden" value="<%=id%>" name="id"/>
+					<div class="col binding_input"><input class="autoupdate" data-type="binding_title" data-id="<%=bind.id%>" data-lesson="<%=bind.lesson_id%>" placeholder="binding" type="text" name="binding" value="<%=bind.title%>"/></div>
+					<div class="col binding_input"><input class="autoupdate" data-type="binding_value" data-id="<%=bind.id%>" data-lesson="<%=bind.lesson_id%>" placeholder="value" type="text" name="value" value="<%=bind.value%>"/></div>
+					<div class="col"><button class="edit-btn edit-btn-red delete" type="button" data-id="<%=bind.id%>" data-lesson="<%=bind.lesson_id%>" >Delete Binding</button></div>
+				</div>
+				<%
+					}
+				%>
+			</form>
+			<script>
+					$(".autoupdate").blur(function(){
+						var test = {
+							type: $(this).data("type"),
+							id: $(this).data("id"),
+							lesson: $(this).data("lesson"),
+							value: $(this).val(),
+							submit: "Update Binding"
+						}
+						$.post("<c:url value="/Admin/Lessons"/>", test);
+						location.reload();
+					});
+					$(".delete").click(function(){
+						var test = {
+							submit: "Delete Binding",
+							id: $(this).data("id"),
+							lesson: $(this).data("lesson")
+						}
+						$.post("<c:url value="/Admin/Lessons"/>", test);
+						location.reload();
+					});
+			</script>
 		</div>
 	</div>
 	<%

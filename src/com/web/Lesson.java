@@ -3,6 +3,7 @@ package com.web;
 import com.code.CodeOutput;
 import com.dao.LessonDao;
 import com.dao.UserDao;
+import com.data.Lesson.Binding;
 import com.data.Lesson.LessonId;
 import com.util.LoginUtil;
 import com.code.CodeEngine;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -83,20 +85,17 @@ public class Lesson extends HttpServlet {
 				{
 					HashMap<String, Object> bindings = engine.GetBindings();
 					Set<String> keys = bindings.keySet();
-					HashMap<String, String> lessonBindings = LessonDao.getLessonBindings(lesson_id);
-					Set<String> lesson_keys = lessonBindings.keySet();
+					ArrayList<Binding> lessonBindings = LessonDao.getLessonBindings(lesson_id);
 					
-					System.out.println(keys + "/n" + lesson_keys);
 					boolean valid = true;
 					
-					for(String lesson_key : lesson_keys)
+					for(Binding bind : lessonBindings)
 					{
 						
-						if(keys.contains(lesson_key)){
-							Object binding = bindings.get(lesson_key);
+						if(keys.contains(bind.title)){
+							Object binding = bindings.get(bind.title);
 							String database_binding = binding.toString();
-							System.out.println(database_binding + "/n" + lessonBindings.get(lesson_key));
-							if(database_binding.equals(lessonBindings.get(lesson_key)))
+							if(database_binding.equals(bind.value))
 							{
 							
 							} else {
