@@ -75,53 +75,62 @@ public class Lesson extends HttpServlet {
 			int user_id = (int)session.getAttribute("user_id");
 			String code = request.getParameter("code");
 			int lesson_id = Integer.parseInt(request.getParameter("lesson"));
-			
+			String action = request.getParameter("submit");
 			if(LessonDao.CheckLessonAccessible(lesson_id, user_id))
 			{
-				CodeEngine engine = new CodeEngine();
-				CodeOutput output = engine.Exec(code);
-				LessonDao.UpdateLessonCode(lesson_id, code);
-				if(!output.Error)
+				if(action.equals("Advance")) {
+					LessonDao.UpdateLessonAccessible(lesson_id, user_id);
+				}
+				else if(action.equals("Run Code"))
 				{
-					HashMap<String, Object> bindings = engine.GetBindings();
-					Set<String> keys = bindings.keySet();
-					ArrayList<Binding> lessonBindings = LessonDao.getLessonBindings(lesson_id);
-					
-					boolean valid = true;
-					
-					for(Binding bind : lessonBindings)
+					CodeEngine engine = new CodeEngine();
+					CodeOutput output = engine.Exec(code);
+					LessonDao.UpdateLessonCode(lesson_id, code);
+					if (!output.Error)
 					{
+						HashMap<String, Object> bindings = engine.GetBindings();
+						Set<String> keys = bindings.keySet();
+						ArrayList<Binding> lessonBindings = LessonDao.getLessonBindings(lesson_id);
 						
-						if(keys.contains(bind.title)){
-							Object binding = bindings.get(bind.title);
-							String database_binding = binding.toString();
-							if(database_binding.equals(bind.value))
-							{
+						boolean valid = true;
+						
+						for (Binding bind : lessonBindings)
+						{
 							
-							} else {
-								output.Text += "\nValues not assigned correctly";
+							if (keys.contains(bind.title))
+							{
+								Object binding = bindings.get(bind.title);
+								String database_binding = binding.toString();
+								if (database_binding.equals(bind.value))
+								{
+								
+								} else
+								{
+									output.Text += "\nValues not assigned correctly";
+									valid = false;
+									break;
+								}
+							} else
+							{
+								output.Text += "\nCheck code to include all elements";
 								valid = false;
 								break;
 							}
-						} else {
-							output.Text += "\nCheck code to include all elements";
-							valid = false;
-							break;
 						}
-					}
-					if(valid)
+						if (valid)
+						{
+							request.setAttribute("success", true);
+						}
+					} else
 					{
-						request.setAttribute("success", true);
-						System.out.println(request.getAttribute("success"));
+					
 					}
-				} else {
-				
+					request.setAttribute("output", output.Text);
+					request.setAttribute("lesson_text", LessonDao.GetLessonText(lesson_id));
+					request.setAttribute("lesson", lesson_id);
+					request.setAttribute("start_code", LessonDao.GetLessonCode(lesson_id));
+					request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 				}
-				request.setAttribute("output", output.Text);
-				request.setAttribute("lesson_text",LessonDao.GetLessonText(lesson_id));
-				request.setAttribute("lesson", lesson_id);
-				request.setAttribute("start_code", LessonDao.GetLessonCode(lesson_id));
-				request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 			}
 		}
 		else

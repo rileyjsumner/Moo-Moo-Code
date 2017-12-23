@@ -23,8 +23,8 @@
 			<textarea style="height:1000px;" name="code" id="code"><%=start%></textarea>
 		</div>
 		
-		<div class = "lesson-codebed-submit" onclick="$(this).closest('form').submit()"><div class = "bracket-hover"><p>Run Code</p></div></div>
-		<div class = "lesson-codebed-output"><pre id = "lesson-code-output"><%=output%></pre></div>
+		<div class="lesson-codebed-submit"><input class = "edit-btn" type="submit" name="submit" value="Run Code"/></div>
+		<div class = "lesson-codebed-output"><pre id = "lesson-code-output">Output:</pre></div>
 	</form>
 </div>
 <%
@@ -34,8 +34,8 @@
 				<textarea style="height:1000px;" name="code" id="code"><%=start%></textarea>
 			</div>
 			
-			<div class = "lesson-codebed-submit" onclick="$(this).closest('form').submit()"><div class = "bracket-hover"><p>Run Code</p></div></div>
-			<div class = "lesson-codebed-output"><pre id = "lesson-code-output"><%=output%></pre></div>
+			<div class="lesson-codebed-submit"><input class = "edit-btn" name="submit" type="submit" value="Run Code"/></div>
+			<div class = "lesson-codebed-output"><pre id = "lesson-code-output">Output:<%=output%></pre></div>
 		</form>
 	<% } else {
 %>
@@ -44,9 +44,14 @@
 		$(".lesson-codebed-container").remove();
 		$("#content-relative").append("" +
 			"<h1>Great Work!</h1>" +
-			"<a id='review' class='success edit-btn' href='${pageContext.request.contextPath}/Lesson?lesson=<%=lesson%>'>Review Lesson</a>" +
-			"<a id='continue' class='success edit-btn' href='${pageContext.request.contextPath}/Lesson?lesson=<%=lesson+1%>'>Advance</a>" +
-			"");
+			"<form action=\"${pageContext.request.contextPath}/Lesson?lesson=<%=lesson%>\" method=\"POST\">" +
+			"<input type='hidden' value='<%=lesson%>' name='lesson'/>" +
+			"<input id='review' type='submit' class='success edit-btn' name='submit' value='Review Lesson'/>" +
+			"</form>" +
+			"<form action=\"${pageContext.request.contextPath}/Lesson?lesson=<%=lesson+1%>\" method=\"POST\">" +
+			"<input type='hidden' value='<%=lesson%>' name='lesson'/>" +
+			"<input id='continue' type='submit' class='success edit-btn' name='submit' value='Advance'/>" +
+			"</form>");
 	</script>
 <%
 	}

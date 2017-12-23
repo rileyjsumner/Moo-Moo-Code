@@ -182,3 +182,7 @@
 	overflow-y: scroll;
 	max-height: 550px;
 }
+.lesson_output textarea {
+	border-radius: 5px;
+	margin-left: 20px;
+}
