@@ -1,15 +1,13 @@
 package com.dao;
 
+import com.data.Lesson.Binding;
 import com.data.Lesson.Lesson;
 import com.data.Lesson.LessonCategory;
 import com.data.Lesson.LessonId;
 import com.util.DbUtil;
 
 import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -123,6 +121,36 @@ public class LessonDao {
 	{
 		return CheckLessonAccessible(GetLessonFromId(lessonId),UserDao.GetUserLessonProgress(userId));
 	}
+	public static void UpdateLessonAccessible(int lessonId, int userId) {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		int lessonProg = -1;
+		int categoryProg = -1;
+		try {
+			preparedStatement = con.prepareStatement("SELECT progress_learn_lesson, progress_learn_category FROM users WHERE id = ?");
+			preparedStatement.setInt(1, userId);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()){
+				lessonProg = set.getInt("progress_learn_lesson");
+				categoryProg = set.getInt("progress_learn_lesson");
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		PreparedStatement preparedStatement1;
+		try {
+			if(lessonId >= lessonProg && lessonProg != -1) {
+				preparedStatement1 = con.prepareStatement("UPDATE users SET progress_learn_lesson = ? WHERE id = ?");
+				preparedStatement1.setInt(1, lessonProg+1);
+				preparedStatement1.setInt(2, userId);
+				preparedStatement1.execute();
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 	public static String GetLessonText(int lesson)
 	{
 		Connection con = DbUtil.getConnection();
@@ -146,19 +174,16 @@ public class LessonDao {
 		PreparedStatement preparedStatement;
 		PreparedStatement preparedStatement1;
 		try {
-			System.out.println(" try save code");
 			preparedStatement1 = con.prepareStatement("SELECT code_save FROM lessons WHERE id = ?");
 			preparedStatement1.setInt(1, id);
 			ResultSet set = preparedStatement1.executeQuery();
 			if(set.first()){
 				String save_code = set.getString("code_save");
 				if(save_code != null) {
-					System.out.println(save_code);
 					return save_code;
 				} else {
 					try
 					{
-						System.out.println(" try start code");
 						preparedStatement = con.prepareStatement("SELECT start_code FROM lessons WHERE id = ?");
 						preparedStatement.setInt(1, id);
 						ResultSet set1 = preparedStatement.executeQuery();
@@ -167,7 +192,6 @@ public class LessonDao {
 							String start_code = set1.getString("start_code");
 							if (start_code != null)
 							{
-								System.out.println(start_code);
 								return start_code;
 							}
 						}
@@ -252,7 +276,6 @@ public class LessonDao {
 			preparedStatement.setInt(2, id);
 			
 			preparedStatement.execute();
-			System.out.println("updated");
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -321,6 +344,22 @@ public class LessonDao {
 		}
 		return -1;
 	}
+	public static void UpdateBinding(String col, String value, int bind_id, int lesson_id) {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("UPDATE lesson_bindings SET " + col + " = ?, lesson_id = ? WHERE id = ?;");
+			preparedStatement.setString(1, value);
+			preparedStatement.setInt(2, lesson_id);
+			preparedStatement.setInt(3, bind_id);
+			
+			System.out.println(preparedStatement);
+			preparedStatement.execute();
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 	public static void AddCategory(String categoryName)
 	{
 		Connection con = DbUtil.getConnection();
@@ -356,10 +395,10 @@ public class LessonDao {
 		}
 		return -1;
 	}
-	public static HashMap<String, String> getLessonBindings(int lesson_id) {
+	public static ArrayList<Binding> getLessonBindings(int lesson_id) {
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
-		HashMap<String, String> bindings = new HashMap<>();
+		ArrayList<Binding> bindings = new ArrayList<>();
 		try {
 			preparedStatement = con.prepareStatement("SELECT * FROM lesson_bindings WHERE lesson_id = ?");
 			
@@ -367,7 +406,7 @@ public class LessonDao {
 			
 			ResultSet set = preparedStatement.executeQuery();
 			while(set.next()) {
-				bindings.put(set.getString("binding_title"), set.getString("binding_value"));
+				bindings.add(new Binding(set.getInt("id"), set.getInt("lesson_id"), set.getString("binding_title"), set.getString("binding_value")));
 			}
 			
 		}
@@ -375,5 +414,18 @@ public class LessonDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return bindings;
+	}
+	public static void DeleteBinding(int bind) {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("DELETE FROM lesson_bindings WHERE id = ?");
+			preparedStatement.setInt(1, bind);
+			
+			preparedStatement.execute();
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 }

@@ -2,6 +2,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.data.Lesson.LessonCategory" %>
 <%@ page import="java.lang.reflect.Array" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="com.data.Lesson.Binding" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -15,45 +18,88 @@
 	
 	if(id >= 0) {
 %>
-	<form action="<c:url value="/Admin/Lessons"/>" method="POST">
-		<input type="hidden" value="<%=id%>" name="id"/>
-		<div class="lesson_edit_header">
-			<input type="text" value="<%=request.getAttribute("lesson_title")%>" name="lesson_title_text"/>
-			<select name="category">
+	<div class="lesson_editor_wrapper">
+		<form action="<c:url value="/Admin/Lessons"/>" method="POST" class="lesson_update">
+			<input type="hidden" value="<%=id%>" name="id"/>
+			<div class="lesson_edit_header">
+				<input type="text" value="<%=request.getAttribute("lesson_title")%>" name="lesson_title_text"/>
+				<select name="category">
+					<%
+						int category_id = (int)request.getAttribute("category_id");
+						for(LessonCategory category : categories)
+						{
+							%>
+							<option <%=category.Id==category_id?"selected":""%> value="<%=category.Id%>"><%=category.Name%></option>
+							<%
+						}
+					%>
+				</select>
+			</div>
+			<div class="lesson_edit_content">
+				<textarea class="lesson_content_editor" name="lesson_content"><%=(String)request.getAttribute("lesson_content") %></textarea>
+				<div style="text-align:left;">
+					<textarea name="lesson_start_code" id="code"><%=(String)request.getAttribute("lesson_start_code") %></textarea>
+				</div>
+			</div>
+			<div class="lesson_output">
+				<textarea name="lesson_content_output" class="lesson_content_output" placeholder="Output"><%=(String)request.getAttribute("output")%></textarea>
+			</div>
+			<div class="buttons">
+				<input class="edit-btn edit-btn-red" type="submit" value="Delete" name="submit"/>
+				<input class="edit-btn" type="submit" value="Save" name="submit"/>
+			</div>
+		</form>
+		<div class="bindings">
+			<form action="<c:url value="/Admin/Lessons"/>" method="POST" class="add_binding">
+				<div class="binding_inputs">
+					<input type="hidden" value="<%=id%>" name="id"/>
+					<div class="col binding_input"><input placeholder="binding" type="text" name="binding"/></div>
+					<div class="col binding_input"><input placeholder="value" type="text" name="value"/></div>
+					<div class="col"><input class="edit-btn" type="submit" name="submit" value="Add Binding"/></div>
+				</div>
+			</form>
+			<form class="add_binding" action="<c:url value="/Admin/Lessons"/>" method="POST">
 				<%
-					int category_id = (int)request.getAttribute("category_id");
-					for(LessonCategory category : categories)
-					{
-						%>
-						<option <%=category.Id==category_id?"selected":""%> value="<%=category.Id%>"><%=category.Name%></option>
-						<%
+					ArrayList<Binding> bindings = (ArrayList<Binding>)request.getAttribute("bindings");
+					for(Binding bind : bindings) {
+				%>
+				<div class="binding_inputs">
+					<input type="hidden" value="<%=id%>" name="id"/>
+					<div class="col binding_input"><input class="autoupdate" data-type="binding_title" data-id="<%=bind.id%>" data-lesson="<%=bind.lesson_id%>" placeholder="binding" type="text" name="binding" value="<%=bind.title%>"/></div>
+					<div class="col binding_input"><input class="autoupdate" data-type="binding_value" data-id="<%=bind.id%>" data-lesson="<%=bind.lesson_id%>" placeholder="value" type="text" name="value" value="<%=bind.value%>"/></div>
+					<div class="col"><button class="edit-btn edit-btn-red delete" type="button" data-id="<%=bind.id%>" data-lesson="<%=bind.lesson_id%>" >Delete Binding</button></div>
+				</div>
+				<%
 					}
 				%>
-			</select>
+			</form>
+			<script>
+					$(".autoupdate").blur(function(){
+						var test = {
+							type: $(this).data("type"),
+							id: $(this).data("id"),
+							lesson: $(this).data("lesson"),
+							value: $(this).val(),
+							submit: "Update Binding"
+						}
+						$.post("<c:url value="/Admin/Lessons"/>", test);
+						location.reload();
+					});
+					$(".delete").click(function(){
+						var test = {
+							submit: "Delete Binding",
+							id: $(this).data("id"),
+							lesson: $(this).data("lesson")
+						}
+						$.post("<c:url value="/Admin/Lessons"/>", test);
+						location.reload();
+					});
+			</script>
 		</div>
-		<div class="lesson_edit_content">
-			<textarea class="lesson_content_editor" name="lesson_content"><%=(String)request.getAttribute("lesson_content") %></textarea>
-			<div style="text-align:left;">
-				<textarea name="lesson_start_code" id="code"><%=(String)request.getAttribute("lesson_start_code") %></textarea>
-			</div>
-			<div class="bindings">
-				<form action="<c:url value="/Admin/Lessons"/>" method="POST">
-					<div class="binding_inputs">
-						<input type="text" name="binding"/>
-						<input type="text" name="value"/>
-						<input type="submit" name="submit" value="Add Binding"/>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="lesson_output">
-			<textarea name="lesson_content_output" class="lesson_content_output" placeholder="Output"><%=(String)request.getAttribute("output")%></textarea>
-		</div>
-		<input type="submit" value="Delete" name="submit"/>
-		<input type="submit" value="Save" name="submit"/>
-	</form>
-<%
-	} else if(id == -1){ %>
+	</div>
+	<%
+		} else if(id == -1){ %>
+	<div class="lesson_editor_wrapper">
 		<form action="<c:url value="/Admin/Lessons"/>" method="POST">
 			<input type="hidden" value="<%=id%>" name="id"/>
 			<div class="lesson_edit_header">
@@ -76,20 +122,25 @@
 					<textarea name="lesson_start_code" id="code">print("Lesson Start Code");</textarea>
 				</div>
 			</div>
-			<div class="bindings">
-				<form action="<c:url value="/Admin/Lessons"/>" method="POST">
-					<div class="binding_inputs">
-						<input type="text" name="binding"/>
-						<input type="text" name="value"/>
-						<input type="submit" name="submit" value="Add Binding"/>
-					</div>
-				</form>
-			</div>
 			<div class="lesson_output">
 				<textarea name="lesson_content_output" class="lesson_content_output" placeholder="Output"><%=(String)request.getAttribute("output")%></textarea>
 			</div>
-			<input type="submit" value="Add" name="submit"/>
+			<div class="buttons">
+				<input class="edit-btn edit-btn-red" type="submit" value="Delete" name="submit"/>
+				<input class="edit-btn" type="submit" value="Save" name="submit"/>
+			</div>
 		</form>
+		<div class="bindings">
+			<form action="<c:url value="/Admin/Lessons"/>" method="POST" class="add_binding">
+				<div class="binding_inputs">
+					<input type="hidden" value="<%=id%>" name="id"/>
+					<div class="col binding_input"><input placeholder="binding" type="text" name="binding"/></div>
+					<div class="col binding_input"><input placeholder="value" type="text" name="value"/></div>
+					<div class="col"><input class="edit-btn" type="submit" name="submit" value="Add Binding"/></div>
+				</div>
+			</form>
+		</div>
+	</div>
 	<% }
 %>
 <script>

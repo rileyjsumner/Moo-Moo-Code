@@ -3,6 +3,7 @@ package com.web;
 import com.code.CodeOutput;
 import com.dao.LessonDao;
 import com.dao.UserDao;
+import com.data.Lesson.Binding;
 import com.data.Lesson.LessonId;
 import com.util.LoginUtil;
 import com.code.CodeEngine;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -73,55 +75,62 @@ public class Lesson extends HttpServlet {
 			int user_id = (int)session.getAttribute("user_id");
 			String code = request.getParameter("code");
 			int lesson_id = Integer.parseInt(request.getParameter("lesson"));
-			
+			String action = request.getParameter("submit");
 			if(LessonDao.CheckLessonAccessible(lesson_id, user_id))
 			{
-				CodeEngine engine = new CodeEngine();
-				CodeOutput output = engine.Exec(code);
-				LessonDao.UpdateLessonCode(lesson_id, code);
-				if(!output.Error)
+				if(action.equals("Advance")) {
+					LessonDao.UpdateLessonAccessible(lesson_id, user_id);
+				}
+				else if(action.equals("Run Code"))
 				{
-					HashMap<String, Object> bindings = engine.GetBindings();
-					Set<String> keys = bindings.keySet();
-					HashMap<String, String> lessonBindings = LessonDao.getLessonBindings(lesson_id);
-					Set<String> lesson_keys = lessonBindings.keySet();
-					
-					System.out.println(keys + "/n" + lesson_keys);
-					boolean valid = true;
-					
-					for(String lesson_key : lesson_keys)
+					CodeEngine engine = new CodeEngine();
+					CodeOutput output = engine.Exec(code);
+					LessonDao.UpdateLessonCode(lesson_id, code);
+					if (!output.Error)
 					{
-						if(keys.contains(lesson_key)){
-							Object binding = bindings.get(lesson_key);
-							String database_binding = binding.toString();
-							System.out.print(database_binding + "/n" + lessonBindings.get(lesson_key));
-							if(database_binding.equals(lessonBindings.get(lesson_key)))
-							{
+						HashMap<String, Object> bindings = engine.GetBindings();
+						Set<String> keys = bindings.keySet();
+						ArrayList<Binding> lessonBindings = LessonDao.getLessonBindings(lesson_id);
+						
+						boolean valid = true;
+						
+						for (Binding bind : lessonBindings)
+						{
 							
-							} else {
-								output.Text += "\nValues not assigned correctly";
+							if (keys.contains(bind.title))
+							{
+								Object binding = bindings.get(bind.title);
+								String database_binding = binding.toString();
+								if (database_binding.equals(bind.value))
+								{
+								
+								} else
+								{
+									output.Text += "\nValues not assigned correctly";
+									valid = false;
+									break;
+								}
+							} else
+							{
+								output.Text += "\nCheck code to include all elements";
 								valid = false;
 								break;
 							}
-						} else {
-							output.Text += "\nCheck code to include all elements";
-							valid = false;
-							break;
 						}
-					}
-					if(valid)
+						if (valid)
+						{
+							request.setAttribute("success", true);
+						}
+					} else
 					{
-						request.setAttribute("success", true);
-						System.out.println(request.getAttribute("success"));
+					
 					}
-				} else {
-				
+					request.setAttribute("output", output.Text);
+					request.setAttribute("lesson_text", LessonDao.GetLessonText(lesson_id));
+					request.setAttribute("lesson", lesson_id);
+					request.setAttribute("start_code", LessonDao.GetLessonCode(lesson_id));
+					request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 				}
-				request.setAttribute("output", output.Text);
-				request.setAttribute("lesson_text",LessonDao.GetLessonText(lesson_id));
-				request.setAttribute("lesson", lesson_id);
-				request.setAttribute("start_code", LessonDao.GetLessonCode(lesson_id));
-				request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 			}
 		}
 		else

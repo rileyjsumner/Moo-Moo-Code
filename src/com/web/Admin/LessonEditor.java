@@ -28,6 +28,7 @@ public class LessonEditor extends HttpServlet
 					request.setAttribute("lesson_title", LessonDao.GetLessonTitle(id));
 					request.setAttribute("category_id", LessonDao.GetCategoryId(id));
 					request.setAttribute("output", LessonDao.GetLessonOutput(id));
+					request.setAttribute("bindings", LessonDao.getLessonBindings(id));
 				}
 				request.getRequestDispatcher("/WEB-INF/admin/lesson_editor.jsp").forward(request, response);
 				return;
@@ -80,7 +81,23 @@ public class LessonEditor extends HttpServlet
 				int id = Integer.parseInt(request.getParameter("id"));
 				String title = request.getParameter("binding");
 				String value = request.getParameter("value");
-				LessonDao.AddBinding(title, value, id);
+				if(title != null && value != null) {
+					LessonDao.AddBinding(title, value, id);
+				}
+				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+id));
+			} else if(action.equals("Update Binding")) {
+				String col = request.getParameter("type");
+				String val = request.getParameter("value");
+				int lesson_id = Integer.parseInt(request.getParameter("lesson"));
+				int bind_id = Integer.parseInt(request.getParameter("id"));
+				if(val != null && col != null) {
+					LessonDao.UpdateBinding(col, val, bind_id, lesson_id);
+				}
+				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+lesson_id));
+			} else if(action.equals("Delete Binding")) {
+				int id = Integer.parseInt(request.getParameter("lesson"));
+				int bind_id = Integer.parseInt(request.getParameter("id"));
+				LessonDao.DeleteBinding(bind_id);
 				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+id));
 			}
 			
