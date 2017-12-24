@@ -167,11 +167,17 @@
 	box-shadow: inset 0 0 0 2px #ffffff;
 	background: #ffffff66 url(../icons/entities/pitchfork.png);
 }
-.entity-haybale
+.entity-haybale-vert
 {
-	background-image: url(../icons/entities/pitchfork.png);
-	border-radius: 25px;
-	box-shadow: inset 0 0 20px 4px gold;
+	border-radius: 10px;
+	box-shadow: inset 0 0 0 2px #313131bd;
+	background: #00000047 url(../icons/entities/haybale_vert.png);
+}
+.entity-haybale-horiz
+{
+	border-radius: 10px;
+	box-shadow: inset 0 0 0 2px #313131bd;
+	background: #00000047 url(../icons/entities/haybale_horiz.png);
 }
 #entity-reference
 {

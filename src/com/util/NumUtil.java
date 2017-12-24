@@ -1,17 +1,37 @@
 package com.util;
 
 import com.data.Game.GameTiles;
+import com.data.Map.Entity;
 import com.data.Map.MapTile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 
 public class NumUtil
 {
 	// ---------
 	// Collision
 	// ---------
-	
+	public static  Collision Collision_entity_MapEntities(double entityX, double entityY, double entityRadius, ArrayList<Entity> entities)
+	{
+		Collision newPos;
+		boolean hadCollision = false;
+		for(Entity entity : entities)
+		{
+			if(entity.Type==4)
+			{
+				newPos = Collision_entity_SquareMapEntity(entityX,entityY,entityRadius,entity.X,entity.Y);
+				if(newPos.IsCollision)
+				{
+					entityX = newPos.Pos.X;
+					entityY = newPos.Pos.Y;
+					hadCollision = true;
+				}
+			}
+		}
+		return new Collision(hadCollision,new Vec2(entityX,entityY));
+	}
 	public static  Collision Collision_entity_MapTiles(double entityX, double entityY, double entityRadius, GameTiles tiles)
 	{
 		Collision newPos;
@@ -45,19 +65,31 @@ public class NumUtil
 		double closestX = Clamp(entityX, tileX, tileX+1);
 		double closestY = Clamp(entityY, tileY, tileY+1);
 		
+		return Collide_Circle_Square(entityX,entityY,entityRadius,closestX,closestY);
+	}
+	public static Collision Collision_entity_SquareMapEntity(double entityX,double entityY,double entityRadius,double mapEntityX,double mapEntityY)
+	{
+		// Find the closest point to the circle within the rectangle
+		double closestX = Clamp(entityX, mapEntityX-.5, mapEntityX+.5);
+		double closestY = Clamp(entityY, mapEntityY-.5, mapEntityY+.5);
+		
+		return Collide_Circle_Square(entityX,entityY,entityRadius,closestX,closestY);
+	}
+	public static Collision Collide_Circle_Square(double circleX,double circleY,double radius, double closestX,double closestY)
+	{
 		// Calculate the distance between the circle's center and this closest point
-		double distanceX = entityX - closestX;
-		double distanceY = entityY - closestY;
+		double distanceX = circleX - closestX;
+		double distanceY = circleY - closestY;
 		
 		// If the distance is less than the circle's radius, an intersection occurs
 		double distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-		if( distanceSquared < (entityRadius * entityRadius))
+		if( distanceSquared < (radius * radius))
 		{
 			// Normalize the distance to the entity center (make = to 1)
 			Vec2 normalizedVec = new Vec2(distanceX,distanceY).Normalized();
 			
 			// Multiply by the entity radius, giving the needed offset
-			normalizedVec.multiply(entityRadius);
+			normalizedVec.multiply(radius);
 			
 			// Add the old position back
 			normalizedVec.add(new Vec2(closestX,closestY));
@@ -66,7 +98,6 @@ public class NumUtil
 		}
 		else{return new Collision();} // No collision occurs
 	}
-	
 	// ------
 	// Vector
 	// ------

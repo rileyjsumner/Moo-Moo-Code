@@ -110,6 +110,13 @@ public class CodeGame
 				frame.Data.PlayerY = NumUtil.GetClean(mapCollision.Pos.Y);
 			}
 			
+			Collision entityCollision = NumUtil.Collision_entity_MapEntities(frame.Data.PlayerX.floatValue(),frame.Data.PlayerY.floatValue(),.5,frame.Data.Entities);
+			if(entityCollision.IsCollision)
+			{
+				frame.Data.PlayerX = NumUtil.GetClean(entityCollision.Pos.X);
+				frame.Data.PlayerY = NumUtil.GetClean(entityCollision.Pos.Y);
+			}
+			
 			// Cap position to 5 decimals
 			frame.Data.PlayerX = NumUtil.TrimTrailing(frame.Data.PlayerX);
 			frame.Data.PlayerY = NumUtil.TrimTrailing(frame.Data.PlayerY);

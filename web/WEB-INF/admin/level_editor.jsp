@@ -395,7 +395,7 @@
 			}
 			else if(entity.Type==4)
 			{
-				out.print("entity-haybale");
+				out.print("entity-haybale-vert");
 			}
 			out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
 		}
