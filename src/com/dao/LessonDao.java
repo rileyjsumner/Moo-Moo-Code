@@ -121,7 +121,7 @@ public class LessonDao {
 	{
 		return CheckLessonAccessible(GetLessonFromId(lessonId),UserDao.GetUserLessonProgress(userId));
 	}
-	public static void UpdateLessonAccessible(int lessonId, int userId) {
+	public static boolean UpdateLessonAccessible(int lessonId, int userId) {
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		int lessonProg = -1;
@@ -134,22 +134,18 @@ public class LessonDao {
 				lessonProg = set.getInt("progress_learn_lesson");
 				categoryProg = set.getInt("progress_learn_lesson");
 			}
-		}
-		catch (SQLException ex) {
-			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		PreparedStatement preparedStatement1;
-		try {
 			if(lessonId >= lessonProg && lessonProg != -1) {
-				preparedStatement1 = con.prepareStatement("UPDATE users SET progress_learn_lesson = ? WHERE id = ?");
-				preparedStatement1.setInt(1, lessonProg+1);
-				preparedStatement1.setInt(2, userId);
-				preparedStatement1.execute();
+				preparedStatement = con.prepareStatement("UPDATE users SET progress_learn_lesson = ? WHERE id = ?");
+				preparedStatement.setInt(1, lessonProg+1);
+				preparedStatement.setInt(2, userId);
+				preparedStatement.execute();
+				return true;
 			}
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		return false;
 	}
 	public static String GetLessonText(int lesson)
 	{

@@ -5,6 +5,7 @@ import com.dao.LessonDao;
 import com.dao.UserDao;
 import com.data.Lesson.Binding;
 import com.data.Lesson.LessonId;
+import com.util.Html;
 import com.util.LoginUtil;
 import com.code.CodeEngine;
 
@@ -76,12 +77,10 @@ public class Lesson extends HttpServlet {
 			String code = request.getParameter("code");
 			int lesson_id = Integer.parseInt(request.getParameter("lesson"));
 			String action = request.getParameter("submit");
+			System.out.println(action);
 			if(LessonDao.CheckLessonAccessible(lesson_id, user_id))
 			{
-				if(action.equals("Advance")) {
-					LessonDao.UpdateLessonAccessible(lesson_id, user_id);
-				}
-				else if(action.equals("Run Code"))
+				if(action.equals("Run Code"))
 				{
 					CodeEngine engine = new CodeEngine();
 					CodeOutput output = engine.Exec(code);
@@ -120,6 +119,9 @@ public class Lesson extends HttpServlet {
 						if (valid)
 						{
 							request.setAttribute("success", true);
+							if(LessonDao.UpdateLessonAccessible(lesson_id, user_id)) {
+								response.sendRedirect(Html.encodeURL()+"/Lesson");
+							}
 						}
 					} else
 					{
