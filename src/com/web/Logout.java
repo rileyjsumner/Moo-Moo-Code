@@ -28,6 +28,6 @@ public class Logout extends HttpServlet {
 		session.setAttribute("username","");
 		session.setAttribute("password","");
 		session.setAttribute("signed_in",false);
-		response.sendRedirect(response.encodeURL("Home"));
+		response.sendRedirect(Html.encodeURL(request,"Home"));
 	}
 }

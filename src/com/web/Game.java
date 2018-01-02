@@ -1,9 +1,11 @@
 package com.web;
 
 import com.code.CodeGame;
-import com.dao.*;
+import com.dao.MapsDao;
+import com.dao.UserLevelsDao;
 import com.data.Game.GameOutput;
 import com.data.Map.MapData;
+import com.util.Html;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -62,7 +64,7 @@ public class Game extends HttpServlet {
 				}
 				catch (NumberFormatException ex){/* level isn't an integer */}
 			}
-			response.sendRedirect(response.encodeURL("/LevelSelect"));
+			response.sendRedirect(Html.encodeURL(request,"/LevelSelect"));
 		}
 		else
 		{
@@ -116,7 +118,7 @@ public class Game extends HttpServlet {
 				}
 				catch (NumberFormatException ex){/* level isn't an integer */}
 			}
-			response.sendRedirect(response.encodeURL("/Game"));
+			response.sendRedirect(Html.encodeURL(request,"/Game"));
 		}
 		else
 		{

@@ -1,6 +1,7 @@
 package com.web.Admin;
 
 import com.dao.LessonDao;
+import com.util.Html;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -58,12 +59,12 @@ public class LessonEditor extends HttpServlet
 				String content = request.getParameter("lesson_content");
 				String output = request.getParameter("lesson_content_output");
 				LessonDao.SetLessonContent(id, title, content, category, start_code, output);
-				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+id));
+				response.sendRedirect(Html.encodeURL(request,"/Admin/Lessons?id="+id));
 				return;
 			} else if(action.equals("Delete")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				LessonDao.DeleteLesson(id);
-				response.sendRedirect(response.encodeURL("/Admin/Lessons"));
+				response.sendRedirect(Html.encodeURL(request,"/Admin/Lessons"));
 				return;
 			} else if(action.equals("Add")) {
 				String title = request.getParameter("lesson_title_text");
@@ -72,11 +73,11 @@ public class LessonEditor extends HttpServlet
 				String content = request.getParameter("lesson_content_editor");
 				String output = request.getParameter("lesson_content_output");
 				int maxID = LessonDao.AddLesson(title, content, category, start_code, output);
-				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+maxID));
+				response.sendRedirect(Html.encodeURL(request,"/Admin/Lessons?id="+maxID));
 			} else if(action.equals("Add Category")) {
 				String categoryName = request.getParameter("category_name");
 				LessonDao.AddCategory(categoryName);
-				response.sendRedirect(response.encodeURL("/Admin/Lessons"));
+				response.sendRedirect(Html.encodeURL(request,"/Admin/Lessons"));
 			} else if(action.equals("Add Binding")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				String title = request.getParameter("binding");
@@ -84,7 +85,7 @@ public class LessonEditor extends HttpServlet
 				if(title != null && value != null) {
 					LessonDao.AddBinding(title, value, id);
 				}
-				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+id));
+				response.sendRedirect(Html.encodeURL(request,"/Admin/Lessons?id="+id));
 			} else if(action.equals("Update Binding")) {
 				String col = request.getParameter("type");
 				String val = request.getParameter("value");
@@ -93,12 +94,12 @@ public class LessonEditor extends HttpServlet
 				if(val != null && col != null) {
 					LessonDao.UpdateBinding(col, val, bind_id, lesson_id);
 				}
-				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+lesson_id));
+				response.sendRedirect(Html.encodeURL(request,"/Admin/Lessons?id="+lesson_id));
 			} else if(action.equals("Delete Binding")) {
 				int id = Integer.parseInt(request.getParameter("lesson"));
 				int bind_id = Integer.parseInt(request.getParameter("id"));
 				LessonDao.DeleteBinding(bind_id);
-				response.sendRedirect(response.encodeURL("/Admin/Lessons?id="+id));
+				response.sendRedirect(Html.encodeURL(request,"/Admin/Lessons?id="+id));
 			}
 			
 		}

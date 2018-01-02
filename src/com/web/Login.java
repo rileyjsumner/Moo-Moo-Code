@@ -65,10 +65,10 @@ public class Login extends HttpServlet {
 				String action = request.getParameter("action");
 				if(action != null && !action.equals("null"))
 				{
-					response.sendRedirect(response.encodeURL("/"+action));return;
+					response.sendRedirect(Html.encodeURL(request,"/"+action));return;
 				}
 			}
-			response.sendRedirect(response.encodeURL("/Home"));
+			response.sendRedirect(Html.encodeURL(request,"/Home"));
 		}
 	}
 }

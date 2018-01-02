@@ -1,11 +1,15 @@
 package com.web.Admin;
 
-import com.data.User;
 import com.dao.UserDao;
+import com.data.User;
+import com.util.Html;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -78,7 +82,7 @@ public class Users extends HttpServlet
 					int lessonProgress = Integer.parseInt(request.getParameter("lessonProgress"));
 					int admin = Integer.parseInt(request.getParameter("admin"));
 					AddUser(username, password, categoryProgress, lessonProgress, admin);
-					response.sendRedirect(response.encodeURL("/Admin/Users"));
+					response.sendRedirect(Html.encodeURL(request,"/Admin/Users"));
 				}
 			}
 		}
