@@ -1,6 +1,12 @@
 package com.util;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class Html {
+	public static String encodeURL(HttpServletRequest request, String string)
+	{
+		return request.getContextPath()+string;
+	}
 	public static String encode(String string)
 	{
 		string = string.replace("\\","\\\\");

@@ -26,7 +26,7 @@ public class RawCodeExec extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect(response.encodeURL("/Home"));
+		response.sendRedirect(Html.encodeURL(request,"/Home"));
 	}
 	
 	/**

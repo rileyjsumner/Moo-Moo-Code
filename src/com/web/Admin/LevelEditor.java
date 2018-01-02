@@ -1,7 +1,9 @@
 package com.web.Admin;
+
 import com.dao.MapsDao;
 import com.data.Map.MapData;
 import com.data.Map.MapDeco;
+import com.util.Html;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -44,7 +46,7 @@ public class LevelEditor extends HttpServlet {
 				}
 				catch(NumberFormatException ex){/*Invalid level*/}
 			}
-			response.sendRedirect(response.encodeURL("/Admin/Home"));
+			response.sendRedirect(Html.encodeURL(request,"/Admin/Home"));
 		}
 	}
 	
@@ -97,9 +99,9 @@ public class LevelEditor extends HttpServlet {
 						
 						MapsDao.SetMapSettings(mapId,dimX,dimY,time,desc,help,code);
 						
-						response.sendRedirect(response.encodeURL("/Admin/LevelEditor?level="+mapId));
+						response.sendRedirect(Html.encodeURL(request,"/Admin/LevelEditor?level="+mapId));
 					}
-					catch(NumberFormatException ex){response.sendRedirect(response.encodeURL("/Admin/Levels"));}
+					catch(NumberFormatException ex){response.sendRedirect(Html.encodeURL(request,"/Admin/Levels"));}
 				}
 				else if(action.equals("entity_new"))
 				{
@@ -109,9 +111,9 @@ public class LevelEditor extends HttpServlet {
 						
 						MapsDao.AddEntity(mapId,type);
 						
-						response.sendRedirect(response.encodeURL("/Admin/LevelEditor?level="+mapId+"&mode=1"));
+						response.sendRedirect(Html.encodeURL(request,"/Admin/LevelEditor?level="+mapId+"&mode=1"));
 					}
-					catch(NumberFormatException ex){response.sendRedirect(response.encodeURL("/Admin/Levels"));}
+					catch(NumberFormatException ex){response.sendRedirect(Html.encodeURL(request,"/Admin/Levels"));}
 				}
 				else if(action.equals("entity"))
 				{
@@ -124,9 +126,9 @@ public class LevelEditor extends HttpServlet {
 						int mapId = Integer.parseInt(request.getParameter("map"));
 						
 						MapsDao.UpdateEntity(id,type,name,spawn_x,spawn_y);
-						response.sendRedirect(response.encodeURL("/Admin/LevelEditor?level="+mapId+"&mode=1&selected_ent="+id));
+						response.sendRedirect(Html.encodeURL(request,"/Admin/LevelEditor?level="+mapId+"&mode=1&selected_ent="+id));
 					}
-					catch(NumberFormatException ex){response.sendRedirect(response.encodeURL("/Admin/Levels"));}
+					catch(NumberFormatException ex){response.sendRedirect(Html.encodeURL(request,"/Admin/Levels"));}
 				}
 				else if(action.equals("entity_delete"))
 				{
@@ -135,9 +137,9 @@ public class LevelEditor extends HttpServlet {
 						int mapId = Integer.parseInt(request.getParameter("map"));
 						
 						MapsDao.DeleteEntity(id);
-						response.sendRedirect(response.encodeURL("/Admin/LevelEditor?level="+mapId+"&mode=1"));
+						response.sendRedirect(Html.encodeURL(request,"/Admin/LevelEditor?level="+mapId+"&mode=1"));
 					}
-					catch(NumberFormatException ex){response.sendRedirect(response.encodeURL("/Admin/Levels"));}
+					catch(NumberFormatException ex){response.sendRedirect(Html.encodeURL(request,"/Admin/Levels"));}
 				}
 				else if(action.equals("deco_new"))
 				{
@@ -147,9 +149,9 @@ public class LevelEditor extends HttpServlet {
 						
 						//MapsDao.AddEntity(mapId,type);
 						
-						response.sendRedirect(response.encodeURL("/Admin/LevelEditor?level="+mapId+"&mode=1"));
+						response.sendRedirect(Html.encodeURL(request,"/Admin/LevelEditor?level="+mapId+"&mode=1"));
 					}
-					catch(NumberFormatException ex){response.sendRedirect(response.encodeURL("/Admin/Levels"));}
+					catch(NumberFormatException ex){response.sendRedirect(Html.encodeURL(request,"/Admin/Levels"));}
 				}
 				else if(action.equals("deco_repopulate"))
 				{
@@ -168,9 +170,9 @@ public class LevelEditor extends HttpServlet {
 							MapsDao.AddDeco(mapId,deco.Type,deco.X,deco.Y,i);
 						}
 						
-						response.sendRedirect(response.encodeURL("/Admin/LevelEditor?level="+mapId+"&mode=2"));
+						response.sendRedirect(Html.encodeURL(request,"/Admin/LevelEditor?level="+mapId+"&mode=2"));
 					}
-					catch(NumberFormatException ex){response.sendRedirect(response.encodeURL("/Admin/Levels"));}
+					catch(NumberFormatException ex){response.sendRedirect(Html.encodeURL(request,"/Admin/Levels"));}
 				}
 				else if(action.equals("deco"))
 				{
@@ -182,9 +184,9 @@ public class LevelEditor extends HttpServlet {
 						int mapId = Integer.parseInt(request.getParameter("map"));
 						
 						//MapsDao.UpdateEntity(id,type,spawn_x,spawn_y);
-						response.sendRedirect(response.encodeURL("/Admin/LevelEditor?level="+mapId+"&mode=2&selected_ent="+id));
+						response.sendRedirect(Html.encodeURL(request,"/Admin/LevelEditor?level="+mapId+"&mode=2&selected_ent="+id));
 					}
-					catch(NumberFormatException ex){response.sendRedirect(response.encodeURL("/Admin/Levels"));}
+					catch(NumberFormatException ex){response.sendRedirect(Html.encodeURL(request,"/Admin/Levels"));}
 				}
 			}
 		}

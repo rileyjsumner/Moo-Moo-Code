@@ -1,6 +1,7 @@
 package com.web;
 
 import com.dao.UserDao;
+import com.util.Html;
 import com.util.LoginUtil;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,7 @@ public class CreateAccount extends HttpServlet {
 		request.setAttribute("failed",false);
 		if(LoginUtil.TestLogin(request.getSession()))
 		{
-			response.sendRedirect(response.encodeURL("/Home"));
+			response.sendRedirect(Html.encodeURL(request,"/Home"));
 		}
 		else
 		{
@@ -58,7 +59,7 @@ public class CreateAccount extends HttpServlet {
 			session.setAttribute("username",username);
 			session.setAttribute("password",password);
 			session.setAttribute("signed_in",true);
-			response.sendRedirect(response.encodeURL("/Home"));
+			response.sendRedirect(Html.encodeURL(request,"/Home"));
 		}
 		else // Username taken
 		{

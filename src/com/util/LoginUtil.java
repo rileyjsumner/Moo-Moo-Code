@@ -49,7 +49,7 @@ public class LoginUtil {
 				return true;
 			}
 		}
-		if(redirect){response.sendRedirect(response.encodeURL("/Home"));}
+		if(redirect){response.sendRedirect(Html.encodeURL(request,"/Home"));}
 		return false;
 	}
 	public static boolean TestAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
