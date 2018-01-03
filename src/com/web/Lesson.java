@@ -1,13 +1,12 @@
 package com.web;
 
+import com.code.CodeEngine;
 import com.code.CodeOutput;
 import com.dao.LessonDao;
 import com.dao.UserDao;
 import com.data.Lesson.Binding;
-import com.data.Lesson.LessonId;
 import com.util.Html;
 import com.util.LoginUtil;
-import com.code.CodeEngine;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -120,7 +119,7 @@ public class Lesson extends HttpServlet {
 						{
 							request.setAttribute("success", true);
 							if(LessonDao.UpdateLessonAccessible(lesson_id, user_id)) {
-								response.sendRedirect(Html.encodeURL()+"/Lesson");
+								response.sendRedirect(Html.encodeURL(request,"/Lesson"));
 							}
 						}
 					} else
