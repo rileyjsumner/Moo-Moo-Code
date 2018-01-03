@@ -121,6 +121,57 @@ public class LessonDao {
 	{
 		return CheckLessonAccessible(GetLessonFromId(lessonId),UserDao.GetUserLessonProgress(userId));
 	}
+	public static int getCategoryCount(int categoryId) {
+		PreparedStatement preparedStatement;
+		Connection con = DbUtil.getConnection();
+		int count = -1;
+		try {
+			preparedStatement = con.prepareStatement("SELECT COUNT(category_id) AS total FROM lessons WHERE category_id = ?");
+			preparedStatement.setInt(1, categoryId);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()) {
+				count = set.getInt("total");
+			}
+			
+		}
+		catch(SQLException ex)
+		{
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return count;
+	}
+	public static int getNextLesson(int userId, int lessonId)
+	{
+		PreparedStatement preparedStatement;
+		Connection con = DbUtil.getConnection();
+		int lessonProg = -1, categoryProg = -1, lesson = -1;
+		try
+		{
+			preparedStatement = con.prepareStatement("SELECT progress_learn_lesson, progress_learn_category FROM users WHERE id = ?");
+			preparedStatement.setInt(1, userId);
+			ResultSet set = preparedStatement.executeQuery();
+			if (set.first())
+			{
+				lessonProg = set.getInt("progress_learn_lesson");
+				categoryProg = set.getInt("progress_learn_category");
+				preparedStatement = con.prepareStatement("SELECT id FROM lessons WHERE category_id = ? AND lesson_num = ?");
+				preparedStatement.setInt(1, categoryProg+1);
+				preparedStatement.setInt(2, lessonProg);
+				set = preparedStatement.executeQuery();
+				if(set.first()) {
+					lesson = set.getInt("id");
+					if(lesson > lessonId) {
+						return lessonId;
+					}
+				}
+			}
+		}
+		catch (SQLException ex)
+		{
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return lesson;
+	}
 	public static boolean UpdateLessonAccessible(int lessonId, int userId) {
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
@@ -132,12 +183,13 @@ public class LessonDao {
 			ResultSet set = preparedStatement.executeQuery();
 			if(set.first()){
 				lessonProg = set.getInt("progress_learn_lesson");
-				categoryProg = set.getInt("progress_learn_lesson");
+				categoryProg = set.getInt("progress_learn_category");
 			}
 			if(lessonId >= lessonProg && lessonProg != -1) {
-				preparedStatement = con.prepareStatement("UPDATE users SET progress_learn_lesson = ? WHERE id = ?");
-				preparedStatement.setInt(1, lessonProg+1);
-				preparedStatement.setInt(2, userId);
+				preparedStatement = con.prepareStatement("UPDATE users SET progress_learn_lesson = ?, progress_learn_category = ? WHERE id = ?");
+				preparedStatement.setInt(1, lessonProg < getCategoryCount(categoryProg+1)-1 ? lessonProg+1 : 0);
+				preparedStatement.setInt(2, lessonProg >= getCategoryCount(categoryProg+1)-1 ? categoryProg+1 : categoryProg);
+				preparedStatement.setInt(3, userId);
 				preparedStatement.execute();
 				return true;
 			}

@@ -77,7 +77,6 @@ public class Lesson extends HttpServlet {
 			String code = request.getParameter("code");
 			int lesson_id = Integer.parseInt(request.getParameter("lesson"));
 			String action = request.getParameter("submit");
-			System.out.println(action);
 			if(LessonDao.CheckLessonAccessible(lesson_id, user_id))
 			{
 				if(action.equals("Run Code"))
@@ -119,12 +118,8 @@ public class Lesson extends HttpServlet {
 						if (valid)
 						{
 							request.setAttribute("success", true);
-							if(LessonDao.UpdateLessonAccessible(lesson_id, user_id)) {
-								response.sendRedirect(Html.encodeURL()+"/Lesson");
-							}
 						}
-					} else
-					{
+					} else {
 					
 					}
 					request.setAttribute("output", output.Text);
@@ -132,6 +127,17 @@ public class Lesson extends HttpServlet {
 					request.setAttribute("lesson", lesson_id);
 					request.setAttribute("start_code", LessonDao.GetLessonCode(lesson_id));
 					request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
+				}
+				else if(action.equals("Advance")) {
+					response.sendRedirect(Html.encodeURL(request, "/Lesson?lesson="+LessonDao.getNextLesson(user_id, lesson_id)));
+					return;
+				}
+			} else {
+				if(action.equals("Advance")) {
+					if(LessonDao.UpdateLessonAccessible(lesson_id, user_id)) {
+						response.sendRedirect(Html.encodeURL(request, "/Lesson?lesson="+LessonDao.getNextLesson(user_id, lesson_id)));
+						return;
+					}
 				}
 			}
 		}
