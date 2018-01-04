@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: localhost    Database: moo_moo_code
+-- Host: 127.0.0.1    Database: moo_moo_code
 -- ------------------------------------------------------
--- Server version	5.7.10-log
+-- Server version	5.7.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -55,7 +55,7 @@ CREATE TABLE `entities` (
   `name` varchar(45) DEFAULT NULL,
   `icon` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,6 +120,31 @@ INSERT INTO `lesson_categories` VALUES (1,'Introduction',0),(2,'Functions',1),(3
 UNLOCK TABLES;
 
 --
+-- Table structure for table `lesson_progress`
+--
+
+DROP TABLE IF EXISTS `lesson_progress`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `lesson_progress` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `lesson_id` int(11) NOT NULL,
+  `save_code` varchar(1500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lesson_progress`
+--
+
+LOCK TABLES `lesson_progress` WRITE;
+/*!40000 ALTER TABLE `lesson_progress` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lesson_progress` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `lessons`
 --
 
@@ -134,7 +159,6 @@ CREATE TABLE `lessons` (
   `lesson_text` varchar(1500) NOT NULL,
   `start_code` varchar(1500) NOT NULL DEFAULT '',
   `lesson_output` varchar(1500) NOT NULL DEFAULT '',
-  `code_save` varchar(1500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `lesson_category_idx` (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
@@ -146,7 +170,7 @@ CREATE TABLE `lessons` (
 
 LOCK TABLES `lessons` WRITE;
 /*!40000 ALTER TABLE `lessons` DISABLE KEYS */;
-INSERT INTO `lessons` VALUES (1,'My Lesson',0,1,'Do the code boi!','sql.inject(\"MooMoo.hack(int hacketyhack)\");','',NULL),(2,'Output',1,1,'KEK','sql.inject(\"MooMoo.hack(int hacketyhack)\");','','var myvar = \"my_name\";'),(3,'Variables',2,1,'Richard Nixon','','',NULL),(4,'Numbers',3,1,'Putin','','',NULL),(5,'Introduction',0,2,'lol','','',NULL),(6,'Arguments',1,2,'Darude sandstorm is good song','','',NULL),(7,'Returning',2,2,'Richy & mortis','','',NULL),(8,'Using functions',3,2,'F5 F5 F5','','',NULL),(9,'Introduction',0,3,'wow gud lesson','','',NULL),(10,'Defining a class',1,3,'this is a lesson too','','',NULL),(11,'Functions in a class',2,3,'this is also a lesson','','',NULL),(12,'Using classes',3,3,'why did i type this','','',NULL),(13,'Common Classes',4,3,'what a waste of time','','',NULL);
+INSERT INTO `lessons` VALUES (1,'My Lesson',0,1,'Do the code boi!','sql.inject(\"MooMoo.hack(int hacketyhack)\");',''),(2,'Output',1,1,'KEK','sql.inject(\"MooMoo.hack(int hacketyhack)\");',''),(3,'Variables',2,1,'Richard Nixon','',''),(4,'Numbers',3,1,'Putin','',''),(5,'Introduction',0,2,'lol','',''),(6,'Arguments',1,2,'Darude sandstorm is good song','',''),(7,'Returning',2,2,'Richy & mortis','',''),(8,'Using functions',3,2,'F5 F5 F5','',''),(9,'Introduction',0,3,'wow gud lesson','',''),(10,'Defining a class',1,3,'this is a lesson too','',''),(11,'Functions in a class',2,3,'this is also a lesson','',''),(12,'Using classes',3,3,'why did i type this','',''),(13,'Common Classes',4,3,'what a waste of time','','');
 /*!40000 ALTER TABLE `lessons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,4 +397,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-19 16:29:26
+-- Dump completed on 2018-01-04 14:58:54

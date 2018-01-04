@@ -36,6 +36,7 @@ public class Lesson extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Test if user is logged in
 		HttpSession session = request.getSession();
+		int user_id = (int)session.getAttribute("user_id");
 		if(LoginUtil.TestLogin(session))
 		{
 			// Check if requested lesson is available for this user and valid
@@ -45,7 +46,7 @@ public class Lesson extends HttpServlet {
 			{
 				request.setAttribute("lesson", lesson);
 				request.setAttribute("lesson_text",LessonDao.GetLessonText(lesson));
-				request.setAttribute("start_code", LessonDao.GetLessonCode(lesson));
+				request.setAttribute("start_code", LessonDao.GetLessonCode(user_id, lesson));
 				request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 			}
 			else
@@ -82,7 +83,7 @@ public class Lesson extends HttpServlet {
 				{
 					CodeEngine engine = new CodeEngine();
 					CodeOutput output = engine.Exec(code);
-					LessonDao.UpdateLessonCode(lesson_id, code);
+					LessonDao.UpdateLessonCode(user_id, lesson_id, code);
 					if (!output.Error)
 					{
 						HashMap<String, Object> bindings = engine.GetBindings();
@@ -127,7 +128,7 @@ public class Lesson extends HttpServlet {
 					request.setAttribute("output", output.Text);
 					request.setAttribute("lesson_text", LessonDao.GetLessonText(lesson_id));
 					request.setAttribute("lesson", lesson_id);
-					request.setAttribute("start_code", LessonDao.GetLessonCode(lesson_id));
+					request.setAttribute("start_code", LessonDao.GetLessonCode(user_id, lesson_id));
 					request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 				}
 				else if(action.equals("Advance")) {

@@ -216,15 +216,15 @@ public class LessonDao {
 		}
 		return "No lesson here";
 	}
-	public static String GetLessonCode(int id)
+	public static String GetLessonCode(int user_id, int id)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
-		PreparedStatement preparedStatement1;
 		try {
-			preparedStatement1 = con.prepareStatement("SELECT code_save FROM lessons WHERE id = ?");
-			preparedStatement1.setInt(1, id);
-			ResultSet set = preparedStatement1.executeQuery();
+			preparedStatement = con.prepareStatement("SELECT code_save FROM lesson_progress WHERE lesson_id = ? AND user_id = ?");
+			preparedStatement.setInt(1, id);
+			preparedStatement.setInt(2, user_id);
+			ResultSet set = preparedStatement.executeQuery();
 			if(set.first()){
 				String save_code = set.getString("code_save");
 				if(save_code != null) {
@@ -314,14 +314,15 @@ public class LessonDao {
 			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	public static void UpdateLessonCode(int id, String code)
+	public static void UpdateLessonCode(int user_id, int id, String code)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = con.prepareStatement("UPDATE lessons SET code_save = ? WHERE id = ?;");
+			preparedStatement = con.prepareStatement("UPDATE lesson_progress SET code_save = ? WHERE user_id = ? AND lesson_id = ?;");
 			preparedStatement.setString(1, code);
-			preparedStatement.setInt(2, id);
+			preparedStatement.setInt(2, user_id);
+			preparedStatement.setInt(3, id);
 			
 			preparedStatement.execute();
 		}
