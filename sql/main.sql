@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: moo_moo_code
+-- Host: localhost    Database: moo_moo_code
 -- ------------------------------------------------------
--- Server version	5.7.20
+-- Server version	5.7.10-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -55,7 +55,7 @@ CREATE TABLE `entities` (
   `name` varchar(45) DEFAULT NULL,
   `icon` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `entities` (
 
 LOCK TABLES `entities` WRITE;
 /*!40000 ALTER TABLE `entities` DISABLE KEYS */;
-INSERT INTO `entities` VALUES (2,1,'Cow','cow'),(3,0,'Player Spawn','farmer_dan'),(6,2,'Pitch Fork - On Ground','pitchfork'),(7,3,'Pitch Fork - Flying','pitchfork'),(8,4,'Hay Bale','hay');
+INSERT INTO `entities` VALUES (2,1,'Cow','cow'),(3,0,'Player Spawn','farmer_dan'),(6,2,'Pitch Fork - On Ground','pitchfork'),(7,3,'Pitch Fork - Flying','pitchfork'),(8,4,'Hay Bale Vertical','hay'),(9,5,'Hay Bale Horizontal','hay');
 /*!40000 ALTER TABLE `entities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +90,7 @@ CREATE TABLE `lesson_bindings` (
 
 LOCK TABLES `lesson_bindings` WRITE;
 /*!40000 ALTER TABLE `lesson_bindings` DISABLE KEYS */;
-INSERT INTO `lesson_bindings` VALUES (1,2,'printed_var','This is a print statement');
+INSERT INTO `lesson_bindings` VALUES (1,2,'myvar','my_name');
 /*!40000 ALTER TABLE `lesson_bindings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +132,7 @@ CREATE TABLE `lesson_progress` (
   `lesson_id` int(11) NOT NULL,
   `save_code` varchar(1500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +141,6 @@ CREATE TABLE `lesson_progress` (
 
 LOCK TABLES `lesson_progress` WRITE;
 /*!40000 ALTER TABLE `lesson_progress` DISABLE KEYS */;
-INSERT INTO `lesson_progress` VALUES (4,1,2,'var printed_var = \"This is a print statement\";\r\nprint(printed_var);'),(5,1,3,'');
 /*!40000 ALTER TABLE `lesson_progress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +170,7 @@ CREATE TABLE `lessons` (
 
 LOCK TABLES `lessons` WRITE;
 /*!40000 ALTER TABLE `lessons` DISABLE KEYS */;
-INSERT INTO `lessons` VALUES (2,'Output',1,1,'When writing javascript there are often times you will need to display your code. Given to you is a variable <div class=\"code\">myvar</div>. You can print information using the <div class=\"code\">print()</div> function. For example, to print out a string you could say:\r\n\r\n<div class=\"code\">print(\"Moo Moo Code!);</div>\r\n\r\nTry printing out the variable given','var printed_var = \"This is a print statement\";','This is a print statement'),(3,'Variables',2,1,'Richard Nixon','',''),(4,'Numbers',3,1,'Putin','',''),(5,'Introduction',0,2,'lol','',''),(6,'Arguments',1,2,'Darude sandstorm is good song','',''),(7,'Returning',2,2,'Richy & mortis','',''),(8,'Using functions',3,2,'F5 F5 F5','',''),(9,'Introduction',0,3,'wow gud lesson','',''),(10,'Defining a class',1,3,'this is a lesson too','',''),(11,'Functions in a class',2,3,'this is also a lesson','',''),(12,'Using classes',3,3,'why did i type this','',''),(13,'Common Classes',4,3,'what a waste of time','','');
+INSERT INTO `lessons` VALUES (1,'My Lesson',0,1,'Do the code boi!','sql.inject(\"MooMoo.hack(int hacketyhack)\");',''),(2,'Output',1,1,'KEK','sql.inject(\"MooMoo.hack(int hacketyhack)\");',''),(3,'Variables',2,1,'Richard Nixon','',''),(4,'Numbers',3,1,'Putin','',''),(5,'Introduction',0,2,'lol','',''),(6,'Arguments',1,2,'Darude sandstorm is good song','',''),(7,'Returning',2,2,'Richy & mortis','',''),(8,'Using functions',3,2,'F5 F5 F5','',''),(9,'Introduction',0,3,'wow gud lesson','',''),(10,'Defining a class',1,3,'this is a lesson too','',''),(11,'Functions in a class',2,3,'this is also a lesson','',''),(12,'Using classes',3,3,'why did i type this','',''),(13,'Common Classes',4,3,'what a waste of time','','');
 /*!40000 ALTER TABLE `lessons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,11 +223,7 @@ CREATE TABLE `level_entities` (
   PRIMARY KEY (`id`),
   KEY `enemy_level_idx` (`level_id`),
   CONSTRAINT `entity_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-<<<<<<< HEAD
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
-=======
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
->>>>>>> d6286490d9cb8f5d26e72188ba55c3462228d30c
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,11 +232,7 @@ CREATE TABLE `level_entities` (
 
 LOCK TABLES `level_entities` WRITE;
 /*!40000 ALTER TABLE `level_entities` DISABLE KEYS */;
-<<<<<<< HEAD
-INSERT INTO `level_entities` VALUES (3,7,6,9,'Bessie',0),(5,2,1,4,'Player Spawn',0),(8,1,11,3,'Cow',1),(9,1,3,3,'Player Spawn',0),(10,2,9,4,'Cow',1),(11,3,4.5,4.5,'Cow',1),(16,3,1.5,1.5,'Player Spawn',0),(19,4,1,5.5,'Pitch Fork - On Ground',2),(20,4,0,0,'Player Spawn',0),(21,4,5,5,'Cow',1);
-=======
 INSERT INTO `level_entities` VALUES (3,7,6,9,'Bessie',0),(5,2,1,4,'Player Spawn',0),(8,1,11,3,'Cow',1),(9,1,3,3,'Player Spawn',0),(10,2,9,4,'Cow',1),(11,3,4.5,4.5,'Cow',1),(16,3,1.5,1.5,'Player Spawn',0),(19,4,1.5,5.5,'Pitch Fork - On Ground',2),(20,4,1.5,1.5,'Player Spawn',0),(21,4,7.5,5.5,'Cow',1),(22,4,5,0.5,'Hay Bale',5),(23,4,4,1.5,'Hay Bale Vertical',4),(24,4,4.5,2.5,'Hay Bale Vertical',4),(25,4,4,3.5,'Hay Bale Vertical',4),(26,4,4.5,4.5,'Hay Bale Vertical',4),(27,4,5,5.5,'Hay Bale Vertical',4),(28,4,4,6.5,'Hay Bale Horizontal',5),(29,4,5,6.5,'Hay Bale Horizontal',5),(31,4,3.5,7.5,'Hay Bale Vertical',4),(32,4,3.5,0.5,'Hay Bale Horizontal',5),(33,4,6,2,'Hay Bale Horizontal',5);
->>>>>>> d6286490d9cb8f5d26e72188ba55c3462228d30c
 /*!40000 ALTER TABLE `level_entities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,7 +384,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'root','admin',1,0,1),(2,'nixon','TESTRichard',0,0,1),(3,'admin','admin',0,0,0);
+INSERT INTO `users` VALUES (1,'root','admin',2,2,1),(2,'nixon','TESTRichard',2,0,1),(3,'admin','admin',0,0,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -406,8 +397,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD
--- Dump completed on 2018-01-04 16:45:34
-=======
 -- Dump completed on 2018-01-04 16:45:54
->>>>>>> d6286490d9cb8f5d26e72188ba55c3462228d30c
