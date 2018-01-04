@@ -15,7 +15,7 @@ public class LessonEditor extends HttpServlet
 {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
+		int user_id = (int)session.getAttribute("user_id");
 		if(LoginUtil.TestAdmin(request,response))
 		{
 			if(request.getParameterMap().containsKey("id"))
@@ -25,7 +25,7 @@ public class LessonEditor extends HttpServlet
 				if(id != -1)
 				{
 					request.setAttribute("lesson_content", LessonDao.GetLessonText(id));
-					request.setAttribute("lesson_start_code", LessonDao.GetLessonCode(id));
+					request.setAttribute("lesson_start_code", LessonDao.GetLessonCode(user_id, id));
 					request.setAttribute("lesson_title", LessonDao.GetLessonTitle(id));
 					request.setAttribute("category_id", LessonDao.GetCategoryId(id));
 					request.setAttribute("output", LessonDao.GetLessonOutput(id));
