@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: moo_moo_code
+-- Host: localhost    Database: moo_moo_code
 -- ------------------------------------------------------
--- Server version	5.7.20
+-- Server version	5.7.10-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -55,7 +55,7 @@ CREATE TABLE `entities` (
   `name` varchar(45) DEFAULT NULL,
   `icon` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `entities` (
 
 LOCK TABLES `entities` WRITE;
 /*!40000 ALTER TABLE `entities` DISABLE KEYS */;
-INSERT INTO `entities` VALUES (2,1,'Cow','cow'),(3,0,'Player Spawn','farmer_dan'),(6,2,'Pitch Fork - On Ground','pitchfork'),(7,3,'Pitch Fork - Flying','pitchfork'),(8,4,'Hay Bale','hay');
+INSERT INTO `entities` VALUES (2,1,'Cow','cow'),(3,0,'Player Spawn','farmer_dan'),(6,2,'Pitch Fork - On Ground','pitchfork'),(7,3,'Pitch Fork - Flying','pitchfork'),(8,4,'Hay Bale Vertical','hay'),(9,5,'Hay Bale Horizontal','hay');
 /*!40000 ALTER TABLE `entities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,7 +223,7 @@ CREATE TABLE `level_entities` (
   PRIMARY KEY (`id`),
   KEY `enemy_level_idx` (`level_id`),
   CONSTRAINT `entity_level` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +232,7 @@ CREATE TABLE `level_entities` (
 
 LOCK TABLES `level_entities` WRITE;
 /*!40000 ALTER TABLE `level_entities` DISABLE KEYS */;
-INSERT INTO `level_entities` VALUES (3,7,6,9,'Bessie',0),(5,2,1,4,'Player Spawn',0),(8,1,11,3,'Cow',1),(9,1,3,3,'Player Spawn',0),(10,2,9,4,'Cow',1),(11,3,4.5,4.5,'Cow',1),(16,3,1.5,1.5,'Player Spawn',0),(19,4,1,5.5,'Pitch Fork - On Ground',2),(20,4,0,0,'Player Spawn',0),(21,4,5,5,'Cow',1);
+INSERT INTO `level_entities` VALUES (3,7,6,9,'Bessie',0),(5,2,1,4,'Player Spawn',0),(8,1,11,3,'Cow',1),(9,1,3,3,'Player Spawn',0),(10,2,9,4,'Cow',1),(11,3,4.5,4.5,'Cow',1),(16,3,1.5,1.5,'Player Spawn',0),(19,4,1,5.5,'Pitch Fork - On Ground',2),(20,4,0,0,'Player Spawn',0),(21,4,5,5,'Cow',1),(22,4,4.5,0.5,'Hay Bale',5);
 /*!40000 ALTER TABLE `level_entities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,4 +397,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-04 14:58:54
+-- Dump completed on 2018-01-04 15:31:57

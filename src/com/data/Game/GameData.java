@@ -59,16 +59,16 @@ public class GameData
 		Map = new GameTiles(mapData.Map);
 		Entities = mapData.MapEntities;
 		
-		Iterator<Entity> enitites = Entities.iterator();
+		Iterator<Entity> entities = Entities.iterator();
 		ArrayList<Entity> PlayerSpawns = new ArrayList<>();
 		// Get the player-spawn entities, pick a random one to turn into the player, then remove the rest
-		while(enitites.hasNext())
+		while(entities.hasNext())
 		{
-			Entity entity = enitites.next();
+			Entity entity = entities.next();
 			if(entity.Type==0)//It's a player spawn
 			{
 				PlayerSpawns.add(entity);
-				enitites.remove();
+				entities.remove();
 			}
 		}
 		if(PlayerSpawns.size()>0)

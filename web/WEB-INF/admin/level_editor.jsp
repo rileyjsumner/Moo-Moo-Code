@@ -397,6 +397,10 @@
 			{
 				out.print("entity-haybale-vert");
 			}
+			else if(entity.Type==5)
+			{
+				out.print("entity-haybale-horiz");
+			}
 			out.print("',"+entity.X+","+entity.Y+","+entity.Id+");");
 		}
 		for(MapDeco deco : mapData.MapDecorations)

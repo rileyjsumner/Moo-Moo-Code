@@ -17,7 +17,7 @@ public class Entity
 	{
 		X=x;Y=y;Type=type;Id=id;Name=name;VelX=0;VelY=0;
 	}
-	public Entity(int type,int id,String name,String icon)
+	public Entity(int type, int id,String name,String icon)
 	{
 		Type=type;Id=id;Name=name;Icon=icon;VelX=0;VelY=0;
 	}
