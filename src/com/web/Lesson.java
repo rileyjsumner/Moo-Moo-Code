@@ -118,12 +118,7 @@ public class Lesson extends HttpServlet {
 						if (valid)
 						{
 							request.setAttribute("success", true);
-							if(LessonDao.UpdateLessonAccessible(lesson_id, user_id)) {
-								response.sendRedirect(Html.encodeURL(request,"/Lesson"));
-							}
 						}
-					} else {
-					
 					}
 					request.setAttribute("output", output.Text);
 					request.setAttribute("lesson_text", LessonDao.GetLessonText(lesson_id));

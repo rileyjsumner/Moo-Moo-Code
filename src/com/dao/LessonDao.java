@@ -221,33 +221,37 @@ public class LessonDao {
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = con.prepareStatement("SELECT code_save FROM lesson_progress WHERE lesson_id = ? AND user_id = ?");
+			preparedStatement = con.prepareStatement("SELECT save_code FROM lesson_progress WHERE lesson_id = ? AND user_id = ?");
 			preparedStatement.setInt(1, id);
 			preparedStatement.setInt(2, user_id);
 			ResultSet set = preparedStatement.executeQuery();
-			if(set.first()){
-				String save_code = set.getString("code_save");
-				if(save_code != null) {
+			if(set.first())
+			{
+				String save_code = set.getString("save_code");
+				if (save_code != null)
+				{
+					System.out.println("save_code");
 					return save_code;
-				} else {
-					try
+				}
+			} else {
+				try
+				{
+					preparedStatement = con.prepareStatement("SELECT start_code FROM lessons WHERE id = ?");
+					preparedStatement.setInt(1, id);
+					set = preparedStatement.executeQuery();
+					System.out.println("start_code");
+					if (set.first())
 					{
-						preparedStatement = con.prepareStatement("SELECT start_code FROM lessons WHERE id = ?");
-						preparedStatement.setInt(1, id);
-						ResultSet set1 = preparedStatement.executeQuery();
-						if (set1.first())
+						String start_code = set.getString("start_code");
+						if (start_code != null)
 						{
-							String start_code = set1.getString("start_code");
-							if (start_code != null)
-							{
-								return start_code;
-							}
+							return start_code;
 						}
 					}
-					catch (SQLException ex)
-					{
-						Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-					}
+				}
+				catch (SQLException ex)
+				{
+					Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 		}
@@ -319,10 +323,22 @@ public class LessonDao {
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = con.prepareStatement("UPDATE lesson_progress SET code_save = ? WHERE user_id = ? AND lesson_id = ?;");
-			preparedStatement.setString(1, code);
+			preparedStatement = con.prepareStatement("SELECT save_code FROM lesson_progress WHERE lesson_id = ? AND user_id = ?");
+			preparedStatement.setInt(1, id);
 			preparedStatement.setInt(2, user_id);
-			preparedStatement.setInt(3, id);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first())
+			{
+				preparedStatement = con.prepareStatement("UPDATE lesson_progress SET save_code = ? WHERE user_id = ? AND lesson_id = ?;");
+				preparedStatement.setString(1, code);
+				preparedStatement.setInt(2, user_id);
+				preparedStatement.setInt(3, id);
+			} else {
+				preparedStatement = con.prepareStatement("INSERT INTO lesson_progress (user_id, lesson_id, save_code) VALUES (?, ?, ?);");
+				preparedStatement.setInt(1, user_id);
+				preparedStatement.setInt(2, id);
+				preparedStatement.setString(3, code);
+			}
 			
 			preparedStatement.execute();
 		}
