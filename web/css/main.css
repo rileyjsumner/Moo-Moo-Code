@@ -10,6 +10,15 @@ body, html {
 pre{
 	font-family: "Inconsolata";
 }
+code
+{
+	font-family: "Inconsolata";
+	text-align: left;
+	white-space: pre;
+	display: inline-block;
+	background-color: #49483E;
+	padding: 15px;
+}
 #code-output pre.error
 {
 	color: #ff4841;
