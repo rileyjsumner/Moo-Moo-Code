@@ -46,7 +46,7 @@ public class Lesson extends HttpServlet {
 			{
 				request.setAttribute("lesson", lesson);
 				request.setAttribute("lesson_text",LessonDao.GetLessonText(lesson));
-				request.setAttribute("start_code", LessonDao.GetLessonCode(user_id, lesson));
+				request.setAttribute("start_code", LessonDao.GetLessonCode(user_id, lesson, false));
 				request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 			}
 			else
@@ -123,11 +123,15 @@ public class Lesson extends HttpServlet {
 					request.setAttribute("output", output.Text);
 					request.setAttribute("lesson_text", LessonDao.GetLessonText(lesson_id));
 					request.setAttribute("lesson", lesson_id);
-					request.setAttribute("start_code", LessonDao.GetLessonCode(user_id, lesson_id));
+					request.setAttribute("start_code", LessonDao.GetLessonCode(user_id, lesson_id, false));
 					request.getRequestDispatcher("/WEB-INF/lesson.jsp").forward(request, response);
 				}
 				else if(action.equals("Advance")) {
 					response.sendRedirect(Html.encodeURL(request, "/Lesson?lesson="+LessonDao.getNextLesson(user_id, lesson_id)));
+					return;
+				}
+				else if(action.equals("Review Lesson")) {
+					response.sendRedirect(Html.encodeURL(request, "/Lesson?lesson="+lesson_id));
 					return;
 				}
 			} else {

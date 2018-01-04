@@ -216,7 +216,7 @@ public class LessonDao {
 		}
 		return "No lesson here";
 	}
-	public static String GetLessonCode(int user_id, int id)
+	public static String GetLessonCode(int user_id, int id, boolean edit)
 	{
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
@@ -225,12 +225,11 @@ public class LessonDao {
 			preparedStatement.setInt(1, id);
 			preparedStatement.setInt(2, user_id);
 			ResultSet set = preparedStatement.executeQuery();
-			if(set.first())
+			if(set.first() && !edit)
 			{
 				String save_code = set.getString("save_code");
 				if (save_code != null)
 				{
-					System.out.println("save_code");
 					return save_code;
 				}
 			} else {
@@ -367,7 +366,7 @@ public class LessonDao {
 		try {
 			preparedStatement = con.prepareStatement(
 					"INSERT INTO lessons (lesson_name, lesson_text, category_id, start_code, lesson_output) " +
-						 "VALUES (?, ?, ?, ?, ?)");
+							"VALUES (?, ?, ?, ?, ?)");
 			
 			preparedStatement.setString(1, title);
 			preparedStatement.setString(2, lesson_content);

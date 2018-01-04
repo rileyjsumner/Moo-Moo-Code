@@ -25,7 +25,7 @@ public class LessonEditor extends HttpServlet
 				if(id != -1)
 				{
 					request.setAttribute("lesson_content", LessonDao.GetLessonText(id));
-					request.setAttribute("lesson_start_code", LessonDao.GetLessonCode(user_id, id));
+					request.setAttribute("lesson_start_code", LessonDao.GetLessonCode(user_id, id, true));
 					request.setAttribute("lesson_title", LessonDao.GetLessonTitle(id));
 					request.setAttribute("category_id", LessonDao.GetCategoryId(id));
 					request.setAttribute("output", LessonDao.GetLessonOutput(id));
