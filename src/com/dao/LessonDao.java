@@ -238,7 +238,6 @@ public class LessonDao {
 					preparedStatement = con.prepareStatement("SELECT start_code FROM lessons WHERE id = ?");
 					preparedStatement.setInt(1, id);
 					set = preparedStatement.executeQuery();
-					System.out.println("start_code");
 					if (set.first())
 					{
 						String start_code = set.getString("start_code");

@@ -102,8 +102,12 @@ public class Lesson extends HttpServlet {
 								if (database_binding.equals(bind.value))
 								{
 								
-								} else
+								} else if(bind.value.equals("?")) {
+									System.out.println("?");
+								}
+								else
 								{
+									System.out.println(database_binding);
 									output.Text += "\nValues not assigned correctly";
 									valid = false;
 									break;
