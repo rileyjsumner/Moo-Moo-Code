@@ -140,7 +140,7 @@ public class Lesson extends HttpServlet {
 					return;
 				}
 			} else {
-				if(action.equals("Advance")) {
+				if(action.equals("Advance") || action.equals("Review Lesson")) {
 					if(LessonDao.UpdateLessonAccessible(lesson_id, user_id)) {
 						response.sendRedirect(Html.encodeURL(request, "/Lesson?lesson="+LessonDao.getNextLesson(user_id, lesson_id)));
 						return;

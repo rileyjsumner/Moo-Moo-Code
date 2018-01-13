@@ -81,7 +81,7 @@ CREATE TABLE `lesson_bindings` (
   `binding_title` varchar(45) NOT NULL,
   `binding_value` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `lesson_bindings` (
 
 LOCK TABLES `lesson_bindings` WRITE;
 /*!40000 ALTER TABLE `lesson_bindings` DISABLE KEYS */;
-INSERT INTO `lesson_bindings` VALUES (1,2,'printed_var','This is a print statement'),(2,3,'int_var','?'),(3,3,'string_var','?'),(4,4,'first_num','3'),(5,4,'second_num','7'),(6,5,'subtract','num_one+num_two'),(7,5,'difference','subtract(6,2)');
+INSERT INTO `lesson_bindings` VALUES (1,2,'printed_var','This is a print statement'),(2,3,'int_var','?'),(3,3,'string_var','?'),(4,4,'first_num','3'),(5,4,'second_num','7'),(6,5,'add_num','?'),(8,6,'my_greeting','?');
 /*!40000 ALTER TABLE `lesson_bindings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +132,7 @@ CREATE TABLE `lesson_progress` (
   `lesson_id` int(11) NOT NULL,
   `save_code` varchar(1500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +141,7 @@ CREATE TABLE `lesson_progress` (
 
 LOCK TABLES `lesson_progress` WRITE;
 /*!40000 ALTER TABLE `lesson_progress` DISABLE KEYS */;
-INSERT INTO `lesson_progress` VALUES (4,1,2,'var printed_var = \"This is a print statement\";\r\nprint(printed_var);'),(5,1,3,'var int_var = 3;\r\nvar string_var = \"kek\";\r\nprint(int_var + \"\\n\" + string_var);'),(6,1,4,'// int variable\r\nvar first_num = 3;\r\nprint(first_num + 4);\r\nvar second_num = 7;\r\nprint(first_num + second_num);'),(7,1,5,'// Function\r\nfunction subtract(num_one, num_two) {\r\n  return(num_one-num_two);\r\n}\r\nvar difference = subtract(6, 2);\r\nprint(difference);');
+INSERT INTO `lesson_progress` VALUES (4,1,2,'var printed_var = \"This is a print statement\";\r\nprint(printed_var);'),(5,1,3,'var int_var = 3;\r\nvar string_var = \"kek\";\r\nprint(int_var + \"\\n\" + string_var);'),(6,1,4,'// int variable\r\nvar first_num = 3;\r\nprint(first_num + 4);\r\nvar second_num = 7;\r\nprint(first_num + second_num);'),(7,1,5,'// Function\r\nfunction add(num_one, num_two) {\r\n  return(num_one+num_two);\r\n}\r\nvar add_num = add(3, 8);\r\nprint(add_num);'),(8,1,6,'function greeting(name, age, money) {\r\n  return (\"Hello! My name is \" + name + \" and I am \" + age + \" years old. I have \" + money + \" dollars!\");\r\n}\r\nvar my_greeting = greeting(\"Riley\", 17, 23.22);\r\nprint(my_greeting);');
 /*!40000 ALTER TABLE `lesson_progress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +171,7 @@ CREATE TABLE `lessons` (
 
 LOCK TABLES `lessons` WRITE;
 /*!40000 ALTER TABLE `lessons` DISABLE KEYS */;
-INSERT INTO `lessons` VALUES (2,'Output',1,1,'When writing javascript there are often times you will need to display your code. Given to you is a variable myvar. You can print information using the <code>print()</code> function. For example, to print out a string you could say:\r\n<br/>\r\n<code>print(\"Moo Moo Code!);</code>\r\n<br />\r\nTry printing out the variable given to you!','var printed_var = \"This is a print statement\";','This is a print statement'),(3,'Variables',2,1,'Variables are a way to store information. There are 3 types of variables:\r\n<ul>\r\n<li>String (text)</li>\r\n<li>Integer (whole numbers)</li>\r\n<li>Double (decimals)</li>\r\n</ul>\r\nWe can declare and initialize variables by saying: <code>var my_var = \"this is a string variable\";</code>\r\n<br/>\r\nTo declare integer and double variables is the same way, just without the quotes: <code>var my_num = 1.2;</code>\r\n<br/>\r\nTry declaring 2 variables, an integer type named <code>int_var</code> and a String called <code>string_var</code>. Set them equal to whatever you would like!','// Code Starts Here\r\n','?\r\n?'),(4,'Numbers',3,1,'We can use numbers in javascript to compute data. \r\n<br/>\r\nCalculations can be both stored in a new variable or done inside a <code>print()</code> statement. \r\n<br/>\r\nSuppose we had <code>var first_num = 3;</code>\r\nWe can add 4 to that number, and <code>print()</code> it out. Try running the code and see!\r\n<br/>\r\nTry declaring a new variable <code>second_num</code> and set it equal to 7. Then <code>print()</code> the sum of <code>first_num + second_num</code>!','// int variable\r\nvar first_num = 3;\r\nprint(first_num + 4);','10'),(5,'Introduction',0,2,'Functions allow you to run a block of code multiple times. \r\nWe could have a function called <code>add()</code> which <code>return</code>\'s the sum of two numbers. \r\n<br/>\r\nThe two variables inside the parenthesis are called parameters. The number of parameters to give a function could be 0, or quite a few! It all depends on what the function is doing. Parameters are separated by commas.\r\n<br/>\r\nA function may also contain a <code>return</code> statement. The return statement specifies what value the function should have when it is called. In the case of this function, we return the sum of <code>num_one</code> and <code>num_two</code>.\r\n<br/>\r\nTry creating a function, <code>subtract</code> which returns the difference between two numbers. Then set a var, <code>difference</code>, equal to the function call and give it numbers 6 and 2.\r\n<br/>\r\nThe function should take 2 parameters, <code>num_one</code> and <code>num_two</code>','// Function\r\nfunction add(num_one, num_two) {\r\n  return(num_one+num_two)\r\n}\r\nprint(add(3, 6));','4'),(6,'Arguments',1,2,'Darude sandstorm is good song','',''),(7,'Returning',2,2,'Richy & mortis','',''),(8,'Using functions',3,2,'F5 F5 F5','',''),(9,'Introduction',0,3,'wow gud lesson','',''),(10,'Defining a class',1,3,'this is a lesson too','',''),(11,'Functions in a class',2,3,'this is also a lesson','',''),(12,'Using classes',3,3,'why did i type this','',''),(13,'Common Classes',4,3,'what a waste of time','','');
+INSERT INTO `lessons` VALUES (2,'Output',1,1,'When writing javascript there are often times you will need to display your code. Given to you is a variable myvar. You can print information using the <code>print()</code> function. For example, to print out a string you could say:\r\n<br/>\r\n<code>print(\"Moo Moo Code!);</code>\r\n<br />\r\nTry printing out the variable given to you!','var printed_var = \"This is a print statement\";','This is a print statement'),(3,'Variables',2,1,'Variables are a way to store information. There are 3 types of variables:\r\n<ul>\r\n<li>String (text)</li>\r\n<li>Integer (whole numbers)</li>\r\n<li>Double (decimals)</li>\r\n</ul>\r\nWe can declare and initialize variables by saying: <code>var my_var = \"this is a string variable\";</code>\r\n<br/>\r\nTo declare integer and double variables is the same way, just without the quotes: <code>var my_num = 1.2;</code>\r\n<br/>\r\nTry declaring 2 variables, an integer type named <code>int_var</code> and a String called <code>string_var</code>. Set them equal to whatever you would like!','// Code Starts Here\r\n','?\r\n?'),(4,'Numbers',3,1,'We can use numbers in javascript to compute data. \r\n<br/>\r\nCalculations can be both stored in a new variable or done inside a <code>print()</code> statement. \r\n<br/>\r\nSuppose we had <code>var first_num = 3;</code>\r\nWe can add 4 to that number, and <code>print()</code> it out. Try running the code and see!\r\n<br/>\r\nTry declaring a new variable <code>second_num</code> and set it equal to 7. Then <code>print()</code> the sum of <code>first_num + second_num</code>!','// int variable\r\nvar first_num = 3;\r\nprint(first_num + 4);','10'),(5,'Introduction',0,2,'Functions allow you to run a block of code multiple times. \r\nWe could have a function called <code>add()</code> which <code>return</code>\'s the sum of two numbers. \r\n<br/>\r\nThe two variables inside the parenthesis are called parameters. The number of parameters to give a function could be 0, or quite a few! It all depends on what the function is doing. Parameters are separated by commas.\r\n<br/>\r\nA function may also contain a <code>return</code> statement. The return statement specifies what value the function should have when it is called. In the case of this function, we return the sum of <code>num_one</code> and <code>num_two</code>.\r\n<br/>\r\nTry calling the function <code>add()</code> and specify the two numbers to add. Store the result in a variable called <code>add_num</code>\r\n<br/>\r\nThe function should take 2 parameters, <code>num_one</code> and <code>num_two</code>','// Function\r\nfunction add(num_one, num_two) {\r\n  return(num_one+num_two)\r\n}','?'),(6,'Arguments',1,2,'Arguments or parameters can be used to give a function information. In the previous example, we used a function <code>add()</code> that took two integer parameters and returned the sum of the two.\r\n<br />\r\nThe function to the right, <code>greeting()</code> takes three parameters: <code>String name</code>,<code>int age</code>, and <code>double money</code>. The function returns a greeting statement.\r\n<br />\r\nTry calling the function, and give it some values!\r\nStore the result in a variable <code>my_greeting</code>','function greeting(name, age, money) {\r\n  return (\"Hello! My name is \" + name + \" and I am \" + age + \" years old. I have \" + money + \" dollars!\");\r\n}\r\n',''),(7,'Returning',2,2,'Richy & mortis','',''),(8,'Using functions',3,2,'F5 F5 F5','',''),(9,'Introduction',0,3,'wow gud lesson','',''),(10,'Defining a class',1,3,'this is a lesson too','',''),(11,'Functions in a class',2,3,'this is also a lesson','',''),(12,'Using classes',3,3,'why did i type this','',''),(13,'Common Classes',4,3,'what a waste of time','','');
 /*!40000 ALTER TABLE `lessons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,7 +385,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'root','admin',1,0,1),(2,'nixon','TESTRichard',2,0,1),(3,'admin','admin',0,0,0);
+INSERT INTO `users` VALUES (1,'root','admin',1,2,1),(2,'nixon','TESTRichard',2,0,1),(3,'admin','admin',0,0,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -398,4 +398,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-09 16:00:53
+-- Dump completed on 2018-01-13  8:52:55
