@@ -19,12 +19,15 @@ public class GameData
 	
 	public boolean PlayerHasPitchFork;
 	
+	public int lastSwing;
+	
 	public BigDecimal PlayerVelX;
 	public BigDecimal PlayerVelY;
 	public GameData(GameData data)
 	{
+		lastSwing=1000000000;
 		Map = data.Map;
-		Entities = data.Entities;
+		Entities = new ArrayList<>(data.Entities);
 		
 		PlayerX = data.PlayerX;
 		PlayerY = data.PlayerY;
@@ -34,8 +37,9 @@ public class GameData
 	}
 	public GameData(GameTiles map,ArrayList<Entity> entities,BigDecimal playerX,BigDecimal playerY)
 	{
+		lastSwing=1000000000;
 		Map = map;
-		Entities = entities;
+		Entities = new ArrayList<>(entities);
 		
 		PlayerX = playerX;
 		PlayerY = playerY;
@@ -45,8 +49,9 @@ public class GameData
 	}
 	public GameData(GameTiles map, ArrayList<Entity> entities, BigDecimal playerX, BigDecimal playerY, BigDecimal playerVelX, BigDecimal playerVelY)
 	{
+		lastSwing=1000000000;
 		Map = map;
-		Entities = entities;
+		Entities = new ArrayList<>(entities);
 		
 		PlayerX = playerX;
 		PlayerY = playerY;
@@ -56,8 +61,9 @@ public class GameData
 	}
 	public GameData(MapData mapData)
 	{
+		lastSwing=10000000;
 		Map = new GameTiles(mapData.Map);
-		Entities = mapData.MapEntities;
+		Entities = new ArrayList<>(mapData.MapEntities);
 		
 		Iterator<Entity> entities = Entities.iterator();
 		ArrayList<Entity> PlayerSpawns = new ArrayList<>();

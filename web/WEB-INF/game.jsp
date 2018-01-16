@@ -1,3 +1,5 @@
+<%@ page import="com.data.Game.EntityDelete" %>
+<%@ page import="com.data.Game.EntityMove" %>
 <%@ page import="com.data.Game.GameFrame" %>
 <%@ page import="com.data.Game.GameOutput" %>
 <%@ page import="com.data.Map.Entity" %>
@@ -5,8 +7,8 @@
 <%@ page import="com.data.Map.MapDeco" %>
 <%@ page import="com.data.Map.Tile" %>
 <%@ page import="com.util.Html" %>
-<%@ page import="java.util.Objects" %>
 <%@ page import="com.util.NumUtil" %>
+<%@ page import="java.util.Objects" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -163,7 +165,7 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 	}
 	function removeEntity(id)
 	{
-		$("#entity-reference").remove("#entity-ref-"+id);
+		$("#entity-ref-"+id).remove();
 	}
 	function animateEntity(id,animation)
 	{
@@ -228,6 +230,7 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 	}
 	$( window ).on( "load" ,function() {
 		<%
+			if(exec){mapData.MapEntities = output.GameStart.Entities;}
 			for(Entity entity : mapData.MapEntities)
 			{
 				out.print("addEntity('");
@@ -264,32 +267,33 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 	{
 		removePlayerSpawns();
 		<%
+		try{
 			if(exec)
 			{
 				// add the player
-				out.print("addEntity('entity-player',"+output.spawnX+","+output.spawnY+",0);");
+				out.print("addEntity('entity-player',"+output.GameStart.PlayerX+","+output.GameStart.PlayerX+",0);");
 				// Add the animations
-				for(GameFrame frame: output.GameChanges)
+				for(GameFrame frame: output.GameFrames)
 				{
-					int time =((100*frame.Data.Map.Time) - (frame.TimeLeft*100));
-					out.print("\nsetTimeout(function(){setTime("+frame.TimeLeft+");moveEntity(0,"+frame.Data.PlayerX+","+frame.Data.PlayerY+");");
+					int time =((100*output.GameStart.Map.Time) - (frame.TimeLeft*100));
+					out.print("\nsetTimeout(function(){setTime("+frame.TimeLeft+");moveEntity(0,"+frame.Changes.PlayerX+","+frame.Changes.PlayerY+");");
 					
 					out.print("animateEntity(0,\"characters/dan/");
 					
-					if(frame.Data.PlayerHasPitchFork)
+					if(frame.Changes.PlayerHasPitchFork)
 					{
 						out.print("pitchfork/");
 					}
 					
-					if(NumUtil.greaterThan(frame.Data.PlayerVelX,0))
+					if(NumUtil.greaterThan(frame.Changes.PlayerVelX,0))
 					{
 						out.print("walk_right");
 					}
-					else if(NumUtil.lessThan(frame.Data.PlayerVelX,0))
+					else if(NumUtil.lessThan(frame.Changes.PlayerVelX,0))
 					{
 						out.print("walk_left");
 					}
-					else if(!NumUtil.equalTo(frame.Data.PlayerVelY,0))
+					else if(!NumUtil.equalTo(frame.Changes.PlayerVelY,0))
 					{
 						out.print("walk_right");
 					}
@@ -298,16 +302,25 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 					}
 					out.print(".gif\");");
 					
-					if(!Objects.equals(frame.ConsoleOut, "")){out.print("addConsole(\""+ Html.encode(frame.ConsoleOut)+"\","+frame.ConsoleError+")");}
+					if(!Objects.equals(frame.ConsoleOut, "")){out.print("addConsole(\""+ Html.encode(frame.ConsoleOut)+"\","+frame.ConsoleError+");");}
 					
-					for(Entity entity : frame.Data.Entities)
+					for(EntityMove entityMove : frame.Changes.EntityMoves)
 					{
-						out.print("\nmoveEntity("+entity.Id+","+entity.X+","+entity.Y+");");
+						out.print("\nmoveEntity("+entityMove.Id+","+entityMove.X+","+entityMove.Y+");");
+					}
+					for(EntityDelete entityDelete : frame.Changes.EntityDeletes)
+					{
+						out.print("\nremoveEntity(\""+entityDelete.Id+"\");");
 					}
 					if(frame.GameState==1){out.print("win();");}
 					else if(frame.GameState == -1){out.print("lose();");}
 					out.print("},"+time+");");
 				}
+			}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e.getMessage());
 			}
 		%>
 	}

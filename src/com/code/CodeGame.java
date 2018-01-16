@@ -1,6 +1,7 @@
 package com.code;
 
 import com.dao.MapsDao;
+import com.data.Game.EntityDelete;
 import com.data.Game.GameData;
 import com.data.Game.GameFrame;
 import com.data.Game.GameOutput;
@@ -13,6 +14,8 @@ import js.Player;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.Iterator;
+
 /*= 1000 ms
   = 1 Second
   = 10 Ticks
@@ -37,7 +40,14 @@ public class CodeGame
 		GameOutput output = new GameOutput();
 		output.spawnX=map.PlayerX.floatValue();
 		output.spawnY=map.PlayerY.floatValue();
-		GameData lastData = map;
+		output.GameStart = new GameData(map);
+		for(Entity entity : output.GameStart.Entities)
+		{
+			System.out.println(entity.Name);
+		}
+		
+		GameData currentData = new GameData(map);
+		
 		GameFrame frame;
 		CodeEngine engine;
 		
@@ -45,9 +55,9 @@ public class CodeGame
 		{
 			engine = new CodeEngine();
 			frame = new GameFrame(timeLeft);
-			frame.Data = lastData;
+			
 			// Load data into the engine:
-			Player player = new Player(frame.Data.PlayerX,frame.Data.PlayerY);
+			Player player = new Player(currentData.PlayerX,currentData.PlayerY);
 			engine.SetBinding("player",player);
 			engine.SetBinding("time",NumUtil.GetClean(timeLeft*.1));
 			// Set default values:
@@ -61,7 +71,13 @@ public class CodeGame
 				frame.ConsoleError=true;
 				frame.GameState = -1;
 				frame.ConsoleOut = engineOutput.Text;
-				output.GameChanges.add(frame);
+				frame.Changes.PlayerHasPitchFork = currentData.PlayerHasPitchFork;
+				frame.Changes.PlayerX = currentData.PlayerX;
+				frame.Changes.PlayerY = currentData.PlayerY;
+				frame.Changes.PlayerVelX = currentData.PlayerVelX;
+				frame.Changes.PlayerVelY = currentData.PlayerVelY;
+				output.EndText = "Code Stopped: Error";
+				output.GameFrames.add(frame);
 				return output;
 			}
 			else
@@ -90,48 +106,90 @@ public class CodeGame
 			if(moveY.compareTo(BigDecimal.ONE) > 0){moveY= BigDecimal.ONE;}else if(moveY.compareTo(BigDecimal.valueOf(-1)) <0){moveY= BigDecimal.valueOf(-1);}
 			
 			// Set move speed for animation
-			frame.Data.PlayerVelX = NumUtil.TrimTrailing(moveX.multiply(BigDecimal.valueOf(.2)));
-			frame.Data.PlayerVelY = NumUtil.TrimTrailing(moveY.multiply(BigDecimal.valueOf(.2)));
+			currentData.PlayerVelX = NumUtil.TrimTrailing(moveX.multiply(BigDecimal.valueOf(.2)));
+			currentData.PlayerVelY = NumUtil.TrimTrailing(moveY.multiply(BigDecimal.valueOf(.2)));
 			
 			// Move position
-			frame.Data.PlayerX = frame.Data.PlayerX.add(frame.Data.PlayerVelX);
-			frame.Data.PlayerY = frame.Data.PlayerY.add(frame.Data.PlayerVelY);
+			currentData.PlayerX = currentData.PlayerX.add(currentData.PlayerVelX);
+			currentData.PlayerY = currentData.PlayerY.add(currentData.PlayerVelY);
 			
 			// Make sure the player doesn't go off the edge
-			frame.Data.PlayerX = NumUtil.Clamp(frame.Data.PlayerX,.5,(frame.Data.Map.DimX-.5));
-			frame.Data.PlayerY = NumUtil.Clamp(frame.Data.PlayerY,.5,(frame.Data.Map.DimY-.5));
+			currentData.PlayerX = NumUtil.Clamp(currentData.PlayerX,.5,(currentData.Map.DimX-.5));
+			currentData.PlayerY = NumUtil.Clamp(currentData.PlayerY,.5,(currentData.Map.DimY-.5));
 			
 			//Make sure the player doesn't collide with the map
 			
-			Collision mapCollision = NumUtil.Collision_entity_MapTiles(frame.Data.PlayerX.floatValue(),frame.Data.PlayerY.floatValue(),.5,frame.Data.Map);
+			Collision mapCollision = NumUtil.Collision_entity_MapTiles(currentData.PlayerX.floatValue(),currentData.PlayerY.floatValue(),.5,currentData.Map);
 			if(mapCollision.IsCollision)
 			{
-				frame.Data.PlayerX = NumUtil.GetClean(mapCollision.Pos.X);
-				frame.Data.PlayerY = NumUtil.GetClean(mapCollision.Pos.Y);
+				currentData.PlayerX = NumUtil.GetClean(mapCollision.Pos.X);
+				currentData.PlayerY = NumUtil.GetClean(mapCollision.Pos.Y);
 			}
 			
-			Collision entityCollision = NumUtil.Collision_entity_MapEntities(frame.Data.PlayerX.floatValue(),frame.Data.PlayerY.floatValue(),.5,frame.Data.Entities);
+			Collision entityCollision = NumUtil.Collision_entity_MapEntities(currentData.PlayerX.floatValue(),currentData.PlayerY.floatValue(),.5,currentData.Entities);
 			if(entityCollision.IsCollision)
 			{
-				frame.Data.PlayerX = NumUtil.GetClean(entityCollision.Pos.X);
-				frame.Data.PlayerY = NumUtil.GetClean(entityCollision.Pos.Y);
+				currentData.PlayerX = NumUtil.GetClean(entityCollision.Pos.X);
+				currentData.PlayerY = NumUtil.GetClean(entityCollision.Pos.Y);
 			}
 			
 			// Cap position to 5 decimals
-			frame.Data.PlayerX = NumUtil.TrimTrailing(frame.Data.PlayerX);
-			frame.Data.PlayerY = NumUtil.TrimTrailing(frame.Data.PlayerY);
+			currentData.PlayerX = NumUtil.TrimTrailing(currentData.PlayerX);
+			currentData.PlayerY = NumUtil.TrimTrailing(currentData.PlayerY);
+			
+			frame.Changes.PlayerX = currentData.PlayerX;
+			frame.Changes.PlayerY = currentData.PlayerY;
+			frame.Changes.PlayerVelX = currentData.PlayerVelX;
+			frame.Changes.PlayerVelY = currentData.PlayerVelY;
+			
+			// Check for pitchfork swinging
+			/*if(bindings.containsKey("swing"))
+			{
+				System.out.println("!!---------------------------------------------");
+			/*	Object input_swing = bindings.get("swing");
+				System.out.println("---------------------------------------------");
+				System.out.println(input_swing);
+				if (input_swing instanceof Boolean && (Boolean)input_swing)
+				{   // The pitchfork is trying to be swung
+					if(currentData.PlayerHasPitchFork){ // they have the pitchfork
+						if(currentData.lastSwing>timeLeft+20) // the cooldown is over
+						{
+							currentData.lastSwing= timeLeft;
+							
+							// Swing the pitchfork:
+							// --------------------
+							Iterator<Entity> entities = currentData.Entities.iterator();
+							while(entities.hasNext())
+							{
+								Entity entity = entities.next();
+								
+								if(entity.Type==4 || entity.Type == 5) // if the nearby object is a hay bale
+								{
+									if (Math.hypot(entity.X - currentData.PlayerX.floatValue(), entity.Y - currentData.PlayerY.floatValue()) <= 1.5) // It's close to the player
+									{
+										entities.remove();
+										frame.Changes.EntityDeletes.add(new EntityDelete(entity.Id));
+									}
+								}
+							}
+						}
+					}
+				}
+			}*/
+			
 			
 			// Check if Game is won by touching a cow:
 			// ---------------------------------------
-			
-			for(Entity entity : frame.Data.Entities)
+			Iterator<Entity> entities = currentData.Entities.iterator();
+			while(entities.hasNext())
 			{
+				Entity entity = entities.next();
 				if(entity.Type==1) // It's a cow
 				{
-					if (Math.hypot(entity.X - frame.Data.PlayerX.floatValue(), entity.Y - frame.Data.PlayerY.floatValue()) <= 1) // It's touching the player
+					if (Math.hypot(entity.X - currentData.PlayerX.floatValue(), entity.Y - currentData.PlayerY.floatValue()) <= 1) // It's touching the player
 					{
 						frame.GameState = 1;
-						output.GameChanges.add(frame);
+						output.GameFrames.add(frame);
 						output.Success = true;
 						output.time = map.Map.Time - timeLeft;
 						DecimalFormat df = new DecimalFormat();
@@ -140,20 +198,38 @@ public class CodeGame
 						return output;
 					}
 				}
+				else if(entity.Type==2) // It's a pitchfork
+				{
+					System.out.println(Math.hypot(entity.X - currentData.PlayerX.floatValue(), entity.Y - currentData.PlayerY.floatValue()));
+					if (Math.hypot(entity.X - currentData.PlayerX.floatValue(), entity.Y - currentData.PlayerY.floatValue()) <= 1) // It's touching the player
+					{
+						System.out.println("IsTouch");
+						currentData.PlayerHasPitchFork=true;
+						frame.Changes.EntityDeletes.add(new EntityDelete(entity.Id));
+						entities.remove();
+					}
+				}
 			}
 			
 			// Check if Game is lost by time running out:
 			
 			if(timeLeft ==0)
 			{
+				for(Entity entity : output.GameStart.Entities)
+				{
+					System.out.println(entity.Name);
+				}
 				frame.GameState = -1;
-				output.GameChanges.add(frame);
+				output.GameFrames.add(frame);
 				output.EndText = "You ran out of time";
 				return output;
 			}
-			
-			lastData = new GameData(frame.Data);
-			output.GameChanges.add(frame);
+			frame.Changes.PlayerHasPitchFork = currentData.PlayerHasPitchFork;
+			output.GameFrames.add(frame);
+		}
+		for(Entity entity :output.GameStart.Entities)
+		{
+			System.out.println(entity.Name);
 		}
 		return output;
 	}

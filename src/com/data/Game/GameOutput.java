@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class GameOutput
 {
-	public ArrayList<GameFrame> GameChanges;
+	public GameData GameStart;
+	public ArrayList<GameFrame> GameFrames;
 	public String EndText;
 	public float spawnX;
 	public float spawnY;
@@ -12,7 +13,7 @@ public class GameOutput
 	public int time;
 	public GameOutput()
 	{
-		GameChanges = new ArrayList<>();
+		GameFrames = new ArrayList<>();
 		Success = false;
 		time = -1;
 	}

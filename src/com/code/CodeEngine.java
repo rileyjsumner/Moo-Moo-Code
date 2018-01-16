@@ -84,7 +84,7 @@ public class CodeEngine {
 		executor.shutdown();                          // reject all further submissions
 		
 		try {
-			future.get(1, TimeUnit.SECONDS);  // wait 1 second to finish
+			future.get(2, TimeUnit.SECONDS);  // wait 1 second to finish
 		} catch (InterruptedException e) {            // possible error cases
 			System.out.println("job was interrupted");
 			output.Error = true;
@@ -100,7 +100,7 @@ public class CodeEngine {
 		}
 		try
 		{
-			if(!executor.awaitTermination(1, TimeUnit.SECONDS)){
+			if(!executor.awaitTermination(2, TimeUnit.SECONDS)){
 				// force it to quit
 				executor.shutdownNow();
 				
