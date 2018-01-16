@@ -102,8 +102,13 @@ public class Lesson extends HttpServlet {
 								if (database_binding.equals(bind.value))
 								{
 								
-								} else
+								} else if(bind.value.equals("?")) {
+								
+								}
+								else
 								{
+									System.out.println(bind.title);
+									System.out.println(database_binding);
 									output.Text += "\nValues not assigned correctly";
 									valid = false;
 									break;
@@ -135,7 +140,7 @@ public class Lesson extends HttpServlet {
 					return;
 				}
 			} else {
-				if(action.equals("Advance")) {
+				if(action.equals("Advance") || action.equals("Review Lesson")) {
 					if(LessonDao.UpdateLessonAccessible(lesson_id, user_id)) {
 						response.sendRedirect(Html.encodeURL(request, "/Lesson?lesson="+LessonDao.getNextLesson(user_id, lesson_id)));
 						return;
