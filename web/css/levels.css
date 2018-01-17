@@ -172,3 +172,8 @@ select.admin-levels-input
 	vertical-align: middle;
 	color:inherit;
 }
+.map-table {
+	position: fixed;
+	top: 470px;
+	left: 175px;
+}

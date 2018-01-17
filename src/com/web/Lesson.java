@@ -136,11 +136,13 @@ public class Lesson extends HttpServlet {
 					return;
 				}
 				else if(action.equals("Review Lesson")) {
+					LessonDao.UpdateLessonAccessible(lesson_id, user_id);
 					response.sendRedirect(Html.encodeURL(request, "/Lesson?lesson="+lesson_id));
 					return;
 				}
 			} else {
-				if(action.equals("Advance") || action.equals("Review Lesson")) {
+				System.out.println("Does this work?");
+				if(action.equals("Advance")) {
 					if(LessonDao.UpdateLessonAccessible(lesson_id, user_id)) {
 						response.sendRedirect(Html.encodeURL(request, "/Lesson?lesson="+LessonDao.getNextLesson(user_id, lesson_id)));
 						return;
