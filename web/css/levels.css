@@ -173,7 +173,7 @@ select.admin-levels-input
 	color:inherit;
 }
 .map-table {
-	position: fixed;
-	top: 470px;
-	left: 175px;
+	position: static;
+	align-self: center;
+	margin-top: 315px;
 }
