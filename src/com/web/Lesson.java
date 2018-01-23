@@ -99,7 +99,9 @@ public class Lesson extends HttpServlet {
 							{
 								Object binding = bindings.get(bind.title);
 								String database_binding = binding.toString();
-								if (database_binding.equals(bind.value))
+								System.out.println("db:"+database_binding.trim());
+								System.out.println("val:"+bind.value.trim());
+								if (database_binding.trim().equals(bind.value.trim()))
 								{
 								
 								} else if(bind.value.equals("?")) {
