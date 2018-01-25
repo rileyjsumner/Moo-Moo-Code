@@ -13,6 +13,7 @@ public class GameData
 {
 	public GameTiles Map;
 	public ArrayList<Entity> Entities;
+	public String oof = "oof";
 	
 	public BigDecimal PlayerX;
 	public BigDecimal PlayerY;

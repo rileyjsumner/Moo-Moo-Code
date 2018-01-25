@@ -41,11 +41,6 @@ public class CodeGame
 		output.spawnX=map.PlayerX.floatValue();
 		output.spawnY=map.PlayerY.floatValue();
 		output.GameStart = new GameData(map);
-		for(Entity entity : output.GameStart.Entities)
-		{
-			System.out.println(entity.Name);
-		}
-		
 		GameData currentData = new GameData(map);
 		
 		GameFrame frame;
@@ -143,10 +138,10 @@ public class CodeGame
 			frame.Changes.PlayerVelY = currentData.PlayerVelY;
 			
 			// Check for pitchfork swinging
-			/*if(bindings.containsKey("swing"))
+			if(bindings.containsKey("swing"))
 			{
 				System.out.println("!!---------------------------------------------");
-			/*	Object input_swing = bindings.get("swing");
+				Object input_swing = bindings.get("swing");
 				System.out.println("---------------------------------------------");
 				System.out.println(input_swing);
 				if (input_swing instanceof Boolean && (Boolean)input_swing)
@@ -175,7 +170,7 @@ public class CodeGame
 						}
 					}
 				}
-			}*/
+			}
 			
 			
 			// Check if Game is won by touching a cow:
@@ -200,10 +195,8 @@ public class CodeGame
 				}
 				else if(entity.Type==2) // It's a pitchfork
 				{
-					System.out.println(Math.hypot(entity.X - currentData.PlayerX.floatValue(), entity.Y - currentData.PlayerY.floatValue()));
 					if (Math.hypot(entity.X - currentData.PlayerX.floatValue(), entity.Y - currentData.PlayerY.floatValue()) <= 1) // It's touching the player
 					{
-						System.out.println("IsTouch");
 						currentData.PlayerHasPitchFork=true;
 						frame.Changes.EntityDeletes.add(new EntityDelete(entity.Id));
 						entities.remove();
@@ -215,10 +208,6 @@ public class CodeGame
 			
 			if(timeLeft ==0)
 			{
-				for(Entity entity : output.GameStart.Entities)
-				{
-					System.out.println(entity.Name);
-				}
 				frame.GameState = -1;
 				output.GameFrames.add(frame);
 				output.EndText = "You ran out of time";
@@ -226,10 +215,6 @@ public class CodeGame
 			}
 			frame.Changes.PlayerHasPitchFork = currentData.PlayerHasPitchFork;
 			output.GameFrames.add(frame);
-		}
-		for(Entity entity :output.GameStart.Entities)
-		{
-			System.out.println(entity.Name);
 		}
 		return output;
 	}
