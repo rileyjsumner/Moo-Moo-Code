@@ -4,5 +4,8 @@
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 <title>Moo Moo Code</title>
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
-
+<h2>Welcome to Moo Moo Code!</h2>
+<p>With Moo Moo Code you can learn Javascript with our comprehensive lessons. You can also play our game and help Farmer Dan on his quest to find his cows!</p>
+<p>This website was developed by Anoka High School Software Development Team 2</p>
+<p>30-0005-0018 | 30-0005-00XX</p>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />
