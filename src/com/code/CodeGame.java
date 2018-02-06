@@ -55,7 +55,9 @@ public class CodeGame
 			Player player = new Player(currentData.PlayerX,currentData.PlayerY);
 			engine.SetBinding("player",player);
 			engine.SetBinding("time",NumUtil.GetClean(timeLeft*.1));
+			
 			// Set default values:
+			engine.SetBinding("swing",false);
 			engine.SetBinding("x",0);
 			engine.SetBinding("y",0);
 			
@@ -162,6 +164,7 @@ public class CodeGame
 								{
 									if (Math.hypot(entity.X - currentData.PlayerX.floatValue(), entity.Y - currentData.PlayerY.floatValue()) <= 1.5) // It's close to the player
 									{
+										System.out.println("REMOVED");
 										entities.remove();
 										frame.Changes.EntityDeletes.add(new EntityDelete(entity.Id));
 									}
