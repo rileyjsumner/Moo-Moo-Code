@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: moo_moo_code
+-- Host: localhost    Database: moo_moo_code
 -- ------------------------------------------------------
--- Server version	5.7.20
+-- Server version	5.7.10-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -357,7 +357,6 @@ CREATE TABLE `user_levels` (
 
 LOCK TABLES `user_levels` WRITE;
 /*!40000 ALTER TABLE `user_levels` DISABLE KEYS */;
-INSERT INTO `user_levels` VALUES (8,1,1,'// The x and y variables that control Farmer Dan:\r\nx = 1;\r\ny = 0;',35,1),(9,1,2,'x = 1;\r\ny = 1;\r\nif(player.y >= 7)\r\n{\r\n	y = 0;\r\n}\r\nif(player.x >= 8.5)\r\n{\r\n	y = -1;\r\n    x = 0;\r\n}',49,1),(10,1,3,'x = 1;\r\ny = 1;\r\nif(time <=4)\r\n{\r\n	y=1;\r\n  	x=1;\r\n}\r\nelse if(time <= 5)\r\n{\r\n	y = 0;\r\n	x = 1;\r\n}\r\nelse if(time <= 8)\r\n{\r\n	y = -1;\r\n	x = 0;\r\n}\r\nelse if(time <= 12)\r\n{\r\n	y = 0;\r\n    x = -1;\r\n}',161,1),(11,1,4,'pitchforkSwing = true;',0,0),(12,1,6,'x = 1;\r\ny = 0;\r\n\r\nif(player.x >= 8) {\r\n  x = 0;\r\n  y = 1;\r\n  print(\"x >=8\");\r\n}\r\nif(player.y >= 4 && player.y <=5) {\r\n  x = -1;\r\n  y = 0;\r\n  print(\"y >=4\");\r\n}\r\nif(player.x <= 5 && player.y >= 4 && player.y <=5.3) {\r\n  x = -1;\r\n  y = 1;\r\n  print(\"mess 1\");\r\n}\r\nif(player.x <= 4 && player.y >=5.5 && player.y > 5.3) {\r\n  x = 1;\r\n  y = 1;\r\n  print(\"mess 2\");\r\n}\r\nif(player.x > 4.2 && time < 9) {\r\n  x = 0;\r\n  y = 1;\r\n}\r\nif(player.y >=8.5) {\r\n  x = 1;\r\n  y = 0;\r\n  print(\"yay\");\r\n}',140,1),(13,1,8,'x = 1;\r\ny = -1;\r\n\r\nif(player.x > 5 && player.y < 3.5) {\r\n	y = 1;\r\n}\r\nif(player.x < 8 && player.y > 3.5 && time > 14) {\r\n  x = -1;\r\n  pitchforkSwing = true;\r\n}\r\nif(player.x <= 4 && player.y >=8) {\r\n  pitchforkSwing = false;\r\n  x = 1;\r\n  y= 1;\r\n}',0,0);
 /*!40000 ALTER TABLE `user_levels` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,7 +375,7 @@ CREATE TABLE `users` (
   `progress_learn_lesson` int(11) NOT NULL DEFAULT '0',
   `admin` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,7 +384,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'root','admin',2,3,1),(2,'nixon','TESTRichard',2,0,1),(3,'admin','admin',0,0,0);
+INSERT INTO `users` VALUES (4,'cm9vdA==','YWRtaW4=',2,2,1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -398,4 +397,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-23 16:06:29
+-- Dump completed on 2018-02-07 10:10:00

@@ -6,8 +6,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Base64;
 
 public class LoginUtil {
+	public static String Encrypt(String plainText)
+	{
+		return new String(Base64.getEncoder().encode(plainText.getBytes()));
+	}
+	public static String Decrypt(String encoded)
+	{
+		return new String(Base64.getDecoder().decode(encoded));
+	}
 	public static boolean TestLogin(HttpSession session)
 	{
 		String username = (String)session.getAttribute("username");

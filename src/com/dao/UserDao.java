@@ -3,6 +3,7 @@ package com.dao;
 import com.data.Lesson.LessonId;
 import com.util.DbUtil;
 import com.data.User;
+import com.util.LoginUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +23,8 @@ public class UserDao {
 			PreparedStatement preparedStatement;
 			try {
 				preparedStatement = con.prepareStatement("SELECT id FROM users WHERE username = ? AND password = ?");
-				preparedStatement.setString(1, username);
-				preparedStatement.setString(2, password);
+				preparedStatement.setString(1, LoginUtil.Encrypt(username));
+				preparedStatement.setString(2, LoginUtil.Encrypt(password));
 				ResultSet set = preparedStatement.executeQuery();
 				if(set.first()){
 					return set.getInt("id");
@@ -57,7 +58,7 @@ public class UserDao {
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = con.prepareStatement("SELECT id FROM users WHERE username = ?");
-			preparedStatement.setString(1, username);
+			preparedStatement.setString(1, LoginUtil.Encrypt(username));
 			ResultSet set = preparedStatement.executeQuery();
 			if(set.first()){
 				return true;
@@ -75,8 +76,8 @@ public class UserDao {
 			if(!TestUserExists(username))
 			{
 				preparedStatement = con.prepareStatement("INSERT INTO users (username,password, progress_learn_category, progress_learn_lesson, admin) VALUES (?,?,?,?,?)");
-				preparedStatement.setString(1, username);
-				preparedStatement.setString(2, password);
+				preparedStatement.setString(1, LoginUtil.Encrypt(username));
+				preparedStatement.setString(2, LoginUtil.Encrypt(password));
 				preparedStatement.setInt(3, categoryProgress);
 				preparedStatement.setInt(4, lessonProgress);
 				preparedStatement.setInt(5, admin);
@@ -96,8 +97,8 @@ public class UserDao {
 			if(!TestUserExists(username))
 			{
 				preparedStatement = con.prepareStatement("INSERT INTO users (username,password) VALUES (?,?)");
-				preparedStatement.setString(1, username);
-				preparedStatement.setString(2, password);
+				preparedStatement.setString(1, LoginUtil.Encrypt(username));
+				preparedStatement.setString(2, LoginUtil.Encrypt(password));
 				preparedStatement.execute();
 				return true;
 			}
@@ -155,8 +156,8 @@ public class UserDao {
 				users.add(
 						new User(
 								set.getInt("id"),
-								set.getString("username"),
-								set.getString("password"),
+								LoginUtil.Decrypt(set.getString("username")),
+								LoginUtil.Decrypt(set.getString("password")),
 								set.getInt("progress_learn_category"),
 								set.getInt("progress_learn_lesson"),
 								set.getInt("admin") == 1
@@ -178,7 +179,7 @@ public class UserDao {
 		{
 			if(column.equals("username") || column.equals("password")) {
 				preparedStatement = con.prepareStatement("UPDATE users SET " + column + " = ? WHERE id=?");
-				preparedStatement.setString(1, value);
+				preparedStatement.setString(1, LoginUtil.Encrypt(value));
 				preparedStatement.setInt(2, userID);
 				preparedStatement.executeQuery();
 			} else {
