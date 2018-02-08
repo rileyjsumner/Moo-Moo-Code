@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="<c:url value="/css/lesson.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
 
+
+<form action="${pageContext.request.contextPath}/LessonSearch" method="GET">
+	<input type="text" name="query" placeholder="search"/>
+	<button type="submit" class="edit-btn edit-btn-green" name="submit">Search Lessons</button>
+</form>
 <%
 if((Boolean) request.getAttribute("show_lessons"))
 {
@@ -58,8 +63,13 @@ if((Boolean) request.getAttribute("show_lessons"))
 		}
 		out.print("</div>");
 	}
-}
-else
+} else if (!(Boolean)request.getAttribute("empty")) {
+	ArrayList<Integer> lesson_ids = (ArrayList<Integer>)request.getAttribute("SearchResults");
+	for(int lesson_id : lesson_ids) {
+		
+		out.print("<div class=\"bracket-hover lesson-category-active\"></div>");
+	}
+} else
 {
 	out.print("<p style=\"text-align:center;display:block;margin-top:10px\">Sign in to view lessons</p>");
 }
