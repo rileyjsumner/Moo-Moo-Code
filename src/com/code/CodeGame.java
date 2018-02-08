@@ -142,10 +142,7 @@ public class CodeGame
 			// Check for pitchfork swinging
 			if(bindings.containsKey("swing"))
 			{
-				System.out.println("!!---------------------------------------------");
 				Object input_swing = bindings.get("swing");
-				System.out.println("---------------------------------------------");
-				System.out.println(input_swing);
 				if (input_swing instanceof Boolean && (Boolean)input_swing)
 				{   // The pitchfork is trying to be swung
 					if(currentData.PlayerHasPitchFork){ // they have the pitchfork
