@@ -7,7 +7,7 @@
 
 <div class="content-header" style ="margin:20px">Log in</div>
 <div class="content-container">
-	<form action="Login" method = "POST">
+	<form action="/Login" method = "POST">
 		<p class = "content-container-header">Username</p>
 		<input type ="text" name = "username" class = "content-container-input" />
 		<p class = "content-container-header">Password</p>

@@ -22,6 +22,7 @@ public class UserDao {
 			Connection con = DbUtil.getConnection();
 			PreparedStatement preparedStatement;
 			try {
+				System.out.println("test login nope");
 				preparedStatement = con.prepareStatement("SELECT id FROM users WHERE username = ? AND password = ?");
 				preparedStatement.setString(1, LoginUtil.Encrypt(username));
 				preparedStatement.setString(2, LoginUtil.Encrypt(password));

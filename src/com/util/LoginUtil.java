@@ -11,10 +11,12 @@ import java.util.Base64;
 public class LoginUtil {
 	public static String Encrypt(String plainText)
 	{
+		System.out.println("encript:" + plainText);
 		return new String(Base64.getEncoder().encode(plainText.getBytes()));
 	}
 	public static String Decrypt(String encoded)
 	{
+		System.out.print("not encript" + encoded);
 		return new String(Base64.getDecoder().decode(encoded));
 	}
 	public static boolean TestLogin(HttpSession session)
