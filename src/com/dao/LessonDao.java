@@ -199,6 +199,7 @@ public class LessonDao {
 		}
 		return false;
 	}
+	
 	public static String GetLessonText(int lesson)
 	{
 		Connection con = DbUtil.getConnection();
