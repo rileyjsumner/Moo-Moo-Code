@@ -11,6 +11,16 @@
 	</welcome-file-list>
 	
 	<servlet>
+		<description>Home</description>
+		<display-name>/</display-name>
+		<servlet-name>Root</servlet-name>
+		<servlet-class>com.web.Home</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Root</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<description>Admin Level Editor</description>
 		<display-name>Admin/LevelEditor</display-name>
 		<servlet-name>AdminLevelEditor</servlet-name>
@@ -173,5 +183,16 @@
 	<servlet-mapping>
 		<servlet-name>LessonEditor</servlet-name>
 		<url-pattern>/Admin/Lessons</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>LessonSearch</display-name>
+		<servlet-name>LessonSearch</servlet-name>
+		<servlet-class>com.web.LessonSearch</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LessonSearch</servlet-name>
+		<url-pattern>/LessonSearch</url-pattern>
 	</servlet-mapping>
 </web-app>
