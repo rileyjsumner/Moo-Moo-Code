@@ -129,7 +129,8 @@ public class LessonDao {
 		if(lesson.Lesson != -1 && lesson.Category != -1 && userProgress.Lesson != -1 && userProgress.Category != -1)
 		{
 			// Check that progress >= requested lesson
-			if(userProgress.Category > lesson.Category || (userProgress.Category == lesson.Category && userProgress.Lesson >= lesson.Lesson))
+			
+			if(userProgress.Category > lesson.Category || (userProgress.Category == lesson.Category && userProgress.Lesson >= lesson.Lesson) )
 			{
 				return true;
 			}
