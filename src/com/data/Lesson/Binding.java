@@ -8,7 +8,7 @@ public class Binding
 	public String value;
 	
 	public Binding(int b_id, int l_id, String name, String val)
-	{
+	{ // binding class -> stores lesson bindings
 		this.id = b_id;
 		this.lesson_id = l_id;
 		this.title = name;

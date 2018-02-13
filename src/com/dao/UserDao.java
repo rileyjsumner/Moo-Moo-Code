@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class UserDao {
 	public static int TestLogin(String username,String password)
-	{
+	{ // test if user is logged in
 		if(username != null && password != null)
 		{
 			Connection con = DbUtil.getConnection();
@@ -37,6 +37,7 @@ public class UserDao {
 		return -1;
 	}
 	public static boolean isAdmin(int user_id) {
+		// test if user is the admin
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -53,7 +54,7 @@ public class UserDao {
 		return false;
 	}
 	public static boolean TestUserExists(String username)
-	{
+	{ // make sure user exists
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -70,6 +71,7 @@ public class UserDao {
 		return false;
 	}
 	public static void AddUser(String username, String password, int categoryProgress, int lessonProgress, int admin) {
+		// register new user on admin side
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -90,15 +92,18 @@ public class UserDao {
 		}
 	}
 	public static boolean AddUser(String username,String password)
-	{
+	{ // register new user client side
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
 			if(!TestUserExists(username))
 			{
-				preparedStatement = con.prepareStatement("INSERT INTO users (username,password) VALUES (?,?)");
+				preparedStatement = con.prepareStatement("INSERT INTO users (username,password, progress_learn_category, progress_learn_lesson, admin) VALUES (?,?,?,?,?)");
 				preparedStatement.setString(1, LoginUtil.Encrypt(username));
 				preparedStatement.setString(2, LoginUtil.Encrypt(password));
+				preparedStatement.setInt(3, 0);
+				preparedStatement.setInt(4, 0);
+				preparedStatement.setInt(5, 0);
 				preparedStatement.execute();
 				return true;
 			}
@@ -110,7 +115,7 @@ public class UserDao {
 		return false;
 	}
 	public static LessonId GetUserLessonProgress(int id)
-	{
+	{ // get user progress
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -127,7 +132,7 @@ public class UserDao {
 		return new LessonId(-1,-1);
 	}
 	public static int GetUserGameLevel(int id)
-	{
+	{ // get user game level
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -144,7 +149,7 @@ public class UserDao {
 		return -1;
 	}
 	public static List<User> GetUsers()
-	{
+	{ // return list of users
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		List<User> users = new ArrayList<User>();
@@ -171,7 +176,7 @@ public class UserDao {
 		return users;
 	}
 	public static void UpdateUsers(int userID, String column, String value)
-	{
+	{ // update user
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		PreparedStatement preparedStatement2;
@@ -195,7 +200,7 @@ public class UserDao {
 		}
 	}
 	public static void DeleteUser(int userID)
-	{
+	{ // delete user
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try

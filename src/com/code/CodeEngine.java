@@ -38,16 +38,16 @@ public class CodeEngine {
 		}
 	}
 	public void SetBinding(String key,Object binding)
-	{
+	{ // Set binding
 		Bindings bindings = Engine.getBindings(ScriptContext.ENGINE_SCOPE);
 		bindings.put(key,binding);
 	}
 	public String[] GetBindingKeys()
-	{
+	{ // Get binding Keys
 		return Engine.getBindings(ScriptContext.ENGINE_SCOPE).keySet().toArray(new String[]{});
 	}
 	public HashMap<String,Object> GetBindings()
-	{
+	{ // returns a HashMap of code bindings
 		String[] keys = GetBindingKeys();
 		Bindings raw_bindings = Engine.getBindings(ScriptContext.ENGINE_SCOPE);
 		HashMap<String,Object> bindings = new HashMap<>();
@@ -58,6 +58,7 @@ public class CodeEngine {
 		return bindings;
 	}
 	public CodeOutput Exec(String code) {
+		// execute script
 		CodeOutput output= new CodeOutput();
 		ExecutorService executor = Executors.newFixedThreadPool(4);
 		

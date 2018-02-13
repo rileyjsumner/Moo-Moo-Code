@@ -11,6 +11,7 @@ public class LessonCategory {
 	{
 		Lessons = new ArrayList<>();
 	}
+	// Lesson category, contains details about the category
 	public LessonCategory(String name,int num,int id)
 	{
 		Lessons = new ArrayList<>();Name = name;Num = num;Id = id;

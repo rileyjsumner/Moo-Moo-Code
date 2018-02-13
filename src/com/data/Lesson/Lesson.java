@@ -7,7 +7,7 @@ public class Lesson {
 	public int Id;
 	public String text;
 	public String startCode;
-	
+	// lesson class -> contains lesson information
 	public Lesson()
 	{
 		Name="unknown";Num=0;
@@ -28,10 +28,9 @@ public class Lesson {
 		this.text = lesson_text;
 		this.startCode = start_code;
 	}
-	public Lesson(int id, String name, int num, String text) {
+	public Lesson(int id, String name, String text) {
 		this.Id = id;
 		this.Name = name;
-		this.Num = num;
 		this.text = text;
 	}
 }
