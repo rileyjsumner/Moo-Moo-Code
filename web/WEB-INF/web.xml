@@ -9,18 +9,16 @@
 	<welcome-file-list>
 		<welcome-file>/Home</welcome-file>
 	</welcome-file-list>
-	
 	<servlet>
-		<description>Home</description>
-		<display-name>/</display-name>
+		<description>Root</description>
+		<display-name></display-name>
 		<servlet-name>Root</servlet-name>
 		<servlet-class>com.web.Home</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Root</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern></url-pattern>
 	</servlet-mapping>
-	
 	<servlet>
 		<description>Admin Level Editor</description>
 		<display-name>Admin/LevelEditor</display-name>
