@@ -19,9 +19,6 @@
 <div class="menu-item bracket-hover" onclick="location.href='${pageContext.request.contextPath}/LevelSelect'">
 <p class="menu-text">Play</p>
 </div>
-<div class="menu-item bracket-hover">
-<p class="menu-text">Compete</p>
-</div>
 </div>
 <div id="content" class = "vertical-fill">
 <div id = "content-relative">

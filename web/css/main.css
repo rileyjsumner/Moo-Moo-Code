@@ -424,3 +424,6 @@ div#account-box:hover
 	text-align: center;
 	overflow: scroll;
 }
+.home_image {
+	image-rendering: pixelated;
+}
