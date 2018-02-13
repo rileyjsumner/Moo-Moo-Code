@@ -12,6 +12,9 @@
 		for(String lessonResult : results) {
 			out.print(lessonResult);
 		}
+	} else {
+		out.print("<p>The Search Returned No Results</p>");
 	}
+	out.print("<br/><a href=\"/Learn\">Back to Lesson Select</a>");
 %>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />
