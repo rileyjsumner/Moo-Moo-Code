@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.concurrent.*;
-
+// Object to run javascript on the server
 public class CodeEngine {
 	private ScriptEngine Engine;
 	private StringWriter sw;

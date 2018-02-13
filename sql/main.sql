@@ -77,10 +77,12 @@ DROP TABLE IF EXISTS `lesson_bindings`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `lesson_bindings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `lesson_id` int(11) NOT NULL,
+  `lesson_id` int(11) unsigned NOT NULL,
   `binding_title` varchar(45) NOT NULL,
   `binding_value` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `binding_lesson_idx` (`lesson_id`),
+  CONSTRAINT `binding_lesson` FOREIGN KEY (`lesson_id`) REFERENCES `lessons` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -128,10 +130,12 @@ DROP TABLE IF EXISTS `lesson_progress`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `lesson_progress` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
   `lesson_id` int(11) NOT NULL,
   `save_code` varchar(1500) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `user_lesson_idx` (`user_id`),
+  CONSTRAINT `user_lessons` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -141,7 +145,7 @@ CREATE TABLE `lesson_progress` (
 
 LOCK TABLES `lesson_progress` WRITE;
 /*!40000 ALTER TABLE `lesson_progress` DISABLE KEYS */;
-INSERT INTO `lesson_progress` VALUES (4,1,2,'var printed_var = \"This is a print statement\";\r\nprint(printed_var);'),(5,1,3,'var int_var = 3;\r\nvar string_var = \"kek\";\r\nprint(int_var + \"\\n\" + string_var);'),(6,1,4,'// int variable\r\nvar first_num = 3;\r\nprint(first_num + 4);\r\nvar second_num = 7;\r\nprint(first_num + second_num);'),(7,1,5,'// Function\r\nfunction add(num_one, num_two) {\r\n  return(num_one+num_two);\r\n}\r\nvar add_num = add(3, 8);\r\nprint(add_num);'),(8,1,6,'function greeting(name, age, money) {\r\n  return (\"Hello! My name is \" + name + \" and I am \" + age + \" years old. I have \" + money + \" dollars!\");\r\n}\r\nvar my_greeting = greeting(\"Riley\", 17, 23.22);\r\nprint(my_greeting);'),(9,1,7,'// Update Account\r\nfunction updateAccount(init_balance, transaction) {\r\n  \r\n  // return:\r\n  return init_balance + transaction;\r\n}\r\n'),(10,1,8,'function getDate() {\r\n  return Date.now();\r\n}\r\n// call function\r\nvar today_date = getDate();\r\nprint(today_date);'),(11,1,9,'function Pizza(topping, crust, size) {\r\n  this.topping = topping;\r\n  this.crust = crust;\r\n  this.size = size;\r\n  this.getInfo = getPizzaInfo;\r\n}\r\nfunction getPizzaInfo() {\r\n  return \"Looks like a \" + this.size + \" \" + this.crust + \" crust pizza with \" + this.topping +\"\'s\";\r\n}\r\nvar example_pizza = new Pizza(\"pepperoni\", \"thin\", \"medium\");\r\nprint(example_pizza.getInfo());\r\n\r\nvar my_pizza = new Pizza(\"sausage\", \"New York Style\", \"large\");\r\nprint(my_pizza.getInfo());'),(12,1,10,'function Box() {\r\n  this.size=\"4x3\";\r\n}'),(13,1,11,'var my_box = new Box();');
+INSERT INTO `lesson_progress` VALUES (4,4,2,'var printed_var = \"This is a print statement\";\r\nprint(printed_var);'),(5,4,3,'var int_var = 3;\r\nvar string_var = \"kek\";\r\nprint(int_var + \"\\n\" + string_var);'),(6,4,4,'// int variable\r\nvar first_num = 3;\r\nprint(first_num + 4);\r\nvar second_num = 7;\r\nprint(first_num + second_num);'),(7,4,5,'// Function\r\nfunction add(num_one, num_two) {\r\n  return(num_one+num_two);\r\n}\r\nvar add_num = add(3, 8);\r\nprint(add_num);'),(8,4,6,'function greeting(name, age, money) {\r\n  return (\"Hello! My name is \" + name + \" and I am \" + age + \" years old. I have \" + money + \" dollars!\");\r\n}\r\nvar my_greeting = greeting(\"Riley\", 17, 23.22);\r\nprint(my_greeting);'),(9,4,7,'// Update Account\r\nfunction updateAccount(init_balance, transaction) {\r\n  \r\n  // return:\r\n  return init_balance + transaction;\r\n}\r\n'),(10,4,8,'function getDate() {\r\n  return Date.now();\r\n}\r\n// call function\r\nvar today_date = getDate();\r\nprint(today_date);'),(11,4,9,'function Pizza(topping, crust, size) {\r\n  this.topping = topping;\r\n  this.crust = crust;\r\n  this.size = size;\r\n  this.getInfo = getPizzaInfo;\r\n}\r\nfunction getPizzaInfo() {\r\n  return \"Looks like a \" + this.size + \" \" + this.crust + \" crust pizza with \" + this.topping +\"\'s\";\r\n}\r\nvar example_pizza = new Pizza(\"pepperoni\", \"thin\", \"medium\");\r\nprint(example_pizza.getInfo());\r\n\r\nvar my_pizza = new Pizza(\"sausage\", \"New York Style\", \"large\");\r\nprint(my_pizza.getInfo());'),(12,4,10,'function Box() {\r\n  this.size=\"4x3\";\r\n}'),(13,4,11,'var my_box = new Box();');
 /*!40000 ALTER TABLE `lesson_progress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,4 +401,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-08 15:36:29
+-- Dump completed on 2018-02-13 15:38:14
