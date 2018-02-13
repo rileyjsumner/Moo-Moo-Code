@@ -1,6 +1,7 @@
 package com.data;
 
 public class User {
+	// stores user information/progress
 	public int id;
 	public String username;
 	public String password;

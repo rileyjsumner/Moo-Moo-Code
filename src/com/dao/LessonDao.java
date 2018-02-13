@@ -5,17 +5,14 @@ import com.data.Lesson.Lesson;
 import com.data.Lesson.LessonCategory;
 import com.data.Lesson.LessonId;
 import com.util.DbUtil;
-
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LessonDao {
 	public static ArrayList<LessonCategory> GetAllLessonCategories()
-	{
+	{ // Get a list of all LessonCategories
 		ArrayList<LessonCategory> lessonCategories = new ArrayList<>();
 		
 		Connection con = DbUtil.getConnection();
@@ -35,7 +32,7 @@ public class LessonDao {
 		return lessonCategories;
 	}
 	public static ArrayList<Lesson> GetAllLessons()
-	{
+	{ // Get all Lessons created
 		ArrayList<Lesson> lessons = new ArrayList<>();
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
@@ -48,7 +45,6 @@ public class LessonDao {
 				int id = set.getInt("id");
 				lessons.add(new Lesson(id,
 						GetLessonTitle(id),
-						GetIdFromLesson(GetLessonFromId(id)),
 						GetLessonText(id)));
 			}
 		}
@@ -58,7 +54,7 @@ public class LessonDao {
 		return lessons;
 	}
 	public static LessonCategory GetLessonCategory(int category)
-	{
+	{ // Get one Lesson category from category id
 		LessonCategory lessonCategories = new LessonCategory();
 		
 		Connection con = DbUtil.getConnection();
@@ -87,7 +83,7 @@ public class LessonDao {
 		return lessonCategories;
 	}
 	public static LessonId GetLessonFromId(int lessonId)
-	{
+	{ // Get a particular lesson from id
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -107,7 +103,7 @@ public class LessonDao {
 		return new LessonId(-1,-1);
 	}
 	public static int GetIdFromLesson(LessonId lesson)
-	{
+	{ // Get a lesson id from LessonId class
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -128,7 +124,7 @@ public class LessonDao {
 		return -1;
 	}
 	public static boolean CheckLessonAccessible(LessonId lesson,LessonId userProgress)
-	{
+	{ // See if user has reached the lesson
 		// Check validity
 		if(lesson.Lesson != -1 && lesson.Category != -1 && userProgress.Lesson != -1 && userProgress.Category != -1)
 		{
@@ -141,10 +137,11 @@ public class LessonDao {
 		return false;
 	}
 	public static boolean CheckLessonAccessible(int lessonId,int userId)
-	{
+	{ // boolean ifLessonAccessible
 		return CheckLessonAccessible(GetLessonFromId(lessonId),UserDao.GetUserLessonProgress(userId));
 	}
 	public static int getCategoryCount(int categoryId) {
+		// return how many categories of lessons exist
 		PreparedStatement preparedStatement;
 		Connection con = DbUtil.getConnection();
 		int count = -1;
@@ -165,6 +162,7 @@ public class LessonDao {
 	}
 	public static int getNextLesson(int userId, int lessonId)
 	{
+		// get next lesson
 		PreparedStatement preparedStatement;
 		Connection con = DbUtil.getConnection();
 		int lessonProg = -1, categoryProg = -1, lesson = -1;
@@ -196,6 +194,7 @@ public class LessonDao {
 		return lesson;
 	}
 	public static boolean UpdateLessonAccessible(int lessonId, int userId) {
+		// update lesson progress when lesson completes
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		int lessonProg = -1;
@@ -224,7 +223,7 @@ public class LessonDao {
 	}
 	
 	public static String GetLessonText(int lesson)
-	{
+	{ // get text from lesson
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -241,7 +240,7 @@ public class LessonDao {
 		return "No lesson here";
 	}
 	public static String GetLessonCode(int user_id, int id, boolean edit)
-	{
+	{ // get code user wrote for lesson
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -284,6 +283,7 @@ public class LessonDao {
 		return "No start code here";
 	}
 	public static String GetLessonTitle(int id) {
+		// get title from lesson
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -300,6 +300,7 @@ public class LessonDao {
 		return "No title code here";
 	}
 	public static String GetLessonOutput(int id) {
+		// get users lesson output
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -317,6 +318,7 @@ public class LessonDao {
 	}
 	public static void SetLessonContent(int id, String title, String lesson_content, int category, String start_code, String output)
 	{
+		// set lesson information
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -342,6 +344,7 @@ public class LessonDao {
 	}
 	public static void UpdateLessonCode(int user_id, int id, String code)
 	{
+		// update user saved code
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -370,6 +373,7 @@ public class LessonDao {
 	}
 	public static void DeleteLesson(int id)
 	{
+		// delete a lesson
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -384,6 +388,7 @@ public class LessonDao {
 	}
 	public static int AddLesson(String title, String lesson_content, int category, String start_code, String output)
 	{
+		// add a lesson
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -413,6 +418,7 @@ public class LessonDao {
 	}
 	public static int AddBinding(String title, String value, int lesson_id)
 	{
+		// add a lesson binding
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -432,6 +438,7 @@ public class LessonDao {
 		return -1;
 	}
 	public static void UpdateBinding(String col, String value, int bind_id, int lesson_id) {
+		// update a lesson binding
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -449,6 +456,7 @@ public class LessonDao {
 	}
 	public static void AddCategory(String categoryName)
 	{
+		// add a lesson category
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -464,6 +472,7 @@ public class LessonDao {
 	}
 	public static int GetCategoryId(int lesson_id)
 	{
+		// get a lesson categories Id
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
@@ -483,6 +492,7 @@ public class LessonDao {
 		return -1;
 	}
 	public static ArrayList<Binding> getLessonBindings(int lesson_id) {
+		// get all lesson bindings
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		ArrayList<Binding> bindings = new ArrayList<>();
@@ -503,6 +513,7 @@ public class LessonDao {
 		return bindings;
 	}
 	public static void DeleteBinding(int bind) {
+		// delete a binding
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try {
