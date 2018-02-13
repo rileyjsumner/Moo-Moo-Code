@@ -34,6 +34,29 @@ public class LessonDao {
 		}
 		return lessonCategories;
 	}
+	public static ArrayList<Lesson> GetAllLessons()
+	{
+		ArrayList<Lesson> lessons = new ArrayList<>();
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT id FROM lessons");
+			ResultSet set = preparedStatement.executeQuery();
+			
+			while (set.next())
+			{
+				int id = set.getInt("id");
+				lessons.add(new Lesson(id,
+						GetLessonTitle(id),
+						GetIdFromLesson(GetLessonFromId(id)),
+						GetLessonText(id)));
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return lessons;
+	}
 	public static LessonCategory GetLessonCategory(int category)
 	{
 		LessonCategory lessonCategories = new LessonCategory();

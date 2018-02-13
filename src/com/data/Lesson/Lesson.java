@@ -28,4 +28,10 @@ public class Lesson {
 		this.text = lesson_text;
 		this.startCode = start_code;
 	}
+	public Lesson(int id, String name, int num, String text) {
+		this.Id = id;
+		this.Name = name;
+		this.Num = num;
+		this.text = text;
+	}
 }

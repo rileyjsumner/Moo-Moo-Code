@@ -12,7 +12,7 @@
 
 <form action="${pageContext.request.contextPath}/LessonSearch" method="POST">
 	<input type="text" name="query" placeholder="search"/>
-	<button type="submit" class="edit-btn edit-btn-green" name="submit">Search Lessons</button>
+	<input type="submit" class="edit-btn edit-btn-green" name="submit" value="Search Lessons"/>
 </form>
 <%
 if((Boolean) request.getAttribute("show_lessons"))

@@ -10,7 +10,6 @@
 	if (!(Boolean)request.getAttribute("empty")) {
 		ArrayList<String> results = (ArrayList<String>)request.getAttribute("results");
 		for(String lessonResult : results) {
-		
 			out.print(lessonResult);
 		}
 	}
