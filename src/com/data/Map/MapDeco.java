@@ -1,5 +1,5 @@
 package com.data.Map;
-
+// Stores decoration on the map
 public class MapDeco
 {
 	public int Id;

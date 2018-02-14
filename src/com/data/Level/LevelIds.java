@@ -1,7 +1,7 @@
 package com.data.Level;
 
 import java.util.ArrayList;
-
+// Stores all levels for the selection screen
 public class LevelIds {
 	public ArrayList<LevelId> levels;
 	public LevelIds(){levels = new ArrayList<>();}

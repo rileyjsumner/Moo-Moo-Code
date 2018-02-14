@@ -27,6 +27,7 @@ import java.util.Iterator;
 * */
 public class CodeGame
 {
+	// Run game simulates the level, given the user's code and a game map
 	public static GameOutput RunGame(String code, int mapId)
 	{
 		return RunGame(code, MapsDao.GetMap(mapId));

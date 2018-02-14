@@ -1,5 +1,5 @@
 package com.data.Map;
-
+// Stores tiles on the map
 public class MapTile {
 	public int Id;
 	public int TileType;

@@ -13,7 +13,7 @@ import java.util.concurrent.*;
 public class CodeEngine {
 	private ScriptEngine Engine;
 	private StringWriter sw;
-	
+	// Sets up javascript environment
 	public CodeEngine()
 	{
 		Engine = new NashornScriptEngineFactory().getScriptEngine(new String[]{"--no-java", "-strict", "--no-syntax-extensions"}, null, s -> false);
@@ -26,6 +26,7 @@ public class CodeEngine {
 		PrintWriter pw = new PrintWriter(sw);
 		Engine.getContext().setWriter(pw);
 	}
+	// Set variables and functions in the javascript context
 	public void SetBindings(HashMap<String,Object> inputBindings)
 	{
 		// Get bindings & keys
@@ -37,15 +38,18 @@ public class CodeEngine {
 			bindings.put(inputKey,inputBindings.get(inputKey));
 		}
 	}
+	// Set variables and functions in the javascript context
 	public void SetBinding(String key,Object binding)
 	{ // Set binding
 		Bindings bindings = Engine.getBindings(ScriptContext.ENGINE_SCOPE);
 		bindings.put(key,binding);
 	}
+	// Get variables and functions from the javascript context
 	public String[] GetBindingKeys()
 	{ // Get binding Keys
 		return Engine.getBindings(ScriptContext.ENGINE_SCOPE).keySet().toArray(new String[]{});
 	}
+	// Set variables and functions from the javascript context
 	public HashMap<String,Object> GetBindings()
 	{ // returns a HashMap of code bindings
 		String[] keys = GetBindingKeys();
@@ -57,6 +61,7 @@ public class CodeEngine {
 		}
 		return bindings;
 	}
+	// execute code in the javascript context
 	public CodeOutput Exec(String code) {
 		// execute script
 		CodeOutput output= new CodeOutput();

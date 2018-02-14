@@ -2,7 +2,7 @@ package com.data.Game;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+// Stores All of the actions entities are doing in the current frame
 public class GameChanges
 {
 	public ArrayList<EntityAdd> EntityAdds;

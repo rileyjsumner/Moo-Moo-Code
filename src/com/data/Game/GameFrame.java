@@ -1,5 +1,5 @@
 package com.data.Game;
-
+// Stores all of the data about a specific frame while the game runs
 public class GameFrame
 {
 	public GameChanges Changes;

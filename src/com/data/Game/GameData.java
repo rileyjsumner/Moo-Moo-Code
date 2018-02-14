@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-
+// Stores data about the current state of the level and player
 public class GameData
 {
 	public GameTiles Map;

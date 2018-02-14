@@ -1,7 +1,7 @@
 package com.data.Game;
 
 import java.util.ArrayList;
-
+// The output of running a game, contains all frames, entity movement, the starting level, and player details
 public class GameOutput
 {
 	public GameData GameStart;

@@ -2,7 +2,7 @@ package com.data.Game;
 
 import com.data.Map.MapTile;
 import com.data.Map.TileMap;
-
+// Stores an array of all the tiles that make up a level
 public class GameTiles
 {
 	public int DimX;
