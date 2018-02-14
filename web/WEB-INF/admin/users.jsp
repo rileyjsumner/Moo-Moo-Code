@@ -40,7 +40,7 @@
 		}
 		out.print("</div>");
 	} else {
-		out.print("You ain't no admin boi check how you sound");
+		out.print("Not an Admin");
 	}
 %>
 		<form method="post" action="<c:url value="/Admin/Users"/>">
