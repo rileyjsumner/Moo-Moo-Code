@@ -4,7 +4,9 @@
 
 <c:import url="/WEB-INF/page_defaults/header.jsp" />
 <title>Search</title>
+<link rel="stylesheet" type="text/css" href="<c:url value="/css/search.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
+<div class="search_wrapper">
 <%
 
 	if (!(Boolean)request.getAttribute("empty")) {
@@ -17,4 +19,5 @@
 	}
 	out.print("<br/><a href=\"/Learn\">Back to Lesson Select</a>");
 %>
+</div>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

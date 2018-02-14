@@ -102,7 +102,7 @@ public class UserDao {
 				preparedStatement.setString(1, LoginUtil.Encrypt(username));
 				preparedStatement.setString(2, LoginUtil.Encrypt(password));
 				preparedStatement.setInt(3, 0);
-				preparedStatement.setInt(4, 0);
+				preparedStatement.setInt(4, 1);
 				preparedStatement.setInt(5, 0);
 				preparedStatement.execute();
 				return true;

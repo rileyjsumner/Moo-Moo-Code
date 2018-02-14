@@ -48,7 +48,6 @@ public class LessonSearch extends HttpServlet
 					String link = "";
 					link += "<a class=\"edit-btn edit-btn-green\" href=\"/Lesson?lesson="+id+"\">"+LessonDao.GetLessonTitle(id)+"</a>";
 					results.add(link);
-					System.out.println(link);
 				}
 				request.setAttribute("results", results);
 			} else {
