@@ -10,6 +10,7 @@ import java.io.IOException;
 
 
 public class Code extends HttpServlet {
+	// Controller for /Code
 	private static final long serialVersionUID = 1L;
 	
 	public Code() {

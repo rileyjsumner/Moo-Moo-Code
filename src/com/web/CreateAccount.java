@@ -13,6 +13,7 @@ import java.io.IOException;
 
 
 public class CreateAccount extends HttpServlet {
+	// Controller for /CreateAccount
 	private static final long serialVersionUID = 1L;
 	
 	public CreateAccount() {

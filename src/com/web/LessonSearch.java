@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class LessonSearch extends HttpServlet
 {
+	// Controller for /LessonSearch
 	private static final long serialVersionUID = 1L;
 	
 	public LessonSearch() {

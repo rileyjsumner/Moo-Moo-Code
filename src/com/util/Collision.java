@@ -2,6 +2,7 @@ package com.util;
 
 public class Collision
 {
+	// Stores Game collisions
 	public boolean IsCollision;
 	public Vec2 Pos;
 	public Collision(){IsCollision=false;}

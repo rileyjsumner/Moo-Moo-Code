@@ -13,6 +13,7 @@ import java.io.IOException;
 
 
 public class LevelSelect extends HttpServlet {
+	// Controller for /LevelSelect
 	private static final long serialVersionUID = 1L;
 	
 	public LevelSelect() {

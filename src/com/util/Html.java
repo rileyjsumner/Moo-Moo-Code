@@ -3,6 +3,7 @@ package com.util;
 import javax.servlet.http.HttpServletRequest;
 
 public class Html {
+	// HTML class for encoding URL
 	public static String encodeURL(HttpServletRequest request, String string)
 	{
 		return request.getContextPath()+string;

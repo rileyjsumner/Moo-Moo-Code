@@ -11,6 +11,7 @@ import java.io.IOException;
 
 
 public class Logout extends HttpServlet {
+	// Controller for /Logout
 	private static final long serialVersionUID = 1L;
 	
 	public Logout() {

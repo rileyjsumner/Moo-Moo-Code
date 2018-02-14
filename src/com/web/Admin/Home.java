@@ -11,6 +11,7 @@ import java.io.IOException;
 
 
 public class Home extends HttpServlet {
+	// Controller for /Home
 	private static final long serialVersionUID = 1L;
 	
 	public Home() {super();}

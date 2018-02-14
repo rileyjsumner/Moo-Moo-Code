@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DbUtil {
-	
+	// connects to SQL database
 	private static Connection connection = null;
 	
 	public static Connection getConnection() {

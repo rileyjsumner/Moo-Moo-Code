@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class LessonEditor extends HttpServlet
 {
+	// Controller for /LessonEditor
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int user_id = (int)session.getAttribute("user_id");
