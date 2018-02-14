@@ -9,12 +9,9 @@
 	function validateForm() {
 		var user = document.forms["login"]["username"].value;
 		var pass = document.forms["login"]["password"].value;
-		var element = document.getElementById("login-wrapper");
 		if(user === "" || pass === "") {
-			var response = document.createElement("p");
-			var value = document.createTextNode("Username and Password cannot be blank.");
-			response.appendChild(value);
-			element.appendChild(response);
+			$("#blank").css("display", "block");
+			$("#blank").css("color", "red");
 			return false;
 		}
 		return true;
@@ -31,6 +28,7 @@
 			<button class = "content-container-button">Create Account</button>
 		</form>
 		<p class = "login-failed" style="<% if(!(Boolean) request.getAttribute("failed")){out.print("display:none");}%>">username taken</p>
+		<p class = "blank" id="blank" style="display:none;">Username and Password cannot be blank</p>
 	</div>
 </div>
 

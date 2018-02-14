@@ -1,0 +1,9 @@
+.search_wrapper a{
+	text-decoration: none;
+}
+.search_wrapper {
+	margin-top: 50px;
+}
+.search_wrapper p, a {
+	margin-top: 25px;
+}
