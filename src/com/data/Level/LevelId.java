@@ -1,5 +1,5 @@
 package com.data.Level;
-
+// Stores data for a level to be displayed on the level selection screen
 public class LevelId {
 	public int Id;
 	public String Name;

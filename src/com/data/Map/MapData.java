@@ -4,7 +4,8 @@ import com.util.NumUtil;
 
 import java.util.ArrayList;
 import java.util.Random;
-
+// Stores all the entities and decorations to visualize a level
+// different from the gamedata class in that it stores all static decorations that take a lot of space
 public class MapData {
 	public TileMap Map;
 	public com.data.Map.Tiles Tiles;

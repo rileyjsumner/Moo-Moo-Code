@@ -1,5 +1,5 @@
 package com.data.Map;
-
+// stores data for each tile type
 public class Tile {
 	public String Name;
 	public String Icon;

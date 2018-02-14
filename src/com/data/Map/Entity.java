@@ -1,5 +1,5 @@
 package com.data.Map;
-
+// Stores a dynamic entity (player, cow, hay bale)
 public class Entity
 {
 	public int Type;

@@ -1,5 +1,5 @@
 package com.data.Map;
-
+// stores all tile types
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;

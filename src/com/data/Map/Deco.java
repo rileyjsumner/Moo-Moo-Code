@@ -1,5 +1,5 @@
 package com.data.Map;
-
+// Stores a decoration entity
 public class Deco
 {
 	public int Id;

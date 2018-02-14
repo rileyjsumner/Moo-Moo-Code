@@ -1,5 +1,5 @@
 package com.data.Map;
-
+// stores all tiles on a map
 public class TileMap {
 	public int DimX;
 	public int DimY;
