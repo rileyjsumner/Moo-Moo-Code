@@ -23,7 +23,6 @@
 	} else {
 		out.print("<p>The Search Returned No Results</p>");
 	}
-	out.print("<p><a href=\"/Learn\">Back to Lesson Select</a></p>");
-%>
+%><br/><a href="${pageContext.request.contextPath}/Learn">Back to Lesson Select</a>
 </div>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />
