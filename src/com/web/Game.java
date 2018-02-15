@@ -19,6 +19,7 @@ import java.util.Objects;
 
 
 public class Game extends HttpServlet {
+	// Controller for /Game
 	private static final long serialVersionUID = 1L;
 	
 	public Game() {

@@ -12,6 +12,7 @@ import java.io.IOException;
 
 
 public class Login extends HttpServlet {
+	// Controller for /Login
 	private static final long serialVersionUID = 1L;
 	
 	public Login() {

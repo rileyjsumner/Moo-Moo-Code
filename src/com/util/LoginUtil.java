@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Base64;
 
 public class LoginUtil {
+	// Handles user Logins, encrypt + decrypt functions
 	public static String Encrypt(String plainText)
 	{
 		return new String(Base64.getEncoder().encode(plainText.getBytes()));

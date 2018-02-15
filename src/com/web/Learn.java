@@ -14,6 +14,7 @@ import java.io.IOException;
 
 
 public class Learn extends HttpServlet {
+	// Controller for /Learn
 	private static final long serialVersionUID = 1L;
 	
 	public Learn() {

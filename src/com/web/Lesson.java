@@ -20,6 +20,7 @@ import java.util.Set;
 
 
 public class Lesson extends HttpServlet {
+	// Controller for /Lesson
 	private static final long serialVersionUID = 1L;
 	
 	public Lesson() {

@@ -36,6 +36,37 @@ public class UserDao {
 		}
 		return -1;
 	}
+	public static int GetUserCount() {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT COUNT(id) AS total FROM users");
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()){
+				return set.getInt("total");
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return -1;
+	}
+	public static int GetUsersAtCategory(int category) {
+		Connection con = DbUtil.getConnection();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement("SELECT COUNT(id) AS total FROM users WHERE progress_learn_category = ? ");
+			preparedStatement.setInt(1, category);
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()){
+				return set.getInt("total");
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return -1;
+	}
 	public static boolean isAdmin(int user_id) {
 		// test if user is the admin
 		Connection con = DbUtil.getConnection();

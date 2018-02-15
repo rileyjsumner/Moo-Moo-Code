@@ -5,5 +5,12 @@
 	margin-top: 50px;
 }
 .search_wrapper p, a {
-	margin-top: 25px;
+	padding-top: 25px;
+}
+.results {
+	width: 200px;
+	align-self: center;
+}
+.results {
+	display: inline-grid;
 }

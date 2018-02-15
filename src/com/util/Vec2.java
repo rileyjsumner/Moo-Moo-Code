@@ -2,6 +2,7 @@ package com.util;
 
 public class Vec2
 {
+	// class for collisions, stores 2d vector
 	public double X;
 	public double Y;
 	public Vec2(double x,double y){X=x;Y=y;}

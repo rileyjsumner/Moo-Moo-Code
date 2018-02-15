@@ -18,6 +18,7 @@ import static com.dao.UserDao.*;
 
 public class Users extends HttpServlet
 {
+	// Controller for /Users
 	private static final long serialVersionUID = 1L;
 	
 	public Users()
