@@ -100,13 +100,14 @@ public class Lesson extends HttpServlet {
 							{
 								Object binding = bindings.get(bind.title);
 								String database_binding = binding.toString();
-								database_binding.replace("\n", "");
-								database_binding.replace("\t", "");
-								database_binding.replace(" ", "");
-								bind.value.replace("\n", "");
-								bind.value.replace("\t", "");
-								bind.value.replace(" ", "");
-								
+								database_binding = database_binding.replaceAll("\n", "");
+								database_binding = database_binding.replaceAll("\t", "");
+								database_binding = database_binding.replaceAll(" ", "");
+								bind.value = bind.value.replaceAll("\n", "");
+								bind.value = bind.value.replaceAll("\t", "");
+								bind.value = bind.value.replaceAll(" ", "");
+								System.out.println("DB:" + database_binding);
+								System.out.println("USER:" + bind.value);
 								if (database_binding.equals(bind.value))
 								{
 								
