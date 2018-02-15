@@ -8,7 +8,9 @@
 <title>Moo Moo Code - Login</title>
 <link rel="stylesheet" href="<c:url value="/css/table.css"/>">
 <c:import url="/WEB-INF/page_defaults/menu.jsp" />
-	<div class="table reports">
+<div class="reports">
+	<h2>Reports</h2>
+	<div class="table">
 		<div class="row header">
 			<div class="cell">Statistic</div>
 			<div class="cell">Value</div>
@@ -23,7 +25,7 @@
 			for(int count : categoryCount) {
 				%>
 					<div class="row">
-						<div class="cell">Users at Section <%=i%></div>
+						<div class="cell">Users at Lesson Category <%=i%></div>
 						<div class="cell"><%=count%></div>
 					</div>
 				<%
@@ -31,5 +33,5 @@
 			}
 		%>
 	</div>
-
+</div>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

@@ -88,5 +88,14 @@
 	}
 }
 .reports {
-	width: 400px;
+	width: 400px !important;
+	text-align: center;
+	align-self: center;
+	margin: 0 auto;
+}
+.reports .header .cell{
+	color: white;
+}
+.reports .cell {
+	color: black;
 }
