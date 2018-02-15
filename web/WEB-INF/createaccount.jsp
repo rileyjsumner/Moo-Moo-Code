@@ -20,7 +20,7 @@
 <div class="content-header" style ="margin:20px">Create Account</div>
 <div style = "text-align: center;">
 	<div class="content-container" id="login-wrapper">
-		<form name="login" action="CreateAccount" method = "POST" onsubmit="return validateForm()">
+		<form name="login" action="${pageContext.request.contextPath}/CreateAccount" method = "POST" onsubmit="return validateForm()">
 			<p class = "content-container-header">Username</p>
 			<input type ="text" name = "username" class = "content-container-input" />
 			<p class = "content-container-header">Password</p>
