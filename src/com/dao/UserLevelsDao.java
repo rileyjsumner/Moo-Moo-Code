@@ -118,6 +118,7 @@ public class UserLevelsDao {
 	}
 	public static void UnlockLevel(int userId,int levelId,int time,String code)
 	{
+		System.out.println("UNLOCKING: level:"+levelId+" for user: "+userId);
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try
@@ -128,7 +129,8 @@ public class UserLevelsDao {
 			ResultSet set = preparedStatement.executeQuery();
 			if(!set.first())// There is no user_level for it yet
 			{
-				preparedStatement = con.prepareStatement("INSERT INTO user_levels (user_id, level_id, time,code) VALUES (?,?,?,?)");
+				System.out.println("ONE");
+				preparedStatement = con.prepareStatement("INSERT INTO user_levels (user_id, level_id, time,code,success) VALUES (?,?,?,?,1)");
 				preparedStatement.setInt(1,userId);
 				preparedStatement.setInt(2,levelId);
 				preparedStatement.setInt(3,time);
@@ -137,6 +139,7 @@ public class UserLevelsDao {
 			}
 			else if(set.getInt("success")==0)// There is a user_level, but it was previously failed
 			{
+				System.out.println("TWO");
 				preparedStatement = con.prepareStatement("UPDATE user_levels SET time = ?,code = ?,success=1 WHERE user_id = ? AND level_id = ?");
 				preparedStatement.setInt(1,time);
 				preparedStatement.setString(2,code);
@@ -146,6 +149,7 @@ public class UserLevelsDao {
 			}
 			else if(set.getInt("time") > time)// There is succeeded user_level, but it the player beat the time
 			{
+				System.out.println("THREE");
 				preparedStatement = con.prepareStatement("UPDATE user_levels SET time = ?,code = ? WHERE user_id = ? AND level_id = ?");
 				preparedStatement.setInt(1,time);
 				preparedStatement.setString(2,code);
@@ -161,6 +165,7 @@ public class UserLevelsDao {
 	}
 	public static void FailedLevel(int userId,int levelId,String code)
 	{
+		System.out.println("FAILING: level:"+levelId+" for user: "+userId);
 		Connection con = DbUtil.getConnection();
 		PreparedStatement preparedStatement;
 		try
@@ -171,6 +176,7 @@ public class UserLevelsDao {
 			ResultSet set = preparedStatement.executeQuery();
 			if(!set.first())// There is no user_level for it yet
 			{
+				System.out.println("ONE");
 				preparedStatement = con.prepareStatement("INSERT INTO user_levels (user_id, level_id, time,code) VALUES (?,?,0,?)");
 				preparedStatement.setInt(1,userId);
 				preparedStatement.setInt(2,levelId);
@@ -179,6 +185,7 @@ public class UserLevelsDao {
 			}
 			else if(set.getInt("success")==0)// There is a user_level, and it was also previously failed
 			{
+				System.out.println("TWO");
 				preparedStatement = con.prepareStatement("UPDATE user_levels SET code = ? WHERE user_id = ? AND level_id = ?");
 				preparedStatement.setString(1,code);
 				preparedStatement.setInt(2,userId);
