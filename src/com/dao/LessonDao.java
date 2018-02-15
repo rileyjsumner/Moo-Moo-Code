@@ -161,6 +161,23 @@ public class LessonDao {
 		}
 		return count;
 	}
+	public static int GetTotalCategories() {
+		PreparedStatement preparedStatement;
+		Connection con = DbUtil.getConnection();
+		try {
+			preparedStatement = con.prepareStatement("SELECT COUNT(id) AS total FROM lesson_categories");
+			ResultSet set = preparedStatement.executeQuery();
+			if(set.first()) {
+				return set.getInt("total");
+			}
+			
+		}
+		catch(SQLException ex)
+		{
+			Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return -1;
+	}
 	public static int getNextLesson(int userId, int lessonId)
 	{
 		// get next lesson

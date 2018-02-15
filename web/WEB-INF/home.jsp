@@ -8,6 +8,6 @@
 <img class="home_image" src="../icons/characters/dan/still.png" height="400px" width="400px"/>
 <img class="home_image" src="../icons/entities/cow.png" height="400px" width="400px"/>
 <p>With Moo Moo Code you can learn Javascript with our comprehensive lessons. You can also play our game and help Farmer Dan on his quest to find his cows!</p>
-<p>This website was developed by Anoka High School Software Development Team 2</p>
+<p>This website was developed by Anoka High School Software Development Team A</p>
 <p>30-0005-0018 | 30-0005-0024</p>
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />

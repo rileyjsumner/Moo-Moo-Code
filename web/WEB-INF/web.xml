@@ -194,4 +194,15 @@
 		<servlet-name>LessonSearch</servlet-name>
 		<url-pattern>/LessonSearch</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>Reports</display-name>
+		<servlet-name>Reports</servlet-name>
+		<servlet-class>com.web.Admin.Reports</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Reports</servlet-name>
+		<url-pattern>/Admin/Reports</url-pattern>
+	</servlet-mapping>
 </web-app>
