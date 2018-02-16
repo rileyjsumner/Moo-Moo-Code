@@ -43,6 +43,17 @@
 	
 	<servlet>
 		<description></description>
+		<display-name>Admin/Reset</display-name>
+		<servlet-name>AdminReset</servlet-name>
+		<servlet-class>com.web.Admin.Reset</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminReset</servlet-name>
+		<url-pattern>/Admin/Reset</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
 		<display-name>Admin/Home</display-name>
 		<servlet-name>AdminHome</servlet-name>
 		<servlet-class>com.web.Admin.Home</servlet-class>

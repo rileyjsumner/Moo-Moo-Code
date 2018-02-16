@@ -90,12 +90,12 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 					final Tile tile = mapData.GetTile(x, y);
 					if(tile != null)
 					{
-						out.print("<div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\""+tile.Type+"\" data-id=\""+tile.Id+"\" style = \"cursor:pointer;background-image: url(/icons/map_tiles/");
+						out.print("<div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\""+tile.Type+"\" data-id=\""+tile.Id+"\" style = \"cursor:pointer;background-image: url("+Html.encodeURL(request,"/icons/map_tiles/"));
 						out.print(tile.Icon);
 					}
 					else
 					{
-						out.print("<div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\"0\" style = \"cursor:pointer;background-image: url(/icons/map_tiles/");
+						out.print("<div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\"0\" style = \"cursor:pointer;background-image: url("+Html.encodeURL(request,"/icons/map_tiles/"));
 						out.print("null");
 					}
 					if(y == 0)
@@ -169,12 +169,12 @@ if(exec){output = (GameOutput) request.getAttribute("game_data");}
 	}
 	function animateEntity(id,animation)
 	{
-		$("#entity-ref-"+id).css("background-image","url(../icons/"+animation+")");
+		$("#entity-ref-"+id).css("background-image","url(${pageContext.request.contextPath}/icons/"+animation+")");
 	}
 	function addDeco(icon,x,y,behind,id)
 	{
 		
-		$("#entity-reference").append("<div id = 'deco-ref-"+id+"' class = 'map-entity pixel' style=\"background-image: url(../icons/deco/"+icon+".png);" +
+		$("#entity-reference").append("<div id = 'deco-ref-"+id+"' class = 'map-entity pixel' style=\"background-image: url(${pageContext.request.contextPath}/icons/deco/"+icon+".png);" +
 			"z-index:" + (behind?'0':'1') + ";" +
 			"right:" + (( max_x - x - .5) * 50) + "px;" +
 			"top:" + (( max_y - y - .5) * 50) + "px\">");

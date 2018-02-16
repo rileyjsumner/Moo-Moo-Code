@@ -1,4 +1,8 @@
-<%@ page import="com.data.Map.*" %>
+<%@ page import="com.data.Map.Entity" %>
+<%@ page import="com.data.Map.MapData" %>
+<%@ page import="com.data.Map.MapDeco" %>
+<%@ page import="com.data.Map.Tile" %>
+<%@ page import="com.util.Html" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -46,7 +50,7 @@
 			
 			for(Tile tile : tiles)
 			{
-				out.print("<tr class = 'level-tile-select' data-tile-icon='"+tile.Icon+"' data-tile-type = '"+tile.Type+"' data-tile-id = '"+tile.Id+"'><td><div class = 'tile-icon pixel' style = 'background-image: url(/icons/map_tiles/"+tile.Icon+".png)'></div></td><td><div class = 'tile-name'>"+tile.Name+"</div></td></tr>");
+				out.print("<tr class = 'level-tile-select' data-tile-icon='"+tile.Icon+"' data-tile-type = '"+tile.Type+"' data-tile-id = '"+tile.Id+"'><td><div class = 'tile-icon pixel' style = 'background-image: url("+ Html.encodeURL(request,"/icons/map_tiles/")+tile.Icon+".png)'></div></td><td><div class = 'tile-name'>"+tile.Name+"</div></td></tr>");
 			}
 		%>
 	</table>
@@ -147,12 +151,12 @@
 				final Tile tile = mapData.GetTile(x, y);
 				if(tile != null)
 				{
-					out.print("<div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\""+tile.Type+"\" data-id=\""+tile.Id+"\" style = \"cursor:pointer;background-image: url(/icons/map_tiles/");
+					out.print("<div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\""+tile.Type+"\" data-id=\""+tile.Id+"\" style = \"cursor:pointer;background-image: url("+Html.encodeURL(request,"/icons/map_tiles/"));
 					out.print(tile.Icon);
 				}
 				else
 				{
-					out.print("<div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\"0\" style = \"cursor:pointer;background-image: url(/icons/map_tiles/");
+					out.print("<div class = \"map-tile pixel\" data-x = '"+x+"' data-y='"+y+"' data-type=\"0\" style = \"cursor:pointer;background-image: url("+Html.encodeURL(request,"/icons/map_tiles/"));
 					out.print("null");
 				}
 				if(y == 0)
@@ -263,7 +267,7 @@
 		{
 			if(selected_tile_type !== null)
 			{
-				selected_el.css("background-image","url(/icons/map_tiles/"+selected_tile_icon+".png)");
+				selected_el.css("background-image","url(${pageContext.request.contextPath}/icons/map_tiles/"+selected_tile_icon+".png)");
 				$.post("${pageContext.request.contextPath}/Admin/LevelEditor",{
 						action:"tile",
 						x:selected_el.data("x"),
