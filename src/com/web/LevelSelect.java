@@ -1,6 +1,5 @@
 package com.web;
 
-import com.dao.LevelsDao;
 import com.dao.UserLevelsDao;
 import com.util.LoginUtil;
 

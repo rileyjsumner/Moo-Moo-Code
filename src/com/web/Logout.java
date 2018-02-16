@@ -31,6 +31,6 @@ public class Logout extends HttpServlet {
 		session.setAttribute("username","");
 		session.setAttribute("password","");
 		session.setAttribute("signed_in",false);
-		response.sendRedirect(Html.encodeURL(request,"Home"));
+		response.sendRedirect(Html.encodeURL(request,"/Home"));
 	}
 }

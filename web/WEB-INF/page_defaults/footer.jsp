@@ -13,17 +13,17 @@ if((boolean)session.getAttribute("signed_in"))
 	<div id = "account-dropdown" style="display:none"><%
 	if((boolean)session.getAttribute("admin"))
 	{
-		%><div class="account-dropdown-option" onclick="location.href = '<c:url value='/Admin/Home'/>'"><i class="fa fa-sliders account-icon"></i>Admin Panel</div><%
+		%><div class="account-dropdown-option" onclick="location.href = '${pageContext.request.contextPath}/Admin/Home'"><i class="fa fa-sliders account-icon"></i>Admin Panel</div><%
 	}
-	%><div class="account-dropdown-option" onclick = "location.href = '<c:url value='/Logout'/>' " ><i class="fa fa-sign-out account-icon"></i>Sign out</div></div></div><%
+	%><div class="account-dropdown-option" onclick = "location.href = '${pageContext.request.contextPath}/Logout' " ><i class="fa fa-sign-out account-icon"></i>Sign out</div></div></div><%
 }
 else
 {
 	%>
 	<div id = "account-container">
 	<div>
-	<div class="account-sign-in" onclick="location.href='<c:url value='/Login'/>'"><p>Sign in</p></div>
-	<div class="account-sign-in" onclick="location.href='<c:url value='/CreateAccount'/>'"><p>Create Account</p></div>
+	<div class="account-sign-in" onclick="location.href='${pageContext.request.contextPath}/Login'"><p>Sign in</p></div>
+	<div class="account-sign-in" onclick="location.href='${pageContext.request.contextPath}/CreateAccount'"><p>Create Account</p></div>
 	</div>
 	</div><%
 }

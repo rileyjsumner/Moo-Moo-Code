@@ -83,7 +83,7 @@
 					for(Entity entity : mapData.MapEntities)
 					{
 						out.print("<div class='entity-container' data-id='"+entity.Id+"'><div class='entity-header' data-id='"+entity.Id+"'>"+entity.Name+"</div>" +
-								"<form method = 'post' action = '/Admin/LevelEditor' class = 'entity-content' "+((selected == entity.Id) ? "style='display:block;'" : "")+"><table style=\"width: 100%;overflow: hidden; white-space: nowrap;\">" +
+								"<form method = 'post' action = '"+Html.encodeURL(request,"/Admin/LevelEditor")+"' class = 'entity-content' "+((selected == entity.Id) ? "style='display:block;'" : "")+"><table style=\"width: 100%;overflow: hidden; white-space: nowrap;\">" +
 								"<tr><td><label class = \"admin-levels-label\" for='entity-type-"+entity.Id+"'>Entity Type:</label></td><td>"+mapData.GetTypeDD(entity.Type,false,false)+"</td></tr>" +
 								"<tr><td><label class = \"admin-levels-label\" for='entity-name-"+entity.Id+"'>Custom Name:</label></td><td><input name = 'name' class = 'admin-levels-input' type='text' id = 'entity-name-"+entity.Id+"' value='"+entity.Name+"' /></td></tr>" +
 								"<tr><td><label class = \"admin-levels-label\" for='entity-x-"+entity.Id+"'>Spawn X:</label></td><td><input name = 'spawn_x' step = '.1' class = 'admin-levels-input' type='number' id = 'entity-x-"+entity.Id+"' value='"+entity.X+"' /></td></tr>" +
@@ -127,7 +127,7 @@
 					for(MapDeco deco : mapData.MapDecorations)
 					{
 						out.print("<div class='entity-container' data-id='"+deco.Id+"'><div class='entity-header' data-id='"+deco.Id+"'>"+mapData.GetDecoName(deco.Type)+"</div>" +
-								"<form method = 'post' action = '/Admin/LevelEditor' class = 'entity-content' "+((selected == deco.Id) ? "style='display:block;'" : "")+"><table style=\"width: 100%;overflow: hidden; white-space: nowrap;\">" +
+								"<form method = 'post' action = '"+Html.encodeURL(request,"/Admin/LevelEditor")+"' class = 'entity-content' "+((selected == deco.Id) ? "style='display:block;'" : "")+"><table style=\"width: 100%;overflow: hidden; white-space: nowrap;\">" +
 								"<tr><td><label class = \"admin-levels-label\" for='deco-type-"+deco.Id+"'>Entity Type:</label></td><td>"+mapData.GetDecoTypeDD(deco.Type,false,false)+"</td></tr>" +
 								"<tr><td><label class = \"admin-levels-label\" for='deco-x-"+deco.Id+"'>Spawn X:</label></td><td><input name = 'spawn_x' step = '.1' class = 'admin-levels-input' type='number' id = 'deco-x-"+deco.Id+"' value='"+deco.X+"' /></td></tr>" +
 								"<tr><td><label class = \"admin-levels-label\" for='deco-y-"+deco.Id+"'>Spawn Y:</label></td><td><input name = 'spawn_y' step = '.1' class = 'admin-levels-input' type='number' id = 'deco-y-"+deco.Id+"' value='"+deco.Y+"' /></td></tr>" +
