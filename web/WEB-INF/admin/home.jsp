@@ -11,6 +11,7 @@
 	<button class = "content-container-button" onclick = "location.href='${pageContext.request.contextPath}/Admin/Users'">Go to User Editor</button>
 	<button class = "content-container-button" onclick = "location.href='${pageContext.request.contextPath}/Admin/Lessons'">Go to Lesson Editor</button>
 	<button class = "content-container-button" onclick = "location.href='${pageContext.request.contextPath}/Admin/Reports'">Go to Reports</button>
+	<button class = "content-container-button" onclick = "location.href='${pageContext.request.contextPath}/Admin/Reset'">Reset SQL</button>
 </div>
 
 <c:import url="/WEB-INF/page_defaults/footer.jsp" />
