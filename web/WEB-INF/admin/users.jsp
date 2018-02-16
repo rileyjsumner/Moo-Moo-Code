@@ -18,7 +18,6 @@
 				"<div class='row header'>" +
 					"<div class='cell'>Id</div>" +
 					"<div class='cell'>Username</div>" +
-					"<div class='cell'>Password</div>" +
 					"<div class='cell'>Category Progress</div>" +
 					"<div class='cell'>Lesson Progress</div>" +
 					"<div class='cell'>Admin</div>" +
@@ -29,7 +28,6 @@
 					"<div class='row'>" +
 							"<div class='cell'><input data-user='" + user.id + "' data-type='id' type='number' value='" + user.id + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='username' type='text' value='" + user.username + "'/></div>" +
-							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='password' type='text' value='" + user.password + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_category' type='number' value='" + user.categoryProgress + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='progress_learn_lesson' type='number' value='" + user.lessonProgress + "'/></div>" +
 							"<div class='cell'><input data-user='" + user.id + "' class='autoupdate' data-type='admin' type='text' value='" + user.admin + "'/></div>" +
@@ -48,7 +46,7 @@
 				<div class="row">
 					<div class="cell"><input type="number" name="id" value="<% out.print(nextId);%>"/></div>
 					<div class="cell"><input type='text' name='username' placeholder='username' /></div>
-					<div class="cell"><input type='text' name='password' placeholder='password' /></div>
+					<div class="cell"><input type='password' name='password' placeholder='password' /></div>
 					<div class="cell"><input type='number' name='categoryProgress' placeholder='category progress'/></div>
 					<div class="cell"><input type='number' name='lessonProgress' placeholder='lesson progress'/></div>
 					<div class="cell"><input type='text' name='admin' placeholder='admin'/></div>
