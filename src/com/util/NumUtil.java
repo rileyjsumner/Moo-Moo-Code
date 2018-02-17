@@ -19,7 +19,7 @@ public class NumUtil
 		boolean hadCollision = false;
 		for(Entity entity : entities)
 		{
-			if(entity.Type==4)
+			if(entity.Type==4 || entity.Type==5)
 			{
 				newPos = Collision_entity_SquareMapEntity(entityX,entityY,entityRadius,entity.X,entity.Y);
 				if(newPos.IsCollision)
