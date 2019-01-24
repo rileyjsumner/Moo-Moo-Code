@@ -1,6 +1,6 @@
 # Moo-Moo-Code
 
-This project was for a Business Professionals of America competition.
+This project was for a Business Professionals of America competition. [See bpa.org](https://www.bpa.org)
 
 ## Description
 
